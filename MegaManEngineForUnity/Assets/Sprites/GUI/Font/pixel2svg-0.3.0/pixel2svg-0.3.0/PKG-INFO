@@ -1,0 +1,104 @@
+Metadata-Version: 1.1
+Name: pixel2svg
+Version: 0.3.0
+Summary: pixel2svg - Convert pixel art to SVG
+Home-page: http://florian-berger.de/en/software/pixel2svg/
+Author: Florian Berger
+Author-email: fberger@florian-berger.de
+License: GPL
+Description: About
+        -----
+        
+        pixel2svg converts pixel art to SVG - pixel by pixel.
+        
+        For example, here is an icon from the `Tango Icon
+        Set <http://tango.freedesktop.org/>`_:
+        
+        .. figure:: http://static.florian-berger.de/tango-heart.png
+           :align: center
+           :alt: tango heart
+        
+           tango heart
+        If you scale this up for a nice blocky print, you might get a dithered
+        result:
+        
+        .. figure:: http://static.florian-berger.de/tango-heart-400px-dithered.png
+           :align: center
+           :alt: tango heart 400px dithered
+        
+           tango heart 400px dithered
+        Of course you can turn dithering off. But sometimes you might want a
+        vector file, especially for large prints. For these cases, pixel2svg
+        produces this SVG file (try clicking to find out whether your browser
+        supports SVG):
+        
+        `tango-heart.svg <http://static.florian-berger.de/tango-heart.svg>`_
+        
+        Here is a screenshot of the SVG in `Inkscape <http://inkscape.org/>`_:
+        
+        .. figure:: http://static.florian-berger.de/tango-heart-inkscape.png
+           :align: center
+           :alt: tango heart inkscape
+        
+           tango heart inkscape
+        Nice, pure vector data.
+        
+        Prerequisites
+        -------------
+        
+        Python 2.x `http://www.python.org <http://www.python.org>`_
+        
+        Python Imaging Library (PIL)
+        `http://www.pythonware.com/products/pil/ <http://www.pythonware.com/products/pil/>`_
+        
+        svgwrite
+        `http://pypi.python.org/pypi/svgwrite/ <http://pypi.python.org/pypi/svgwrite/>`_
+        
+        Installation
+        ------------
+        
+        Unzip the file, then at the command line run
+        
+        ::
+        
+            python setup.py install
+        
+        Usage
+        -----
+        
+        ::
+        
+            Usage: pixel2svg [--overlap] IMAGEFILE
+        
+            Options:
+              --version             show program's version number and exit
+              -h, --help            show this help message and exit
+              --squaresize=SQUARESIZE
+                                    Width and heigt of vector squares in pixels, default: 40
+              --overlap             If given, overlap vector squares by 1px
+        
+        Running
+        
+        ::
+        
+            pixel2svg.py IMAGE.EXT
+        
+        will process IMAGE.EXT and create IMAGE.svg.
+        
+        EXT can be any format (png, jpg etc.) that can be read by the Python
+        Imaging Library.
+        
+        License
+        -------
+        
+        pixel2svg is licensed under the GPL. See the file COPYING for details.
+        
+        Author
+        ------
+        
+        (c) Florian Berger
+        
+Platform: UNKNOWN
+Requires: PIL
+Requires: svgwrite
+Provides: pixel2svg

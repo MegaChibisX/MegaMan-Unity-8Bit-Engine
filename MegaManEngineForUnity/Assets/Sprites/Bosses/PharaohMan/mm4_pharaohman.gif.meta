@@ -1,0 +1,552 @@
+fileFormatVersion: 2
+guid: 8bb856b217d85ce448e21318883be7ad
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: mm4_pharaohman_0
+    21300002: mm4_pharaohman_1
+    21300004: mm4_pharaohman_2
+    21300006: mm4_pharaohman_3
+    21300008: mm4_pharaohman_4
+    21300010: mm4_pharaohman_5
+    21300012: mm4_pharaohman_6
+    21300014: mm4_pharaohman_7
+    21300016: mm4_pharaohman_8
+    21300018: mm4_pharaohman_9
+    21300020: mm4_pharaohman_10
+    21300022: mm4_pharaohman_11
+    21300024: mm4_pharaohman_12
+    21300026: mm4_pharaohman_13
+    21300028: mm4_pharaohman_14
+    21300030: mm4_pharaohman_15
+    21300032: mm4_pharaohman_16
+    21300034: mm4_pharaohman_17
+    21300036: mm4_pharaohman_18
+    21300038: mm4_pharaohman_19
+  externalObjects: {}
+  serializedVersion: 7
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: mm4_pharaohman_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 46
+        width: 27
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1a7e32db7c616e448e6c49075db8c15
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_1
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 46
+        width: 34
+        height: 28
+      alignment: 9
+      pivot: {x: 0.6302133, y: 0.51871}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18ac035faaf2f73438daa066d3cef472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_2
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 46
+        width: 28
+        height: 32
+      alignment: 9
+      pivot: {x: 0.44729996, y: 0.45540524}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6a4068ff5ec141458dd6e1def3b6cad
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_3
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 46
+        width: 29
+        height: 32
+      alignment: 9
+      pivot: {x: 0.49555442, y: 0.4500053}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4627efd24ec6ec4a84f5961bde9cf1a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_4
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 46
+        width: 28
+        height: 40
+      alignment: 9
+      pivot: {x: 0.47962624, y: 0.36134738}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8426159b79b455478c1c47753749c13
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_5
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 46
+        width: 25
+        height: 34
+      alignment: 9
+      pivot: {x: 0.579704, y: 0.42381218}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a51f38e4ce33b249a055c70f32d3fed
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_6
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 46
+        width: 25
+        height: 32
+      alignment: 9
+      pivot: {x: 0.56952757, y: 0.4498092}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 591ada126c68d7c40a10ccfc7f6f6094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_7
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 46
+        width: 29
+        height: 32
+      alignment: 9
+      pivot: {x: 0.40072894, y: 0.4539261}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a849b3e2cab3da94faa27ccd0c11fc7c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_8
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 46
+        width: 28
+        height: 40
+      alignment: 9
+      pivot: {x: 0.37380654, y: 0.36603737}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9f55a1e29e18604cb9a34cc446fa958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_9
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 46
+        width: 23
+        height: 34
+      alignment: 9
+      pivot: {x: 0.49065232, y: 0.43138346}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a3c7f0942159a849ab2537165456374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_10
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 46
+        width: 20
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5639923, y: 0.4533322}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81e5783f29739b448b867f4fdf861ad5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_11
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 3
+        width: 29
+        height: 32
+      alignment: 9
+      pivot: {x: 0.4973655, y: 0.45183897}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1abc66aaefaa26b4eaa75aa2e9e64b49
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_12
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 3
+        width: 32
+        height: 38
+      alignment: 9
+      pivot: {x: 0.4880612, y: 0.3854077}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 947a20e1ac92f0c45a0b5d6524122d87
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_13
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 4
+        width: 26
+        height: 35
+      alignment: 9
+      pivot: {x: 0.5203071, y: 0.419051}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 636ecedf0e909a54c80f0e939c3a3f1c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_14
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 4
+        width: 23
+        height: 33
+      alignment: 9
+      pivot: {x: 0.5398646, y: 0.44172153}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebbe28f5564470844945a9ea5b9ad549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_15
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 4
+        width: 23
+        height: 33
+      alignment: 9
+      pivot: {x: 0.5425906, y: 0.44234657}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01f9b659625ee244ea3d365399f3bc71
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_16
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 4
+        width: 23
+        height: 33
+      alignment: 9
+      pivot: {x: 0.54348624, y: 0.44213817}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5b4af653c785674cafb099e1c6d1f22
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_17
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 16
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b355a95a0cf4d82479530908979aa6db
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_18
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 4
+        width: 14
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8484394f7e9284468061b7d129e07d5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm4_pharaohman_19
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 3
+        width: 40
+        height: 33
+      alignment: 9
+      pivot: {x: 0.38467178, y: 0.55436414}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 822a379b3e5e1904d95682179ebcb193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: d2d90279089fc434ebdbc75bf8c25907
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
