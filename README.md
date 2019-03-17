@@ -4,6 +4,8 @@
 ## Info
 As the Blue Bomber doesn't get much love in Unity projects, I thought I would make a simple MegaMan project in Unity 2D and release it for everyone to use.
 
+Download the 'MegaManEngineForUnity' folder and open it with Unity to open the project.
+
 Check out the Manual.pdf file to get a better idea of what this project is like and how it works.
 
 
