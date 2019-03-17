@@ -44,11 +44,17 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 ## Known bugs
 
+> Boss description missing from manual.
+
+> Input description missing from manual.
+
 > Boss doors can put the player inside solid blocks.
 
 > In-game weapon switching can be a bit weird.
 
 > In-menu weapon switching can be a bit weird.
+
+> Gears not assigned to controller buttons.
 
 > Ladder standing collision doesn't account for inverted gravity.
 
