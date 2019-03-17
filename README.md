@@ -28,6 +28,30 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 
 
+## Upcoming features
+
+> New enemies, including but not limited to: Crushers from MM2, etc.
+
+> Stage select screen.
+
+> In-game animation cutscenes.
+
+> More enemies, bosses, players.
+
+> Possibly a story.
+
+
+
+## Known bugs
+
+> Boss doors can put the player inside solid blocks.
+
+> In-game weapon switching can be a bit weird.
+
+> In-menu weapon switching can be a bit weird.
+
+> Ladder standing collision doesn't account for inverted gravity.
+
 
 
 # Update Log
