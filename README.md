@@ -69,7 +69,8 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 ## 0.1.1
 > Added Presses
+
 > Added Gemini Man
 
 ## 0.1.0
-The entire official public release of the this project. Everything important can be found in the Manual.pdf, as well as comments in the code itself.
+> The entire official public release of the this project. Everything important can be found in the Manual.pdf, as well as comments in the code itself.
