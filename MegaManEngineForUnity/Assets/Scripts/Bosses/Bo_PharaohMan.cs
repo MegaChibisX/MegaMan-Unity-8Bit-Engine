@@ -31,7 +31,7 @@ public class Bo_PharaohMan : Boss
     public AudioClip chargeSound;
 
     // These variables are only meant to be used by Jump(bool jumpBack, bool shoot, int hops, int maxHops).
-    // However, being public, they can be viewed as Gizmos for debug purposes.
+    // However, placed here, they can be viewed as Gizmos for debug purposes.
     private Vector3 targetPositionJump;
     private Vector3[] targetPositionJumpAr;
 
@@ -214,7 +214,7 @@ public class Bo_PharaohMan : Boss
 
     public IEnumerator PlayDeathLong()
     {
-        // Can't die if you're Pharaoh Man is not in a fight.
+        // Can't die if Pharaoh Man is not in a fight.
         if (!fightStarted)
             yield break;
 

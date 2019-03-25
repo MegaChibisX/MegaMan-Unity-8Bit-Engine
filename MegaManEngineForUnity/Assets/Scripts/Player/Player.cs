@@ -878,10 +878,11 @@ public class Player : MonoBehaviour
         // Sets up the weapons the player can use in game at this point.
         weaponList = new List<Pl_WeaponData.Weapons>();
         weaponList.Add(Pl_WeaponData.Weapons.MegaBuster);
-        weaponList.Add(Pl_WeaponData.Weapons.GeminiLaser);
 
         if (GameManager.bossDead_PharaohMan)
             weaponList.Add(Pl_WeaponData.Weapons.PharaohShot);
+        if (GameManager.bossDead_GeminiMan)
+            weaponList.Add(Pl_WeaponData.Weapons.GeminiLaser);
     }
 
     public void SetGear(bool speedGear, bool powerGear)

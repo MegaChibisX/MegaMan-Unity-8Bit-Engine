@@ -1,0 +1,446 @@
+fileFormatVersion: 2
+guid: 11473e6f92ee8e549a21902b42ccadc7
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: mm3_geminiman_0
+    21300002: mm3_geminiman_1
+    21300004: mm3_geminiman_2
+    21300006: mm3_geminiman_3
+    21300008: mm3_geminiman_4
+    21300010: mm3_geminiman_5
+    21300012: mm3_geminiman_6
+    21300014: mm3_geminiman_7
+    21300016: mm3_geminiman_8
+    21300018: mm3_geminiman_9
+    21300020: mm3_geminiman_10
+    21300022: mm3_geminiman_11
+    21300024: mm3_geminiman_12
+    21300026: mm3_geminiman_13
+    21300028: mm3_geminiman_14
+    21300030: mm3_geminiman_15
+  externalObjects: {}
+  serializedVersion: 7
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: mm3_geminiman_0
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 47
+        width: 27
+        height: 27
+      alignment: 9
+      pivot: {x: 0.4814815, y: 0.4814815}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45381263973def844bb5875dd615ae19
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm3_geminiman_1
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 47
+        width: 27
+        height: 27
+      alignment: 9
+      pivot: {x: 0.4814815, y: 0.4814815}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67ac6a858b8d44541a2fc514c69a306e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm3_geminiman_2
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 47
+        width: 27
+        height: 27
+      alignment: 9
+      pivot: {x: 0.4814815, y: 0.4814815}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c013a394a9dc864098866ec338d1ef5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm3_geminiman_3
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 47
+        width: 29
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5862069, y: 0.46428573}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50f2e1c8948af144db32bcdcdd76fea4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm3_geminiman_4
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 47
+        width: 23
+        height: 28
+      alignment: 9
+      pivot: {x: 0.47826087, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5be5f8c35645c3446bfed4ef396fdc62
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm3_geminiman_5
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 47
+        width: 21
+        height: 30
+      alignment: 9
+      pivot: {x: 0.61904764, y: 0.4666667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8c1d33637e3d7c43acce1589bfeeb2a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm3_geminiman_6
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 47
+        width: 27
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5555556, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 887dda8179793954babc391a72723735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm3_geminiman_7
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 47
+        width: 27
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5555556, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fd40b760fec7394f989b6cf5ba7638f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm3_geminiman_8
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 9
+        width: 31
+        height: 27
+      alignment: 9
+      pivot: {x: 0.6774193, y: 0.4814815}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c232020b831d51449e4ede440716813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm3_geminiman_9
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 9
+        width: 27
+        height: 27
+      alignment: 9
+      pivot: {x: 0.5925926, y: 0.4814815}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af7ce76c378a75d46969a6b335dd4f86
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm3_geminiman_10
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 3
+        width: 31
+        height: 32
+      alignment: 9
+      pivot: {x: 0.61290324, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12ca5cea6435a0845b4249becc8b40d0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm3_geminiman_11
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 11
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c18c6b52aa614c40ab0baf796dc5204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm3_geminiman_12
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 10
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a224c656b4578842b167e85ec2d3857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm3_geminiman_13
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 12
+        width: 8
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4548c8c95692c8d40811222626f81518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm3_geminiman_14
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 3
+        width: 36
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e9c189e701210a47a02936372de3e57
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm3_geminiman_15
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 9
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93dfd1340a2528c428dcd8d70a86a6ea
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 1f706b4b9452ed44eac95eb270408c5e
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

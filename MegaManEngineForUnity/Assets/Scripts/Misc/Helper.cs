@@ -67,4 +67,64 @@ public static class Helper
     }
 
 
+    public static Mesh ExtendSprite(Sprite spritePiece, float height)
+    {
+        if (!spritePiece)
+        {
+            Debug.LogWarning("There is no Sprite Piece to extend!");
+            return null;
+        }
+
+        List<Vector3> v = new List<Vector3>();
+        List<Vector2> u = new List<Vector2>();
+        List<int> t = new List<int>();
+
+        float widthDiv = 1f / spritePiece.texture.width;
+        float heightDiv = 1f / spritePiece.texture.height;
+
+        float x = spritePiece.rect.x;
+        float y = spritePiece.rect.y;
+        float w = spritePiece.rect.x + spritePiece.rect.width;
+        float h = spritePiece.rect.y + spritePiece.rect.height;
+
+        float curHeight = 0;
+        float remainHeight = height;
+        while (remainHeight > 0)
+        {
+            float chainHeight = Mathf.Min(remainHeight, spritePiece.rect.height);
+            int vertexCount = v.Count;
+
+            v.Add(new Vector3(-spritePiece.rect.width / 2f, curHeight + chainHeight, 0));
+            v.Add(new Vector3(+spritePiece.rect.width / 2f, curHeight + chainHeight, 0));
+            v.Add(new Vector3(+spritePiece.rect.width / 2f, curHeight, 0));
+            v.Add(new Vector3(-spritePiece.rect.width / 2f, curHeight, 0));
+
+            u.Add(new Vector2(x * widthDiv, (y + chainHeight) * heightDiv));
+            u.Add(new Vector2(w * widthDiv, (y + chainHeight) * heightDiv));
+            u.Add(new Vector2(w * widthDiv, y * heightDiv));
+            u.Add(new Vector2(x * widthDiv, y * heightDiv));
+
+            t.Add(vertexCount + 0);
+            t.Add(vertexCount + 1);
+            t.Add(vertexCount + 2);
+
+            t.Add(vertexCount + 2);
+            t.Add(vertexCount + 3);
+            t.Add(vertexCount + 0);
+
+            curHeight += chainHeight;
+            remainHeight -= spritePiece.rect.height;
+        }
+
+        Mesh mesh = new Mesh();
+        mesh.vertices = v.ToArray();
+        mesh.uv = u.ToArray();
+        mesh.triangles = t.ToArray();
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+
+        return mesh;
+    }
+
+
 }

@@ -41,6 +41,7 @@ public static class GameManager
     // Boss related variables
     public static int bossesActive;
     public static bool bossDead_PharaohMan;
+    public static bool bossDead_GeminiMan;
 
 
     static GameManager()
@@ -79,6 +80,7 @@ public static class GameManager
 
         bossesActive = 0;
         bossDead_PharaohMan = false;
+        bossDead_GeminiMan = false;
     }
 
     public static void ResetRoom()

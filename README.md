@@ -30,6 +30,8 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 ## Upcoming features
 
+> Rush Utilities
+
 > New enemies, including but not limited to: Crushers from MM2, etc.
 
 > Stage select screen.
@@ -48,6 +50,8 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 > Input description missing from manual.
 
+> Press description missing from manual.
+
 > Boss doors can put the player inside solid blocks.
 
 > In-game weapon switching can be a bit weird.
@@ -61,6 +65,11 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 
 # Update Log
+
+
+## 0.1.1
+> Added Presses
+> Added Gemini Man
 
 ## 0.1.0
 The entire official public release of the this project. Everything important can be found in the Manual.pdf, as well as comments in the code itself.
