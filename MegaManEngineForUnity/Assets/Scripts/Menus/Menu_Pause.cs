@@ -115,7 +115,7 @@ public class Menu_Pause : Menu
 
 
         // Uses current item or section.
-        if (Input.GetKeyDown(KeyCode.Return)) {
+        if (Input.GetButtonDown("Start")) {
             switch (mode)
             {
                 // Sets a new player.
@@ -125,6 +125,9 @@ public class Menu_Pause : Menu
                     {
                         case GameManager.Players.MegaManSuper:
                             playerPath = "Prefabs/Players/MegaMan_Red";
+                            break;
+                        case GameManager.Players.ProtoMan:
+                            playerPath = "Prefabs/Players/ProtoMan";
                             break;
                     }
 
@@ -190,7 +193,8 @@ public class Menu_Pause : Menu
                             break;
                         case "EXIT":
                             // Exit
-                            Application.Quit();
+                            //Application.Quit();
+                            Helper.GoToStage("StageSelect");
                             break;
                         case "HELP":
                             // HELP

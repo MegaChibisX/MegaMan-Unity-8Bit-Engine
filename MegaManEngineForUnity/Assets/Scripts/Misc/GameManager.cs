@@ -44,6 +44,12 @@ public static class GameManager
     public static bool bossDead_GeminiMan;
 
 
+
+    // Stage select variables
+    public static Vector2Int lastStageSelected;
+    public static int maxFortressStage;
+
+
     static GameManager()
     {
         // Everything here happens when the game starts, so it won't run
@@ -81,6 +87,9 @@ public static class GameManager
         bossesActive = 0;
         bossDead_PharaohMan = false;
         bossDead_GeminiMan = false;
+
+        lastStageSelected = Vector2Int.one;
+        maxFortressStage = 3;
     }
 
     public static void ResetRoom()

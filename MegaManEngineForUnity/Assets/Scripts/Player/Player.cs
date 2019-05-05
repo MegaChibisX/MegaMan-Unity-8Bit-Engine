@@ -243,10 +243,13 @@ public class Player : MonoBehaviour
             bodyColorOutline.color = defaultColors.colorOutline;
 
         // Invisibility flashing
-        if (invisTime > 0 && invisTime % 0.2f < 0.1f)
-            spriteContainer.SetActive(false);
-        else if (!spriteContainer.activeSelf)
-            spriteContainer.SetActive(true);
+        if (spriteContainer != null)
+        {
+            if (invisTime > 0 && invisTime % 0.2f < 0.1f)
+                spriteContainer.SetActive(false);
+            else if (!spriteContainer.activeSelf)
+                spriteContainer.SetActive(true);
+        }
 
     }
     protected virtual void FixedUpdate()

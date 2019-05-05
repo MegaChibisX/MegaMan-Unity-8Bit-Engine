@@ -32,7 +32,7 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 > Rush Utilities
 
-> New enemies, including but not limited to: Crushers from MM2, etc.
+> New enemies, including but not limited to: Bowlier (Thanks JKF-Infiniti), etc.
 
 > Stage select screen.
 
@@ -41,6 +41,12 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 > More enemies, bosses, players.
 
 > Possibly a story.
+
+> Enemy hit sound.
+
+> Music in the stages.
+
+> Comments in: Menu_Ctrl.
 
 
 
@@ -66,6 +72,13 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 # Update Log
 
+
+## 0.2.0
+> Added ProtoMan. No shield yet.
+
+> Added Stage Select. The Stage Select screen has been heavily inspired by MegaMan 11.
+
+> Forgotten to add comments. In my defense, I'm lazy. The Menu_Ctrl object holds all the secrets.
 
 ## 0.1.1
 > Added Presses

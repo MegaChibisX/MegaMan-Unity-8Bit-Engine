@@ -207,7 +207,7 @@ public class Item
             case Items.boltHuge:
                 return (GameObject)Resources.Load("Prefabs/Items/BoltHuge", typeof(GameObject));
             case Items.OneUp:
-                return (GameObject)Resources.Load("Prefabs/Items/Double Gear Chip", typeof(GameObject));
+                return (GameObject)Resources.Load("Prefabs/Items/OneUp", typeof(GameObject));
             case Items.ETank:
                 return (GameObject)Resources.Load("Prefabs/Items/Tank-E", typeof(GameObject));
             case Items.WTank:
@@ -216,6 +216,8 @@ public class Item
                 return (GameObject)Resources.Load("Prefabs/Items/Tank-M", typeof(GameObject));
             case Items.LTank:
                 return (GameObject)Resources.Load("Prefabs/Items/Tank-L", typeof(GameObject));
+            case Items.DoubleGearChip:
+                return (GameObject)Resources.Load("Prefabs/Items/Double Gear Chip", typeof(GameObject));
         }
     }
 

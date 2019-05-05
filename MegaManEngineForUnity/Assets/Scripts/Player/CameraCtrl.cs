@@ -52,7 +52,7 @@ public class CameraCtrl : MonoBehaviour {
         }
         // If there is a Checkpoint active,
         // this sets the borders to the Checkpoint's.
-        else if (GameManager.checkpointActive)
+        //else if (GameManager.checkpointActive)
         {
             leftCenter = GameManager.checkpointCamera_LeftCenter;
             maxRightMovement = GameManager.checkpointCamera_MaxRightMovement;
@@ -64,11 +64,11 @@ public class CameraCtrl : MonoBehaviour {
 
         // Sets the position of the camera to be within
         // the bounds it should be when the stage starts.
-        Vector3 startPos = GetPositionWithinCameraBounds(player.transform.position);
+        Vector3 startPos = GetPositionWithinCameraBounds(GameManager.playerPosition);
         transform.position = new Vector3(startPos.x, startPos.y, transform.position.z);
 
         // Sets the proper aspect ratio.
-        SetAspectRatio();
+        Helper.SetAspectRatio(GetComponent<Camera>());
     }
 
     private void LateUpdate()
@@ -80,14 +80,14 @@ public class CameraCtrl : MonoBehaviour {
     private void MoveCamera()
     {
         // If there is no player available, the camera can't move after the player.
-        if (player == null)
-        {
-            //Debug.LogWarning("There is no player assigned to the camera: " + gameObject.name);
-            return;
-        }
+        //if (player == null)
+        //{
+        //    //Debug.LogWarning("There is no player assigned to the camera: " + gameObject.name);
+        //    return;
+        //}
 
         // Sets the target position to be within the bounds of the camera.
-        Vector3 targetPos = GetPositionWithinCameraBounds(player.transform.position);
+        Vector3 targetPos = GetPositionWithinCameraBounds(GameManager.playerPosition);
         targetPos.z = transform.position.z;
 
         // If the camera is in a transition, it should slowly move towards the desired position.
@@ -125,49 +125,6 @@ public class CameraCtrl : MonoBehaviour {
     {
         // Sets the new camera borders from a Stage_ChangeCameraBorders class.
         SetNewCameraBorders(borders.leftCenter, borders.maxRightMovement, borders.maxUpMovement);
-    }
-
-    public void SetAspectRatio()
-    {
-        // Sets the desired aspect ratio (the values in this example are
-        // hard-coded for 16:9, but you could make them into public
-        // variables instead so you can set them at design time).
-        float targetaspect = 254.0f / 224.0f;
-
-        // Determines the game window's current aspect ratio
-        float windowaspect = (float)Screen.width / (float)Screen.height;
-
-        // Current viewport height should be scaled by this amount.
-        float scaleheight = windowaspect / targetaspect;
-
-        // Obtains camera component so it can modify its viewport.
-        cmr = GetComponent<Camera>();
-
-        // If scaled height is less than current height, adds letterbox.
-        if (scaleheight < 1.0f)
-        {
-            Rect rect = cmr.rect;
-
-            rect.width = 1.0f;
-            rect.height = scaleheight;
-            rect.x = 0;
-            rect.y = (1.0f - scaleheight) / 2.0f;
-
-            cmr.rect = rect;
-        }
-        else // Adds pillarbox.
-        {
-            float scalewidth = 1.0f / scaleheight;
-
-            Rect rect = cmr.rect;
-
-            rect.width = scalewidth;
-            rect.height = 1.0f;
-            rect.x = (1.0f - scalewidth) / 2.0f;
-            rect.y = 0;
-
-            cmr.rect = rect;
-        }
     }
 
 

@@ -86,9 +86,10 @@
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyBlueprint.cs" />
     <Compile Include="Assets\Scripts\Menus\Menu.cs" />
-    <Compile Include="Assets\Scripts\Menus\Menu_Controls.cs" />
+    <Compile Include="Assets\Scripts\Menus\Menu_Controller.cs" />
     <Compile Include="Assets\Scripts\Menus\Menu_Cutscene.cs" />
     <Compile Include="Assets\Scripts\Menus\Menu_Pause.cs" />
+    <Compile Include="Assets\Scripts\Menus\Menu_StageSelect.cs" />
     <Compile Include="Assets\Scripts\Misc\GameManager.cs" />
     <Compile Include="Assets\Scripts\Misc\Helper.cs" />
     <Compile Include="Assets\Scripts\Misc\Misc_CopySprite.cs" />
