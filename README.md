@@ -27,6 +27,10 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 2d-extras have been made by Unity Technologies and can be found here https://github.com/Unity-Technologies/2d-extras
 
 
+## To Just Play
+
+> Go to MegaManEngineForUnity/Build and download the zip file, or the entire folder.
+
 
 ## Upcoming features
 

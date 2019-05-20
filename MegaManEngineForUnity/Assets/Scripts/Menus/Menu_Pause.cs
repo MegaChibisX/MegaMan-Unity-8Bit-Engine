@@ -129,6 +129,9 @@ public class Menu_Pause : Menu
                         case GameManager.Players.ProtoMan:
                             playerPath = "Prefabs/Players/ProtoMan";
                             break;
+                        case GameManager.Players.MegaManJet:
+                            playerPath = "Prefabs/Players/MegaMan_Jet";
+                            break;
                     }
 
                     Player newPlayer = (Object.Instantiate((GameObject)Resources.Load(playerPath))).GetComponent<Player>();

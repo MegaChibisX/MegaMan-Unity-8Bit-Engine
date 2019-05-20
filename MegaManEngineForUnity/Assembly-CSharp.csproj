@@ -101,6 +101,7 @@
     <Compile Include="Assets\Scripts\Misc\Misc_SpriteColorOverTime.cs" />
     <Compile Include="Assets\Scripts\Misc\Particles_DeathExplosion.cs" />
     <Compile Include="Assets\Scripts\Player\CameraCtrl.cs" />
+    <Compile Include="Assets\Scripts\Player\MegaManJet.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\StageController.cs" />
     <Compile Include="Assets\Scripts\Player\WeaponColors\Pl_WeaponData.cs" />

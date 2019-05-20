@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     public Rigidbody2D body;
     public SpriteRenderer sprite;
     public PlayerHealthbars bars;
+    public GameManager.Players curPlayer;
     public Pl_WeaponData.WeaponColors defaultColors = new Pl_WeaponData.WeaponColors(
                                                   new Color(0f / 255f, 160f / 255f, 255f / 255f), new Color(0f / 256f, 97f / 256f, 255f / 255), Color.black);
 
@@ -77,6 +78,8 @@ public class Player : MonoBehaviour
     public bool canAnimate = true;
     protected float knockbackTime = 0.0f;
     protected float invisTime = 0.0f;
+
+    public bool canSlide = true;
 
     public bool gearAvailable
     {
@@ -430,7 +433,7 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             // If the down button is pressed and you're on the ground, slide.
-            if (input.y == -1 && isGrounded)
+            if (input.y == -1 && isGrounded && canSlide)
             {
                 slideTime = 0.5f;
                 slideCol.enabled = true;
@@ -450,7 +453,7 @@ public class Player : MonoBehaviour
                 body.velocity = new Vector2(body.velocity.x, body.velocity.y * 0.5f);
         }
         // Slide
-        if (Input.GetButtonDown("Slide"))
+        if (Input.GetButtonDown("Slide") && canSlide)
         {
             slideTime = 0.5f;
             slideCol.enabled = true;
@@ -746,7 +749,7 @@ public class Player : MonoBehaviour
             SetState(PlayerStates.Normal);
         }
     }
-    protected void Animate()
+    protected virtual void Animate()
     {
         // When the played animation is handled externally,
         // like during a combo or cutscene, default animations are ignored.
@@ -931,7 +934,19 @@ public class Player : MonoBehaviour
         {
             // Matches the current sprite with a black sprite and spawns it.
             Sprite blankSprite = null;
-            Sprite[] subSprites = Resources.LoadAll<Sprite>("Sprites/MegaMan_Blank");
+            string blankSpritePath = "Sprites/Players/MegaMan/MegaMan_Blank";
+
+            switch (curPlayer)
+            {
+                case GameManager.Players.MegaManJet:
+                    blankSpritePath = "Sprites/Players/MegaMan_Jet/MegaMan_Blank";
+                    break;
+                case GameManager.Players.ProtoMan:
+                    blankSpritePath = "Sprites/Players/ProtoMan/ProtoMan_Blank";
+                    break;
+            }
+
+            Sprite[] subSprites = Resources.LoadAll<Sprite>(blankSpritePath);
             Sprite newSprite = Array.Find(subSprites, item => item.name == sprite.sprite.name);
             if (newSprite)
                 blankSprite = newSprite;
@@ -1024,7 +1039,7 @@ public class Player : MonoBehaviour
         body.mass *= Time.timeScale;
         body.velocity *= prevMass / body.mass;
     }
-    public void SetGravity(float magnitude, bool inverted)
+    public virtual void SetGravity(float magnitude, bool inverted)
     {
         // The collider of the player needs to be considered when the player flips,
         // not the center of the player themselves.

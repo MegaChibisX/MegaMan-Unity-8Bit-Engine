@@ -36,7 +36,6 @@ public class CameraCtrl : MonoBehaviour {
     private bool inTransition = false;
 
 
-
     private void Start()
     {
         instance = this;
@@ -44,7 +43,7 @@ public class CameraCtrl : MonoBehaviour {
         // this sets the borders to the Start Border.
         if (startBorders != null && !GameManager.checkpointActive)
         {
-            SetNewCameraBorders(startBorders);
+            SetNewCameraBorders(startBorders, false);
 
             GameManager.checkpointCamera_LeftCenter = leftCenter;
             GameManager.checkpointCamera_MaxRightMovement = maxRightMovement;
@@ -52,7 +51,7 @@ public class CameraCtrl : MonoBehaviour {
         }
         // If there is a Checkpoint active,
         // this sets the borders to the Checkpoint's.
-        //else if (GameManager.checkpointActive)
+        else if (GameManager.checkpointActive)
         {
             leftCenter = GameManager.checkpointCamera_LeftCenter;
             maxRightMovement = GameManager.checkpointCamera_MaxRightMovement;
@@ -69,6 +68,9 @@ public class CameraCtrl : MonoBehaviour {
 
         // Sets the proper aspect ratio.
         Helper.SetAspectRatio(GetComponent<Camera>());
+
+        Debug.Log(leftCenter);
+        Debug.Log(startPos);
     }
 
     private void LateUpdate()
@@ -112,19 +114,19 @@ public class CameraCtrl : MonoBehaviour {
         return targetPos;
     }
     
-    public void SetNewCameraBorders(Vector2 _leftCenter, float _maxRightMovement, float _maxUpMovement)
+    public void SetNewCameraBorders(Vector2 _leftCenter, float _maxRightMovement, float _maxUpMovement, bool setToTransition = true)
     {
         // Sets the new camera borders and 
         // sets the camera to act as transitioning.
         leftCenter = _leftCenter;
         maxRightMovement = _maxRightMovement;
         maxUpMovement = _maxUpMovement;
-        inTransition = true;
+        inTransition = setToTransition;
     }
-    public void SetNewCameraBorders(Stage_ChangeCameraBorders borders)
+    public void SetNewCameraBorders(Stage_ChangeCameraBorders borders, bool setToTransition = true)
     {
         // Sets the new camera borders from a Stage_ChangeCameraBorders class.
-        SetNewCameraBorders(borders.leftCenter, borders.maxRightMovement, borders.maxUpMovement);
+        SetNewCameraBorders(borders.leftCenter, borders.maxRightMovement, borders.maxUpMovement, setToTransition);
     }
 
 
