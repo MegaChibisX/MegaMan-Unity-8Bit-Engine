@@ -42,6 +42,7 @@ public static class GameManager
     public static int bossesActive;
     public static bool bossDead_PharaohMan;
     public static bool bossDead_GeminiMan;
+    public static bool bossDead_MetalMan;
 
 
 
@@ -87,6 +88,7 @@ public static class GameManager
         bossesActive = 0;
         bossDead_PharaohMan = false;
         bossDead_GeminiMan = false;
+        bossDead_MetalMan = false;
 
         lastStageSelected = Vector2Int.one;
         maxFortressStage = 3;

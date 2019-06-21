@@ -789,7 +789,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (input.x != 0)
+        if (input.x != 0 && canMove && !paused)
         {
             anim.transform.localScale = new Vector3(input.x > 0 ? 1 : -1, anim.transform.localScale.y, anim.transform.localScale.z);
             lastLookingLeft = anim.transform.localScale.x < 0;
@@ -801,10 +801,10 @@ public class Player : MonoBehaviour
         {
             if (slideTime > 0)
                 anim.Play("Slide");
-            else if (input.x == 0)
-                anim.Play("Stand" + nameSuffix);
-            else
+            else if (input.x != 0 && canMove && !paused)
                 anim.Play("Run" + nameSuffix);
+            else
+                anim.Play("Stand" + nameSuffix);
         }
 
     }
@@ -1068,6 +1068,10 @@ public class Player : MonoBehaviour
         GameManager.playerPosition = transform.position;
     }
 
+    public void Outro()
+    {
+        StartCoroutine(PlayOutro());
+    }
     protected IEnumerator PlayIntro()
     {
         // Sets the right states and animation.
@@ -1089,6 +1093,23 @@ public class Player : MonoBehaviour
         canBeHurt = true;
         anim.applyRootMotion = true;
         GameManager.roomFinishedLoading = true;
+    }
+    protected IEnumerator PlayOutro()
+    {
+        canMove = false;
+        canBeHurt = false;
+        canAnimate = false;
+
+        yield return new WaitForSeconds(1.0f);
+
+        anim.applyRootMotion = false;
+        anim.Play("Outro");
+        audioStage.PlaySound(SFXLibrary.TpOut, true);
+
+        yield return new WaitForSeconds(2.0f);
+
+        anim.applyRootMotion = true;
+        Helper.GoToStage("StageSelect");
     }
 
 
@@ -1174,6 +1195,7 @@ public class PlayerSFX
 
     public AudioClip hurt;
     public AudioClip death;
+    public AudioClip TpOut;
 
     public AudioClip deflect;
 

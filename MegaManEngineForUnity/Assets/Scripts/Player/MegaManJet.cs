@@ -104,7 +104,6 @@ public class MegaManJet : Player
     {
         if (Input.GetButton("Jump") && shouldBeInJet && jetTime > 0.0f)
         {
-            Debug.Log("AAAAAA" + Random.Range(0f, 10000f));
             base.SetGravity(1, inverted);
         }
         else

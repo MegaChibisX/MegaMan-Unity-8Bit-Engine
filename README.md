@@ -77,6 +77,24 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 # Update Log
 
 
+## 0.2.2
+> Added 0.2.1 description.
+
+> Added Bowlie enemy.
+
+> Added Springer enemy.
+
+> Added Sniper Joe (the boring variety).
+
+> Added Metal Man.
+
+> Added Player Outro.
+
+
+## 0.2.1
+> Added Jet Adaptor.
+
+
 ## 0.2.0
 > Added ProtoMan. No shield yet.
 

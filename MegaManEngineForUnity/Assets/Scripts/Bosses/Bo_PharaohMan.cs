@@ -269,8 +269,15 @@ public class Bo_PharaohMan : Boss
         Time.timeScale = 1.0f;
         if (Player.instance != null)
         {
-            Player.instance.CanMove(true);
-            Player.instance.canBeHurt = true;
+            if (GameManager.bossesActive > 0)
+            {
+                Player.instance.CanMove(true);
+                Player.instance.canBeHurt = true;
+            }
+            else
+            {
+                Player.instance.Outro();
+            }
         }
 
         Destroy(gameObject);

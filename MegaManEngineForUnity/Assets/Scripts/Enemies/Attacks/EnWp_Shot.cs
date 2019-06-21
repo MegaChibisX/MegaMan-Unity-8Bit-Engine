@@ -14,11 +14,20 @@ public class EnWp_Shot : Enemy
     public float speed = 200.0f;
     public bool destroyOnWall = false;
 
+    protected SpriteRenderer rend;
+    public Sprite[] sprites;
 
     protected override void Start()
     {
         base.Start();
         body.velocity = direction.normalized * speed;
+
+        rend = GetComponentInChildren<SpriteRenderer>();
+    }
+    protected virtual void LateUpdate()
+    {
+        if (sprites != null && rend != null && sprites.Length > 0.0f)
+            rend.sprite = sprites[(int)(Time.time * 12) % sprites.Length];
     }
     protected void OnCollisionEnter2D(Collision2D collision)
     {

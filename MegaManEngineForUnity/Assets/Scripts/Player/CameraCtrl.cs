@@ -68,9 +68,6 @@ public class CameraCtrl : MonoBehaviour {
 
         // Sets the proper aspect ratio.
         Helper.SetAspectRatio(GetComponent<Camera>());
-
-        Debug.Log(leftCenter);
-        Debug.Log(startPos);
     }
 
     private void LateUpdate()

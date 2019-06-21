@@ -39,9 +39,9 @@ public class Boss : Enemy
             for (int i = 0; i < 28; i++)
             {
                 if (health > i)
-                    GUI.DrawTextureWithTexCoords(new Rect(cmrBase.x + x * 38f, cmrBase.y + y * (72 - i * 2), x * 8, y * 2), healthBar.texture, healthBarRect);
+                    GUI.DrawTextureWithTexCoords(new Rect(cmrBase.x + x * 40f, cmrBase.y + y * (72 - i * 2), x * 8, y * 2), healthBar.texture, healthBarRect);
                 else
-                    GUI.DrawTextureWithTexCoords(new Rect(cmrBase.x + x * 38f, cmrBase.y + y * (72 - i * 2), x * 8, y * 2), emptyBar.texture, emptyBarRect);
+                    GUI.DrawTextureWithTexCoords(new Rect(cmrBase.x + x * 40f, cmrBase.y + y * (72 - i * 2), x * 8, y * 2), emptyBar.texture, emptyBarRect);
             }
         }
     }

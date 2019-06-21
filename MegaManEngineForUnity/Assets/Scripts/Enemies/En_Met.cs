@@ -394,7 +394,6 @@ public class En_Met : Enemy
 
         // Makes the Met damagable.
         shielded = false;
-        body.gravityScale = 0.0f;
         anim.Play("MetTrainUp");
 
         // Just like MetIdle.
@@ -420,7 +419,6 @@ public class En_Met : Enemy
         // Resets and shields the Met.
         shielded = true;
         body.velocity = Vector3.zero;
-        body.gravityScale = 100.0f;
 
         // Waits.
         anim.Play("MetTrainDown");

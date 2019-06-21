@@ -98,10 +98,12 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    public virtual void Shoot(Vector2 shootPosition, Vector2 shotDirection, float shotDamage, float shotSpeed = 200)
+    public virtual void Shoot(Vector2 shootPosition, Vector2 shotDirection, float shotDamage, float shotSpeed = 200, GameObject obj = null)
     {
         // Basic shooting code. Sets the position, direction and damage of the Default Shot.
-        GameObject o = Instantiate((GameObject)Resources.Load("Prefabs/Enemies/En_Shot", typeof(GameObject)));
+        if (obj == null)
+            obj = (GameObject)Resources.Load("Prefabs/Enemies/En_Shot", typeof(GameObject));
+        GameObject o = Instantiate(obj);
         o.transform.position = shootPosition;
         EnWp_Shot shot = o.GetComponent<EnWp_Shot>();
         shot.direction = shotDirection;

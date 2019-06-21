@@ -173,6 +173,8 @@ public class Menu_StageSelect : Menu
                             Helper.GoToStage("Scene");
                         else if (stageIndex.x == 2 && stageIndex.y == 0)
                             Helper.GoToStage("SomeStage");
+                        else if (stageIndex.x == 2 && stageIndex.y == 1)
+                            Helper.GoToStage("Temp");
                         else
                         {
                             stageCooldown = 0.5f;
@@ -186,7 +188,6 @@ public class Menu_StageSelect : Menu
                 }
             }
         }
-        Debug.Log("AAAAAA");
 
         if (Screen.width != prevScreenXY.x || Screen.height != prevScreenXY.y)
         {
@@ -233,6 +234,8 @@ public class Menu_StageSelect : Menu
                     pharaohIcon.enabled = false;
                 if (GameManager.bossDead_GeminiMan)
                     geminiIcon.enabled = false;
+                if (GameManager.bossDead_MetalMan)
+                    metalIcon.enabled = false;
                 break;
             case Rooms.FortressStage:
                 cmrPos = new Vector2(0, 248);
