@@ -36,7 +36,7 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 > Rush Utilities
 
-> New enemies, including but not limited to: Bowlier (Thanks JKF-Infiniti), etc.
+> New enemies, including but not limited to: Totem Polen, Shield Attackers, Hothead, Count Bombs (Thanks JKF-Infiniti), etc.
 
 > Stage select screen.
 
@@ -51,6 +51,8 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 > Music in the stages.
 
 > Comments in: Menu_Ctrl.
+
+> 
 
 
 
@@ -72,9 +74,17 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 > Ladder standing collision doesn't account for inverted gravity.
 
+> You can play the shooting SFX from the menu.
+
 
 
 # Update Log
+
+
+## 0.3.0
+> Wind physics, Gravity scale and Earthquakes added.
+
+> Stage creation tutorial added. Check the Readme folder.
 
 
 ## 0.2.2

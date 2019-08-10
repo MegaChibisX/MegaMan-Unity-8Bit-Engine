@@ -46,7 +46,7 @@ public class PlWpDt_MegaBuster : Pl_WeaponData
         Shoot(owner.right * owner.width * 1.3f, Vector3.Angle(owner.right, Vector3.right) > 90, 1, 300, 0);
         owner.shootTime = 0.2f;
         if (!owner.audioWeapon.isPlaying || owner.audioWeapon.clip != owner.SFXLibrary.shootBig)
-            owner.audioWeapon.PlaySound(owner.SFXLibrary.shoot, false);
+            owner.audioWeapon.PlaySound(owner.SFXLibrary.shoot, true);
     }
     public override void Hold()
     {

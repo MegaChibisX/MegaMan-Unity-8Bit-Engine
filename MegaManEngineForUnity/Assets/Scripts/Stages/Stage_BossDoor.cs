@@ -10,11 +10,10 @@ using UnityEngine;
 public class Stage_BossDoor : MonoBehaviour {
 
 
-    // The door objects that should be animated.
-    public Animation[] doors;
-    // The opening and closing animations.
-    public AnimationClip doorOpenAnimation;
-    public AnimationClip doorCloseAnimation;
+    // 
+    public int doorSize = 4;
+    public SpriteRenderer[] doorTops;
+    private SpriteRenderer[,] doorPieces;
     // The sound and component to play the sound.
     public AudioClip shutterSound;
     private AudioSource audSource;
@@ -35,6 +34,22 @@ public class Stage_BossDoor : MonoBehaviour {
     protected void Start()
     {
         audSource = GetComponentInChildren<AudioSource>();
+
+        doorPieces = new SpriteRenderer[doorTops.Length, doorSize];
+        for (int i = 0; i < doorTops.Length; i++)
+        {
+            doorPieces[i, 0] = doorTops[i];
+            for (int j = 1; j < doorSize; j++)
+                doorPieces[i, j] = Instantiate(doorPieces[i, 0]);
+
+            for (int j = 1; j < doorSize; j++)
+            {
+                doorPieces[i, j].transform.parent = doorPieces[i, 0].transform;
+                doorPieces[i, j].transform.localPosition = new Vector3(0, -16 * j, 0);
+                doorPieces[i, j].transform.localRotation = Quaternion.identity;
+                doorPieces[i, j].transform.localScale = Vector3.one;
+            }
+        }
     }
 
     /// <summary>
@@ -75,31 +90,45 @@ public class Stage_BossDoor : MonoBehaviour {
             yield return null;
         }
 
-        foreach (Animation anim in doors)
-        {
-            if (!anim.GetClip(doorOpenAnimation.name))
-                anim.AddClip(doorOpenAnimation, doorOpenAnimation.name);
-            anim.Play(doorOpenAnimation.name);
-        }
+        //foreach (Animation anim in doors)
+        //{
+        //    if (!anim.GetClip(doorOpenAnimation.name))
+        //        anim.AddClip(doorOpenAnimation, doorOpenAnimation.name);
+        //    anim.Play(doorOpenAnimation.name);
+        //}
 
-        float playSoundAt = 0.19f;
+        //float playSoundAt = 0.19f;
+        //waitTime = 0.0f;
+        //while (waitTime < doorOpenAnimation.length)
+        //{
+        //    foreach (Animation anim in doors)
+        //    {
+        //        anim[doorOpenAnimation.name].time += Time.unscaledDeltaTime;
+        //    }
+        //    waitTime += Time.unscaledDeltaTime;
+
+        //    if (waitTime > playSoundAt && waitTime - Time.unscaledDeltaTime <= playSoundAt)
+        //        audSource.PlaySound(shutterSound, true);
+
+        //    //if (!contact.isGrounded)
+        //    //    contact.body.MovePosition(contact.transform.position + Vector3.down * 100 * Time.fixedUnscaledDeltaTime);
+
+        //    yield return null;
+        //}
+
         waitTime = 0.0f;
-        while (waitTime < doorOpenAnimation.length)
+        for (int i = doorSize; i > 0; i--)
         {
-            foreach (Animation anim in doors)
+            for (int j = 0; j < doorTops.Length; j++)
             {
-                anim[doorOpenAnimation.name].time += Time.unscaledDeltaTime;
+                if (doorPieces[j, i - 1] != null)
+                    doorPieces[j, i - 1].gameObject.SetActive(false);
             }
-            waitTime += Time.unscaledDeltaTime;
 
-            if (waitTime > playSoundAt && waitTime - Time.unscaledDeltaTime <= playSoundAt)
-                audSource.PlaySound(shutterSound, true);
-
-            //if (!contact.isGrounded)
-            //    contact.body.MovePosition(contact.transform.position + Vector3.down * 100 * Time.fixedUnscaledDeltaTime);
-
-            yield return null;
+            audSource.PlaySound(shutterSound, true);
+            yield return new WaitForSecondsRealtime(0.13f);
         }
+
 
         if (moveRightMult > 0)
         {
@@ -123,27 +152,40 @@ public class Stage_BossDoor : MonoBehaviour {
             yield return null;
         }
 
-        foreach (Animation anim in doors)
-        {
-            if (!anim.GetClip(doorCloseAnimation.name))
-                anim.AddClip(doorCloseAnimation, doorCloseAnimation.name);
-            anim.Play(doorCloseAnimation.name);
-        }
+        //foreach (Animation anim in doors)
+        //{
+        //    if (!anim.GetClip(doorCloseAnimation.name))
+        //        anim.AddClip(doorCloseAnimation, doorCloseAnimation.name);
+        //    anim.Play(doorCloseAnimation.name);
+        //}
+
+        //waitTime = 0.0f;
+        //playSoundAt = 0.11f;
+        //while (waitTime < doorCloseAnimation.length)
+        //{
+        //    foreach (Animation anim in doors)
+        //    {
+        //        anim[doorCloseAnimation.name].time += Time.unscaledDeltaTime;
+        //    }
+        //    waitTime += Time.unscaledDeltaTime;
+
+        //    if (waitTime > playSoundAt && waitTime - Time.unscaledDeltaTime <= playSoundAt)
+        //        audSource.PlaySound(shutterSound, true);
+
+        //    yield return null;
+        //}
 
         waitTime = 0.0f;
-        playSoundAt = 0.11f;
-        while (waitTime < doorCloseAnimation.length)
+        for (int i = 1; i <= doorSize; i++)
         {
-            foreach (Animation anim in doors)
+            for (int j = 0; j < doorTops.Length; j++)
             {
-                anim[doorCloseAnimation.name].time += Time.unscaledDeltaTime;
+                if (doorPieces[j, i - 1] != null)
+                    doorPieces[j, i - 1].gameObject.SetActive(true);
             }
-            waitTime += Time.unscaledDeltaTime;
 
-            if (waitTime > playSoundAt && waitTime - Time.unscaledDeltaTime <= playSoundAt)
-                audSource.PlaySound(shutterSound, true);
-
-            yield return null;
+            audSource.PlaySound(shutterSound, true);
+            yield return new WaitForSecondsRealtime(0.13f);
         }
 
         Time.timeScale = GameManager.globalTimeScale;

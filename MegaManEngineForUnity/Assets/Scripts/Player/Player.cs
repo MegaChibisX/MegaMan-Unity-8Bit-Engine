@@ -100,6 +100,10 @@ public class Player : MonoBehaviour
     public bool gearActive_Power = false;
     public bool gravityInverted = false;
 
+    protected float gravityScale = 1.0f;
+    public float gravityEnvironmentMulti = 1.0f;
+    protected Vector2 windVector;
+
     public float moveSpeed = 80;
     public float climbSpeed = 80;
     public float jumpForce = 350;
@@ -221,6 +225,9 @@ public class Player : MonoBehaviour
         // After everything else has been done for the current frame, this variable is set to reflect the current frame,
         // as it will be red in the next one again.
         wasGrounded = isGrounded;
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            Earthquake(1.0f);
     }
     protected virtual void LateUpdate()
     {
@@ -253,10 +260,14 @@ public class Player : MonoBehaviour
             else if (!spriteContainer.activeSelf)
                 spriteContainer.SetActive(true);
         }
-
+    
+        ApplyGravity();
     }
     protected virtual void FixedUpdate()
     {
+        body.position += (Vector2)windVector;
+        windVector = Vector3.zero;
+
         // Handles movement related activities that should be done in FixedUpdate
         HandlePhysics_Movement();
 
@@ -384,6 +395,7 @@ public class Player : MonoBehaviour
             }
         }
     }
+    protected virtual void OnCollisionStay2D(Collision2D collision) { }
     protected virtual void OnCollisionExit2D(Collision2D collision) { }
     protected virtual void OnTriggerEnter2D(Collider2D collider)
     {
@@ -405,7 +417,7 @@ public class Player : MonoBehaviour
             else if (otherBody.GetComponent<Stage_GravitySwitch>())
             {
                 gravityInverted = !otherBody.GetComponent<Stage_GravitySwitch>().gravityDown;
-                SetGravity(body.gravityScale == 0 ? 0 : 1, gravityInverted);
+                SetGravity(gravityScale == 0 ? 0 : 1, gravityInverted);
             }
             // If in contact with a Checkpoint, register it in the Game Manager.
             else if (otherBody.GetComponent<Stage_Checkpoint>())
@@ -415,6 +427,22 @@ public class Player : MonoBehaviour
                 GameManager.checkpointCamera_LeftCenter = CameraCtrl.instance.leftCenter;
                 GameManager.checkpointCamera_MaxRightMovement = CameraCtrl.instance.maxRightMovement;
                 GameManager.checkpointCamera_MaxUpMovement = CameraCtrl.instance.maxUpMovement;
+            }
+        }
+    }
+    protected virtual void OnTriggerStay2D(Collider2D collider)
+    {
+        Rigidbody2D otherBody = collider.attachedRigidbody;
+        if (otherBody != null)
+        {
+            if (otherBody.GetComponent<Stage_WindZone>() != null)
+            {
+                Stage_WindZone zone = otherBody.GetComponent<Stage_WindZone>();
+                windVector += zone.direction.normalized * zone.strength * Time.fixedDeltaTime;
+            }
+            else if (otherBody.GetComponent<Stage_GravityScale>() != null)
+            {
+                gravityEnvironmentMulti *= otherBody.GetComponent<Stage_GravityScale>().gravityScale;
             }
         }
     }
@@ -546,7 +574,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             gravityInverted = !gravityInverted;
-            SetGravity(body.gravityScale == 0 ? 0 : 1, gravityInverted);
+            SetGravity(gravityScale == 0 ? 0 : 1, gravityInverted);
         }
 
     }
@@ -701,7 +729,7 @@ public class Player : MonoBehaviour
         // so it just needs to be called when the gravity might need to be changed.
         if (isInWater != wasInWater)
         {
-            SetGravity(body.gravityScale == 0 ? 0 : 1, gravityInverted);
+            SetGravity(gravityScale == 0 ? 0 : 1, gravityInverted);
             wasInWater = isInWater;
         }
         if (isInSand != wasInSand)
@@ -1039,6 +1067,12 @@ public class Player : MonoBehaviour
         body.mass *= Time.timeScale;
         body.velocity *= prevMass / body.mass;
     }
+    public void ApplyGravity()
+    {
+        if (!body.isKinematic)
+            body.velocity += (gravityInverted ? Vector2.up : Vector2.down) * 10f * gravityScale * gravityEnvironmentMulti * Time.fixedDeltaTime;
+        gravityEnvironmentMulti = 1.0f;
+    }
     public virtual void SetGravity(float magnitude, bool inverted)
     {
         // The collider of the player needs to be considered when the player flips,
@@ -1055,11 +1089,11 @@ public class Player : MonoBehaviour
 
         // Each state has different needs.
         if (state == PlayerStates.Climb || isInSand)
-            body.gravityScale = 0.0f;
+            gravityScale = 0.0f;
         else if (isInWater)
-            body.gravityScale = 50.0f * magnitude * (inverted ? -1 : 1);
+            gravityScale = 50.0f * magnitude * (inverted ? -1 : 1);
         else
-            body.gravityScale = 100.0f * magnitude * (inverted ? -1 : 1);
+            gravityScale = 100.0f * magnitude * (inverted ? -1 : 1);
     }
 
     public virtual void UpdateGameManager()
@@ -1110,6 +1144,32 @@ public class Player : MonoBehaviour
 
         anim.applyRootMotion = true;
         Helper.GoToStage("StageSelect");
+    }
+
+    public void Earthquake(float time)
+    {
+        StartCoroutine(KnockOff(time));
+    }
+
+    protected IEnumerator KnockOff(float time)
+    {
+        canMove = false;
+        canAnimate = false;
+        body.velocity = Vector3.zero;
+        yield return null;
+
+        anim.Play("Fallen");
+
+        while (time > 0.0f)
+        {
+            time -= Time.fixedUnscaledDeltaTime;
+            body.MovePosition(transform.position - right * 4.0f * Time.fixedDeltaTime);
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        canMove = true;
+        canAnimate = true;
     }
 
 

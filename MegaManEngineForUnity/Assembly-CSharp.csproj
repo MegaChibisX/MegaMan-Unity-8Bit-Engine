@@ -108,7 +108,6 @@
     <Compile Include="Assets\Scripts\Player\CameraCtrl.cs" />
     <Compile Include="Assets\Scripts\Player\MegaManJet.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
-    <Compile Include="Assets\Scripts\Player\StageController.cs" />
     <Compile Include="Assets\Scripts\Player\WeaponColors\Pl_WeaponData.cs" />
     <Compile Include="Assets\Scripts\Player\WeaponColors\PlWpDt_GeminiLaser.cs" />
     <Compile Include="Assets\Scripts\Player\WeaponColors\PlWpDt_MegaBuster.cs" />
@@ -122,10 +121,11 @@
     <Compile Include="Assets\Scripts\Stages\Stage_BossDoor.cs" />
     <Compile Include="Assets\Scripts\Stages\Stage_ChangeCameraBorders.cs" />
     <Compile Include="Assets\Scripts\Stages\Stage_Checkpoint.cs" />
+    <Compile Include="Assets\Scripts\Stages\Stage_GravityScale.cs" />
     <Compile Include="Assets\Scripts\Stages\Stage_GravitySwitch.cs" />
     <Compile Include="Assets\Scripts\Stages\Stage_MovingPlatform.cs" />
     <Compile Include="Assets\Scripts\Stages\Stage_Sand.cs" />
-    <Compile Include="Assets\Scripts\Stages\Stage_Wind.cs" />
+    <Compile Include="Assets\Scripts\Stages\Stage_WindZone.cs" />
     <Compile Include="Assets\Scripts\Stages\Stage_YokuBlock.cs" />
     <Compile Include="Assets\Scripts\Stages\Stage_YokuController.cs" />
     <None Include="Assets\_Packages\2d-extras-2018.2\Assets\Tilemap\Tiles\Rule Tile\ScriptTemplates\NewCustomRuleTile.cs.txt" />
