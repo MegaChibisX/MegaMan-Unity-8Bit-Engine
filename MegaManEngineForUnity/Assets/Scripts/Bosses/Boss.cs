@@ -68,6 +68,10 @@ public class Boss : Enemy
         GameManager.bossesActive--;
         base.Kill(false);
     }
+    public override void Despawn()
+    {
+        return;
+    }
 
     public virtual IEnumerator PlayIntro()
     {

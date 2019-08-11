@@ -395,7 +395,17 @@ public class Player : MonoBehaviour
             }
         }
     }
-    protected virtual void OnCollisionStay2D(Collision2D collision) { }
+    protected virtual void OnCollisionStay2D(Collision2D collision)
+    {
+        Rigidbody2D otherBody = collision.collider.attachedRigidbody;
+        if (otherBody != null)
+        {
+            if (otherBody.gameObject.layer == 13)
+            {
+                Kill();
+            }
+        }
+    }
     protected virtual void OnCollisionExit2D(Collision2D collision) { }
     protected virtual void OnTriggerEnter2D(Collider2D collider)
     {
