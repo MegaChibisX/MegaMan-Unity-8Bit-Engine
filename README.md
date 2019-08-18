@@ -29,7 +29,7 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 ## To Just Play
 
-> Go to MegaManEngineForUnity/Build and download the zip file, or the entire folder.
+> Go to MegaManEngineForUnity/Build and open the 8bit.exe file.
 
 
 ## Upcoming features
