@@ -62,8 +62,6 @@ public static class Helper
         // If val was negative, it returned NaN,NaN,Nan as the velocity
         float val = dist * gravity / Mathf.Sin(2 * a);
         float vel = Mathf.Sqrt(Mathf.Abs(val));
-        //if (val < 0)
-        //    dir.y *= -1;
         return vel * dir.normalized;
     }
 

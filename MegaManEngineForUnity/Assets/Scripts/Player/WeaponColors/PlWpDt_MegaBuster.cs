@@ -148,7 +148,7 @@ public class PlWpDt_MegaBuster : Pl_WeaponData
     {
         // The Double Gear charged shot needs the player to freeze until both shots are shot.
         owner.canMove = false;
-        owner.body.gravityScale = 0.0f;
+        owner.gravityScale = 0.0f;
         owner.body.velocity = Vector2.zero;
 
         // Shoots the first shot.
@@ -164,7 +164,7 @@ public class PlWpDt_MegaBuster : Pl_WeaponData
         yield return new WaitForSecondsRealtime(0.05f);
 
         // Adds some knockback to the player.
-        owner.body.gravityScale = 100.0f;
+        owner.gravityScale = 100.0f;
         owner.body.velocity = -owner.right * 70.0f + owner.up * 200.0f;
 
         // Shoots the second shot.

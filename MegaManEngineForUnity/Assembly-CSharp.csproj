@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\Bosses\Bo_GeminiMan.cs" />
     <Compile Include="Assets\Scripts\Bosses\Bo_MetalMan.cs" />
     <Compile Include="Assets\Scripts\Bosses\Bo_PharaohMan.cs" />
+    <Compile Include="Assets\Scripts\Bosses\Bo_StarMan.cs" />
     <Compile Include="Assets\Scripts\Bosses\Boss.cs" />
     <Compile Include="Assets\Scripts\Enemies\Attacks\EnWp_BounceBall.cs" />
     <Compile Include="Assets\Scripts\Enemies\Attacks\EnWp_BowlieBall.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Assets\Scripts\Misc\Misc_MoveOthersWithSelf.cs" />
     <Compile Include="Assets\Scripts\Misc\Misc_ResetScene.cs" />
     <Compile Include="Assets\Scripts\Misc\Misc_SnapToGrid.cs" />
+    <Compile Include="Assets\Scripts\Misc\Misc_SpriteAnimation.cs" />
     <Compile Include="Assets\Scripts\Misc\Misc_SpriteColorOverTime.cs" />
     <Compile Include="Assets\Scripts\Misc\Particles_DeathExplosion.cs" />
     <Compile Include="Assets\Scripts\Player\CameraCtrl.cs" />

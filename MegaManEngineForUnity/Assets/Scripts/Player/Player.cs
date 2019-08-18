@@ -100,13 +100,13 @@ public class Player : MonoBehaviour
     public bool gearActive_Power = false;
     public bool gravityInverted = false;
 
-    protected float gravityScale = 1.0f;
+    public float gravityScale = 100.0f;
     public float gravityEnvironmentMulti = 1.0f;
     protected Vector2 windVector;
 
     public float moveSpeed = 80;
     public float climbSpeed = 80;
-    public float jumpForce = 350;
+    public float jumpForce = 370;
 
     protected float slideTime = 0f;
     protected float chargeKeyHold = 0f;
@@ -1080,7 +1080,7 @@ public class Player : MonoBehaviour
     public void ApplyGravity()
     {
         if (!body.isKinematic)
-            body.velocity += (gravityInverted ? Vector2.up : Vector2.down) * 10f * gravityScale * gravityEnvironmentMulti * Time.fixedDeltaTime;
+            body.velocity += ((gravityInverted ? Vector2.up : Vector2.down) * 10f * gravityScale * gravityEnvironmentMulti * body.mass * body.mass * fixedDeltaTime);
         gravityEnvironmentMulti = 1.0f;
     }
     public virtual void SetGravity(float magnitude, bool inverted)

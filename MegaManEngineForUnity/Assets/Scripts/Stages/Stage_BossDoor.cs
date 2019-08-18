@@ -35,19 +35,22 @@ public class Stage_BossDoor : MonoBehaviour {
     {
         audSource = GetComponentInChildren<AudioSource>();
 
-        doorPieces = new SpriteRenderer[doorTops.Length, doorSize];
-        for (int i = 0; i < doorTops.Length; i++)
+        if (doorTops.Length > 0)
         {
-            doorPieces[i, 0] = doorTops[i];
-            for (int j = 1; j < doorSize; j++)
-                doorPieces[i, j] = Instantiate(doorPieces[i, 0]);
-
-            for (int j = 1; j < doorSize; j++)
+            doorPieces = new SpriteRenderer[doorTops.Length, doorSize];
+            for (int i = 0; i < doorTops.Length; i++)
             {
-                doorPieces[i, j].transform.parent = doorPieces[i, 0].transform;
-                doorPieces[i, j].transform.localPosition = new Vector3(0, -16 * j, 0);
-                doorPieces[i, j].transform.localRotation = Quaternion.identity;
-                doorPieces[i, j].transform.localScale = Vector3.one;
+                doorPieces[i, 0] = doorTops[i];
+                for (int j = 1; j < doorSize; j++)
+                    doorPieces[i, j] = Instantiate(doorPieces[i, 0]);
+
+                for (int j = 1; j < doorSize; j++)
+                {
+                    doorPieces[i, j].transform.parent = doorPieces[i, 0].transform;
+                    doorPieces[i, j].transform.localPosition = new Vector3(0, -16 * j, 0);
+                    doorPieces[i, j].transform.localRotation = Quaternion.identity;
+                    doorPieces[i, j].transform.localScale = Vector3.one;
+                }
             }
         }
     }
@@ -89,32 +92,6 @@ public class Stage_BossDoor : MonoBehaviour {
             waitTime -= Time.unscaledDeltaTime;
             yield return null;
         }
-
-        //foreach (Animation anim in doors)
-        //{
-        //    if (!anim.GetClip(doorOpenAnimation.name))
-        //        anim.AddClip(doorOpenAnimation, doorOpenAnimation.name);
-        //    anim.Play(doorOpenAnimation.name);
-        //}
-
-        //float playSoundAt = 0.19f;
-        //waitTime = 0.0f;
-        //while (waitTime < doorOpenAnimation.length)
-        //{
-        //    foreach (Animation anim in doors)
-        //    {
-        //        anim[doorOpenAnimation.name].time += Time.unscaledDeltaTime;
-        //    }
-        //    waitTime += Time.unscaledDeltaTime;
-
-        //    if (waitTime > playSoundAt && waitTime - Time.unscaledDeltaTime <= playSoundAt)
-        //        audSource.PlaySound(shutterSound, true);
-
-        //    //if (!contact.isGrounded)
-        //    //    contact.body.MovePosition(contact.transform.position + Vector3.down * 100 * Time.fixedUnscaledDeltaTime);
-
-        //    yield return null;
-        //}
 
         waitTime = 0.0f;
         for (int i = doorSize; i > 0; i--)

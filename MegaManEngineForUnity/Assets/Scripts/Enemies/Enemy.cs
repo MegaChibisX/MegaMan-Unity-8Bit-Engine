@@ -47,12 +47,13 @@ public class Enemy : MonoBehaviour {
     {
         // Unique reactions based on the weapon damage should be handled here.
         // Weaknesses and resistances, for example, should be done before calling Damage(float dmg, bool ignoreInvis).
+        float damage = weapon.damage;
         if (shielded)
         {
             weapon.Deflect();
             return;
         }
-        Damage(weapon.damage, weapon.ignoreInvis);
+        Damage(damage, weapon.ignoreInvis);
     }
     public virtual void Damage(float dmg, bool ignoreInvis)
     {
@@ -100,16 +101,29 @@ public class Enemy : MonoBehaviour {
 
     public virtual void Shoot(Vector2 shootPosition, Vector2 shotDirection, float shotDamage, float shotSpeed = 200, GameObject obj = null)
     {
-        // Basic shooting code. Sets the position, direction and damage of the Default Shot.
+        // This script is supposed to work with a GameObject containing a EnWp_Shot component or one that derives from it,
+        // but can be used with any GameObject.
+
+        // If there isn't a GameObject given, the the default bullet will be assigned.
         if (obj == null)
             obj = (GameObject)Resources.Load("Prefabs/Enemies/En_Shot", typeof(GameObject));
+
+        // Makes a new instance of the bullet in the scene, then moves it and rotates it accordingly.
         GameObject o = Instantiate(obj);
         o.transform.position = shootPosition;
+        o.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(shotDirection.y, shotDirection.x), Vector3.forward);
+
+        // Checks if there is a EnWp_Shot component, and changes its properties accordingly.
         EnWp_Shot shot = o.GetComponent<EnWp_Shot>();
-        shot.direction = shotDirection;
-        shot.damage = shotDamage;
-        shot.speed = shotSpeed;
-        o.GetComponent<Rigidbody2D>().gravityScale = 0.0f;
+        if (shot != null)
+        {
+            shot.direction = shotDirection.normalized;
+            shot.damage = shotDamage;
+            shot.speed = shotSpeed;
+        }
+        // Since bullets shouldn't have gravity by default, the gravity is set to 0.
+        if (o.GetComponent<Rigidbody2D>() != null)
+            o.GetComponent<Rigidbody2D>().gravityScale = 0.0f;
     }
 
     public virtual void LookAtPlayer()

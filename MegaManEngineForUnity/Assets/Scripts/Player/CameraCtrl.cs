@@ -35,6 +35,10 @@ public class CameraCtrl : MonoBehaviour {
     // the camera from snapping to being inside the limited area.
     private bool inTransition = false;
 
+    // Adds shake to the camera
+    private float shakeTime;
+    private float shakeStrength;
+
 
     private void Start()
     {
@@ -74,6 +78,13 @@ public class CameraCtrl : MonoBehaviour {
     {
         // Moves the camera.
         MoveCamera();
+
+        // Adds shake to the camera.
+        if (shakeTime > 0.0f)
+        {
+            transform.position += Random.rotation * Vector3.right * Random.Range(0, shakeStrength);
+            shakeTime -= Time.deltaTime;
+        }
     }
 
     private void MoveCamera()
@@ -126,6 +137,11 @@ public class CameraCtrl : MonoBehaviour {
         SetNewCameraBorders(borders.leftCenter, borders.maxRightMovement, borders.maxUpMovement, setToTransition);
     }
 
+    public void Shake(float time, float strength)
+    {
+        shakeTime = time;
+        shakeStrength = strength;
+    }
 
     private void OnDrawGizmosSelected()
     {

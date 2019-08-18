@@ -208,7 +208,7 @@ public class PlWpDt_PharaohShot : Pl_WeaponData {
         // Prevents the player from moving
         // and puts them in a throwing animation.
         owner.canMove = false;
-        owner.body.gravityScale = 100.0f;
+        owner.body.gravityScale = 1.0f;
         owner.body.velocity = Vector2.zero;
         owner.throwTime = 0.1f;
         yield return null;
@@ -233,7 +233,7 @@ public class PlWpDt_PharaohShot : Pl_WeaponData {
 
         // Lets the player move again.
         owner.canMove = true;
-        owner.body.gravityScale = 100.0f;
+        owner.body.gravityScale = 1.0f;
     }
 
 }

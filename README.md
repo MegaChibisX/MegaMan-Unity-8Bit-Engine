@@ -76,9 +76,26 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 > You can play the shooting SFX from the menu.
 
+> Using the power gear will change the player's physics.
+
 
 
 # Update Log
+
+
+## 0.3.1
+
+> Camera shaking added.
+
+> Boss Star Man added.
+
+> Boss creation tutorial added. Check the Readme folder.
+
+> Tutorials properly numbered.
+
+> Metal Man can no longer be made to continuously jump from side to side.
+
+> Red tileset changed to vaguely look like a volcano.
 
 
 ## 0.3.0

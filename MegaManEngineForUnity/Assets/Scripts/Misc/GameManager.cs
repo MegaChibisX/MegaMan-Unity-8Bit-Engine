@@ -43,6 +43,7 @@ public static class GameManager
     public static bool bossDead_PharaohMan;
     public static bool bossDead_GeminiMan;
     public static bool bossDead_MetalMan;
+    public static bool bossDead_StarMan;
 
 
 
@@ -133,6 +134,11 @@ public static class GameManager
         }
     }
 	
+    public static void ShakeCamera(float time, float strength)
+    {
+        if (CameraCtrl.instance != null)
+            CameraCtrl.instance.Shake(time, strength);
+    }
 
 
 }

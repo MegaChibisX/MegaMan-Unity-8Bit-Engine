@@ -36,6 +36,7 @@ public class Menu_StageSelect : Menu
     public SpriteRenderer pharaohIcon;
     public SpriteRenderer geminiIcon;
     public SpriteRenderer metalIcon;
+    public SpriteRenderer starIcon;
 
     [Header("Fortress Stage Select Elements")]
 
@@ -169,13 +170,7 @@ public class Menu_StageSelect : Menu
                 switch (activeRoom)
                 {
                     case Rooms.MainStage:
-                        if (stageIndex.x == 0 && stageIndex.y == 0)
-                            Helper.GoToStage("Scene");
-                        else if (stageIndex.x == 2 && stageIndex.y == 0)
-                            Helper.GoToStage("SomeStage");
-                        else if (stageIndex.x == 2 && stageIndex.y == 1)
-                            Helper.GoToStage("Temp");
-                        else
+                        if (!GoToSelectedScene())
                         {
                             stageCooldown = 0.5f;
                             stageSelected = false;
@@ -236,6 +231,8 @@ public class Menu_StageSelect : Menu
                     geminiIcon.enabled = false;
                 if (GameManager.bossDead_MetalMan)
                     metalIcon.enabled = false;
+                if (GameManager.bossDead_StarMan)
+                    starIcon.enabled = false;
                 break;
             case Rooms.FortressStage:
                 cmrPos = new Vector2(0, 248);
@@ -267,7 +264,31 @@ public class Menu_StageSelect : Menu
                 break;
         }
     }
+    public bool GoToSelectedScene()
+    {
+        if (stageIndex.x == 0 && stageIndex.y == 0)
+        {
+            Helper.GoToStage("Scene");
+            return true;
+        }
+        if (stageIndex.x == 2 && stageIndex.y == 0)
+        {
+            Helper.GoToStage("SomeStage");
+            return true;
+        }
+        if (stageIndex.x == 2 && stageIndex.y == 1)
+        {
+            Helper.GoToStage("Temp");
+            return true;
+        }
+        if (stageIndex.x == 0 && stageIndex.y == 2)
+        {
+            Helper.GoToStage("Temp2");
+            return true;
+        }
 
+        return false;
+    }
 
 
     private void InputMainStageSelect()

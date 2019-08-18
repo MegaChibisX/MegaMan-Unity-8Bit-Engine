@@ -185,9 +185,10 @@ public class Bo_PharaohMan : Boss
         // Freezes the player.
         if (Player.instance != null)
             Player.instance.CanMove(false);
-        
+
 
         // Plays intro.
+        anim.gameObject.SetActive(true);
         anim.Play("Intro");
         yield return new WaitForSeconds(1f);
 

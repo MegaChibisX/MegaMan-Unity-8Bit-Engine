@@ -81,8 +81,9 @@ public class Bo_MetalMan : Boss
 
             if (Mathf.Abs(GameManager.playerPosition.x - transform.position.x) < 80)
                 yield return JumpAcross();
-            else
-                yield return JumpThrow();
+
+            anim.transform.localScale = new Vector3(GameManager.playerPosition.x > transform.position.x ? -1 : 1, 1, 1);
+            yield return JumpThrow();
         }
     }
     public IEnumerator JumpThrow()
@@ -97,7 +98,9 @@ public class Bo_MetalMan : Boss
 
         anim.Play("JumpThrow");
 
-        for (int i = 0; i < (int)((jumpHeight - 300)/75) + 1; i++)
+
+        int jumps = (int)((jumpHeight - 300) / 75) + 1;
+        for (int i = 0; i < jumps; i++)
         {
             ThrowBlade();
             body.velocity = Vector3.zero;
@@ -115,6 +118,10 @@ public class Bo_MetalMan : Boss
 
         while (!isGrounded)
             yield return null;
+
+        anim.transform.localScale = new Vector3(GameManager.playerPosition.x > transform.position.x ? -1 : 1, 1, 1);
+        anim.Play("Run");
+        yield return new WaitForSeconds(0.1f + 0.1f * jumps);
 
     }
     public IEnumerator JumpAcross()

@@ -13,11 +13,14 @@ using UnityEngine;
 public class Boss : Enemy
 {
 
+    public GameObject deathExplosionBoss;
 
     public Sprite healthBarFull;
     public Sprite healthBarEmpty;
+
     protected bool fightStarted;
     protected float invisTime = 0.0f;
+    public bool endStageAfterFight = false;
     
 
 
@@ -51,8 +54,10 @@ public class Boss : Enemy
         // If the fight hasn't started, the boss can't get hurt.
         // Bosses linger in the arena before they appear, so this way
         // the player can't kill them before entering their arena.
-        if (!fightStarted)
+        if (!fightStarted || invisTime > 0.0f)
             return;
+
+        invisTime = 1.0f;
         base.Damage(dmg, ignoreInvis);
     }
 

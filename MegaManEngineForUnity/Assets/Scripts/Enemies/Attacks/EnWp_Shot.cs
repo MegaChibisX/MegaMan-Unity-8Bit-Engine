@@ -15,6 +15,7 @@ public class EnWp_Shot : Enemy
     public bool destroyOnWall = false;
 
     protected SpriteRenderer rend;
+    public int frameSpeed = 12;
     public Sprite[] sprites;
 
     protected override void Start()
@@ -27,7 +28,7 @@ public class EnWp_Shot : Enemy
     protected virtual void LateUpdate()
     {
         if (sprites != null && rend != null && sprites.Length > 0.0f)
-            rend.sprite = sprites[(int)(Time.time * 12) % sprites.Length];
+            rend.sprite = sprites[(int)(Time.time * frameSpeed) % sprites.Length];
     }
     protected void OnCollisionEnter2D(Collision2D collision)
     {
