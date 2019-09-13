@@ -82,7 +82,7 @@ public class Menu_Pause : Menu
         lowerTexts[0] = "CALL";
         lowerTexts[1] = "RETRY";
         lowerTexts[2] = "EXIT";
-        lowerTexts[3] = "HELP";
+        lowerTexts[3] = "ALT+F4";
 
         Helper.PlaySound(owner.SFXLibrary.menuOpen);
     }
