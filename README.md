@@ -8,6 +8,8 @@ Download the 'MegaManEngineForUnity' folder and open it with Unity to open the p
 
 Check out the Manual.pdf file to get a better idea of what this project is like and how it works.
 
+To simply check out the game, without having to use Unity, you can find the Windows and Mac builds here: https://github.com/MegaChibisX/MegaMan-Unity-8Bit-Engine-ButOnlyTheGame
+
 
 ## Contact
 If you have any questions, you can find me in the following places.
