@@ -29,6 +29,7 @@ public class Bo_PharaohMan : Boss
     // Audio Pharaoh Man uses.
     public AudioClip shotSound;
     public AudioClip chargeSound;
+    public AudioClip healSound;
 
     // These variables are only meant to be used by Jump(bool jumpBack, bool shoot, int hops, int maxHops).
     // However, placed here, they can be viewed as Gizmos for debug purposes.
@@ -107,7 +108,7 @@ public class Bo_PharaohMan : Boss
         invisTime = 1f;
         if (health <= 0)
         {
-            Kill(false);
+            Kill(false, false);
         }
     }
 
@@ -157,7 +158,7 @@ public class Bo_PharaohMan : Boss
         }
     }
 
-    public override void Kill(bool makeItem)
+    public override void Kill(bool makeItem, bool makeBolt)
     {
         // Pharaoh Man stops doing what he's doing and dies.
         StopAllCoroutines();
@@ -197,6 +198,7 @@ public class Bo_PharaohMan : Boss
         {
             health++;
             yield return new WaitForSeconds(0.05f);
+            Helper.PlaySound(aud, healSound, true);
         }
 
         // Unfreezes player and self.

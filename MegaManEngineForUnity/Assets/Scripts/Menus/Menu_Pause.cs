@@ -83,6 +83,8 @@ public class Menu_Pause : Menu
         lowerTexts[1] = "RETRY";
         lowerTexts[2] = "EXIT";
         lowerTexts[3] = "HELP";
+
+        Helper.PlaySound(owner.SFXLibrary.menuOpen);
     }
     public override void Start()
     {
@@ -201,6 +203,9 @@ public class Menu_Pause : Menu
                             break;
                         case "HELP":
                             // HELP
+                            break;
+                        case "ALT+F4":
+                            Application.Quit();
                             break;
                     }
                     break;

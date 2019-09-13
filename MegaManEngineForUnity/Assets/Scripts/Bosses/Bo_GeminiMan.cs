@@ -24,6 +24,8 @@ public class Bo_GeminiMan : Boss
     // Gemini Man's most well known weapon, the annoying laser.
     public GameObject GeminiLaser;
 
+    // The healing sound he makes during the intro.
+    public AudioClip healSound;
 
     // Gemini Man's jumps use two corners for reference.
     public Transform leftCorner;
@@ -112,7 +114,7 @@ public class Bo_GeminiMan : Boss
         invisTime = 1f;
         if (health <= 0)
         {
-            Kill(false);
+            Kill(false, false);
         }
     }   
     public void Freeze(bool shouldBeTrue)
@@ -122,7 +124,7 @@ public class Bo_GeminiMan : Boss
         body.constraints = shouldFreeze ? RigidbodyConstraints2D.FreezeAll : RigidbodyConstraints2D.FreezeRotation;
     }
 
-    public override void Kill(bool makeItem)
+    public override void Kill(bool makeItem, bool makeBolt)
     {
         // Gemini Man stops doing what he's doing and dies.
         StopAllCoroutines();
@@ -161,6 +163,7 @@ public class Bo_GeminiMan : Boss
         {
             health++;
             yield return new WaitForSeconds(0.05f);
+            Helper.PlaySound(aud, healSound, true);
         }
 
         // Unfreezes player and self.

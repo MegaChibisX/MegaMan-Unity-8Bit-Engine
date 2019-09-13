@@ -82,9 +82,33 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 # Update Log
 
+## 0.4.0
+> Enemy creation tutorial added. Check the Readmy folder.
+
+> Player weapon types added. Will be addressed soon.
+
+> Boss tutorial updated, to include weaknesses.
+
+> Added Skullmet enemy.
+
+> Added Totem Polen enemy.
+
+> Added Shield Attacker enemy, but it doesn't attack. I'm not even sure why it's called an 'attacker'.
+
+> New enemy created, the Smol Devil. Previously boss from Rockman: Battle & Fighters, now a beefy enemy.
+
+> Enemies now drop bolts. Bolts don't override normal drops, both can  be dropped at the same time.
+
+> Bosses now make a sound when they heal during their intro.
+
+> Stage Select menu fully equipped with sounds.
+
+
+## 0.3.2
+> Holes in old stages updated to no longer have a bed of spikes in them.
+
 
 ## 0.3.1
-
 > Camera shaking added.
 
 > Boss Star Man added.

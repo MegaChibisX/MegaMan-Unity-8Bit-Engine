@@ -13,6 +13,10 @@ using UnityEngine;
 public class Pl_Weapon : MonoBehaviour {
 
 
+    public enum WeaponTypes { Normal, Pharaoh, Gemini, Metal, Star }
+    public WeaponTypes weaponType;
+
+
     // Each weapon needs to do damage.
     public float damage = 1;
     // Checks if the weapon can ignore invisibily from bosses/enemies.

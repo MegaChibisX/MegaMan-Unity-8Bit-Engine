@@ -25,8 +25,6 @@ public class Stage_BossDoor : MonoBehaviour {
     public Boss bossToActivate;
 
     public int doorWidth = 2;       // Each 16 pixels count as 1 unit.
-    public bool redNeedsLadder   = false;
-    public bool greenNeedsLadder = false;
 
     private bool isActive = false;
 
@@ -67,11 +65,6 @@ public class Stage_BossDoor : MonoBehaviour {
             yield break;
 
         float moveRightMult = Vector2.Angle(transform.right, contact.transform.position - transform.position) > 90 ? 1.0f : -1.0f;
-        if ((moveRightMult * (contact.gravityInverted ? -1 : 1) > 0 && greenNeedsLadder && contact.state != Player.PlayerStates.Climb) ||
-            (moveRightMult * (contact.gravityInverted ? -1 : 1) < 0 && redNeedsLadder   && contact.state != Player.PlayerStates.Climb))
-        {
-            yield break;
-        }
         float moveDistance = contact.width * 2.0f + doorWidth * 16.0f;
         Time.timeScale = 0.0f;
 
@@ -193,9 +186,6 @@ public class Stage_BossDoor : MonoBehaviour {
             yield break;
 
         float moveRightMult = Vector2.Angle(transform.right, contact.transform.position - transform.position) > 90 ? 1.0f : -1.0f;
-        if ((moveRightMult > 0 && greenNeedsLadder && contact.state != Player.PlayerStates.Climb) ||
-            (moveRightMult < 0 && redNeedsLadder && contact.state != Player.PlayerStates.Climb))
-            yield break;
 
         if ((moveRightMult > 0 && CameraCtrl.instance.leftCenter == bordersGreenSide.leftCenter
                 && CameraCtrl.instance.maxRightMovement == bordersGreenSide.maxRightMovement && CameraCtrl.instance.maxUpMovement == bordersGreenSide.maxUpMovement) ||

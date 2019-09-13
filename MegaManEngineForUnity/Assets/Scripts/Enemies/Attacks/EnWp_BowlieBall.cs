@@ -41,7 +41,7 @@ public class EnWp_BowlieBall : Enemy
         // If a solid object is hit (layer == 8) and the ball is active, the ball gets destroyed.
         if (collision.gameObject.layer == 8 && isActive)
         {
-            Kill(false);
+            Kill(false, false);
         }
     }
     protected void LateUpdate()

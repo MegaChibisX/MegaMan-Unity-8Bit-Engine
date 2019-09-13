@@ -42,6 +42,11 @@ public class En_Joe : Enemy
             }
         }
     }
+    public override void ChangeColorScheme(Color[] colors)
+    {
+        if (colors.Length > 0)
+            spriteOutput.color = colors[0];
+    }
 
     public IEnumerator Behavior()
     {
@@ -126,13 +131,6 @@ public class En_Joe : Enemy
                    Physics2D.OverlapBox((Vector2)col.bounds.center + Vector2.down * 4.0f,
                                          new Vector2(col.bounds.size.x * 0.8f, col.bounds.size.y), 0f, 1 << 8);
         }
-    }
-
-    [System.Serializable]
-    public struct SpritePair
-    {
-        public Sprite Key;
-        public Sprite Value;
     }
 
 }

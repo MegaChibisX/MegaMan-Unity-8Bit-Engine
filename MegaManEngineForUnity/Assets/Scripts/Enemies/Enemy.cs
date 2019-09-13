@@ -61,10 +61,10 @@ public class Enemy : MonoBehaviour {
         health -= dmg;
         if (health <= 0)
         {
-            Kill(true);
+            Kill(true, true);
         }
     }
-    public virtual void Kill(bool makeItem)
+    public virtual void Kill(bool makeItem, bool makeBolt)
     {
         // Creates an explosion at the center of the enemy.
         if (deathExplosion != null)
@@ -87,6 +87,20 @@ public class Enemy : MonoBehaviour {
                 item.transform.localScale = transform.localScale;
             }
         }
+        if (makeBolt)
+        {
+            // Spawns a random bolt with the normal chances of spawning each item.
+            GameObject item = Item.GetObjectFromItem(Item.GetRandomBolt(1, 1, 1, 1));
+            if (item)
+            {
+                item = Instantiate(item);
+                item.transform.position = transform.position + center;
+                item.transform.rotation = transform.rotation;
+                item.transform.localScale = transform.localScale;
+
+                item.GetComponent<Rigidbody2D>().AddForce(transform.up * Random.Range(-15000, 15000f) + transform.right * Random.Range(0, 8000f));
+            }
+        }
 
         Destroy(gameObject);
     }
@@ -99,7 +113,7 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    public virtual void Shoot(Vector2 shootPosition, Vector2 shotDirection, float shotDamage, float shotSpeed = 200, GameObject obj = null)
+    public virtual GameObject Shoot(Vector2 shootPosition, Vector2 shotDirection, float shotDamage, float shotSpeed = 200, GameObject obj = null)
     {
         // This script is supposed to work with a GameObject containing a EnWp_Shot component or one that derives from it,
         // but can be used with any GameObject.
@@ -111,19 +125,23 @@ public class Enemy : MonoBehaviour {
         // Makes a new instance of the bullet in the scene, then moves it and rotates it accordingly.
         GameObject o = Instantiate(obj);
         o.transform.position = shootPosition;
-        o.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(shotDirection.y, shotDirection.x), Vector3.forward);
+        if (shotDirection.sqrMagnitude > 0)
+            o.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(shotDirection.y, shotDirection.x), Vector3.forward);
 
         // Checks if there is a EnWp_Shot component, and changes its properties accordingly.
         EnWp_Shot shot = o.GetComponent<EnWp_Shot>();
         if (shot != null)
         {
-            shot.direction = shotDirection.normalized;
+            if (shotDirection.sqrMagnitude > 0)
+                shot.direction = shotDirection.normalized;
             shot.damage = shotDamage;
             shot.speed = shotSpeed;
         }
         // Since bullets shouldn't have gravity by default, the gravity is set to 0.
         if (o.GetComponent<Rigidbody2D>() != null)
             o.GetComponent<Rigidbody2D>().gravityScale = 0.0f;
+
+        return o;
     }
 
     public virtual void LookAtPlayer()
@@ -138,7 +156,14 @@ public class Enemy : MonoBehaviour {
     {
         return Player.instance;
     }
+    public virtual void  ChangeColorScheme(Color[] colors) { }
 
 
+}
 
+[System.Serializable]
+public struct SpritePair
+{
+    public Sprite Key;
+    public Sprite Value;
 }

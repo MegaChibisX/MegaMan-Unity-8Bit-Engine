@@ -180,6 +180,34 @@ public class Item
         }
         return Items.empty;
     }
+    public static Items GetRandomBolt(float multiNone, float multiSmall, float multiBig, float multiHuge)
+    {
+        // Random drops are handled here the following way. A list is made with what items can
+        // be dropped and what the chance of every item being dropped is. A KeyValuePair is
+        // used to keep track of every item and the chance it will drop, as well as the chance
+        // of nothing dropping. All of the chances have multipliers that can be given as parameters.
+        //
+        // This is a bit more technical, and there are probably better ways to do random drops.
+        List<KeyValuePair<Items, float>> chances = new List<KeyValuePair<Items, float>>();
+        chances.Add(new KeyValuePair<Items, float>(Items.empty, 5.0f * multiNone));
+        chances.Add(new KeyValuePair<Items, float>(Items.boltSmall, 3 * multiSmall));
+        chances.Add(new KeyValuePair<Items, float>(Items.boltBig, multiBig));
+        chances.Add(new KeyValuePair<Items, float>(Items.boltHuge, 0.1f * multiHuge));
+
+        // Gets a random number inside the list and returns the item that matches it.
+        float totalChances = 0;
+        foreach (KeyValuePair<Items, float> pair in chances)
+            totalChances += pair.Value;
+
+        float itemChoice = Random.Range(0, totalChances);
+        for (int i = 0; i < chances.Count; i++)
+        {
+            itemChoice -= chances[i].Value;
+            if (itemChoice <= 0)
+                return chances[i].Key;
+        }
+        return Items.empty;
+    }
     public static GameObject GetObjectFromItem(Items item)
     {
         // Returns the appropriate Item GameObject based on the Enum Item.

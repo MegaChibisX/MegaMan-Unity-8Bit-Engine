@@ -10,11 +10,13 @@ public class Bo_MetalMan : Boss
     public Transform rightSide;
 
     public Sprite hurtSprite;
+    public AudioClip healSound;
 
     public GameObject metalBlade;
 
     protected Animator anim;
     protected SpriteRenderer spr;
+    protected AudioSource aud;
 
     public Collider2D col;
 
@@ -30,6 +32,7 @@ public class Bo_MetalMan : Boss
 
         anim = GetComponentInChildren<Animator>();
         spr = anim.GetComponent<SpriteRenderer>();
+        aud = GetComponent<AudioSource>();
 
         anim.gameObject.SetActive(false);
     }
@@ -58,10 +61,10 @@ public class Bo_MetalMan : Boss
         invisTime = 1f;
         if (health <= 0)
         {
-            Kill(false);
+            Kill(false, false);
         }
     }
-    public override void Kill(bool makeItem)
+    public override void Kill(bool makeItem, bool makeBolt)
     {
         // Metal Man stops doing what he's doing and dies.
         StopAllCoroutines();
@@ -176,6 +179,7 @@ public class Bo_MetalMan : Boss
         {
             health++;
             yield return new WaitForSeconds(0.05f);
+            Helper.PlaySound(aud, healSound, true);
         }
 
 

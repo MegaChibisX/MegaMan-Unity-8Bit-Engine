@@ -21,7 +21,10 @@ public class EnWp_Shot : Enemy
     protected override void Start()
     {
         base.Start();
-        body.velocity = direction.normalized * speed;
+        if (direction.sqrMagnitude > 0)
+            body.velocity = direction.normalized * speed;
+        else
+            Debug.Log("AAAA");
 
         rend = GetComponentInChildren<SpriteRenderer>();
     }
@@ -34,14 +37,14 @@ public class EnWp_Shot : Enemy
     {
         if (collision.gameObject.layer == 8 && destroyOnWall)
         {
-            Kill(false);
+            Kill(false, false);
         }
     }
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 8 && destroyOnWall)
         {
-            Kill(false);
+            Kill(false, false);
         }
     }
 

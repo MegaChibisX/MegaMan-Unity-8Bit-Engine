@@ -50,7 +50,7 @@ public class EnWp_BounceBall : Enemy
         maxLifetime -= Time.deltaTime;
         if (maxLifetime <= 0)
         {
-            Kill(false);
+            Kill(false, false);
         }
     }
 

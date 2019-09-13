@@ -86,9 +86,13 @@
     <Compile Include="Assets\Scripts\Enemies\En_Joe.cs" />
     <Compile Include="Assets\Scripts\Enemies\En_Met.cs" />
     <Compile Include="Assets\Scripts\Enemies\En_Press.cs" />
+    <Compile Include="Assets\Scripts\Enemies\En_ShieldAttacker.cs" />
+    <Compile Include="Assets\Scripts\Enemies\En_Skullmet.cs" />
+    <Compile Include="Assets\Scripts\Enemies\En_SmolDevil.cs" />
     <Compile Include="Assets\Scripts\Enemies\En_Springer.cs" />
     <Compile Include="Assets\Scripts\Enemies\En_SuperBallMachineJr.cs" />
     <Compile Include="Assets\Scripts\Enemies\En_Suzy.cs" />
+    <Compile Include="Assets\Scripts\Enemies\En_TotemPolen.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyBlueprint.cs" />
     <Compile Include="Assets\Scripts\Menus\Menu.cs" />

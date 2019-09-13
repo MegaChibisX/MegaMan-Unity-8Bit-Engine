@@ -1080,7 +1080,7 @@ public class Player : MonoBehaviour
     public void ApplyGravity()
     {
         if (!body.isKinematic)
-            body.velocity += ((gravityInverted ? Vector2.up : Vector2.down) * 10f * gravityScale * gravityEnvironmentMulti * body.mass * body.mass * fixedDeltaTime);
+            body.velocity += Vector2.down * 10f * gravityScale * gravityEnvironmentMulti * body.mass * body.mass * fixedDeltaTime;
         gravityEnvironmentMulti = 1.0f;
     }
     public virtual void SetGravity(float magnitude, bool inverted)
@@ -1272,6 +1272,7 @@ public class PlayerSFX
     public AudioClip healthRecover;
 
     public AudioClip menuMove;
+    public AudioClip menuOpen;
 
     public AudioClip pharaohShot;
     public AudioClip pharaohCharge;

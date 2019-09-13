@@ -27,6 +27,10 @@ public class Menu_StageSelect : Menu
     public Vector2 stageSelectorOrigin;
     public Vector2Int stageIndex;
 
+    public AudioClip stageAudioMove;
+    public AudioClip stageAudioConfirm;
+    public AudioClip stageAudioCancel;
+
     public SpriteRenderer selectMainSprite;
     public Sprite selectFlashStage1;
     public Sprite selectFlashStage2;
@@ -40,6 +44,9 @@ public class Menu_StageSelect : Menu
 
     [Header("Fortress Stage Select Elements")]
 
+    public AudioClip fortressAudioMove;
+    public AudioClip fortressAudioConfirm;
+
     public Vector2 fortressSelectorOrigin;
     public Vector2Int fortressIndex;
 
@@ -52,6 +59,8 @@ public class Menu_StageSelect : Menu
 
     [Header("Shop Elements")]
 
+    public AudioClip shopAudioMove;
+
     public Vector2 shopSelectorOrigin;
     public Vector3Int shopIndex;
 
@@ -63,6 +72,9 @@ public class Menu_StageSelect : Menu
     public SpriteRenderer[] itemSlots;
 
     [Header("Data Elements")]
+
+    public AudioClip dataAudioMove;
+    public AudioClip dataAudioChange;
 
     public Vector2 dataSelectorOrigin;
     public Vector2Int dataIndex;
@@ -264,26 +276,30 @@ public class Menu_StageSelect : Menu
                 break;
         }
     }
-    public bool GoToSelectedScene()
+    public bool GoToSelectedScene(bool checkOnly = false)
     {
         if (stageIndex.x == 0 && stageIndex.y == 0)
         {
-            Helper.GoToStage("Scene");
+            if (!checkOnly)
+                Helper.GoToStage("Scene");
             return true;
         }
         if (stageIndex.x == 2 && stageIndex.y == 0)
         {
-            Helper.GoToStage("SomeStage");
+            if (!checkOnly)
+                Helper.GoToStage("SomeStage");
             return true;
         }
         if (stageIndex.x == 2 && stageIndex.y == 1)
         {
-            Helper.GoToStage("Temp");
+            if (!checkOnly)
+                Helper.GoToStage("Temp");
             return true;
         }
         if (stageIndex.x == 0 && stageIndex.y == 2)
         {
-            Helper.GoToStage("Temp2");
+            if (!checkOnly)
+                Helper.GoToStage("Temp2");
             return true;
         }
 
@@ -309,6 +325,8 @@ public class Menu_StageSelect : Menu
             ChangeRoom(Rooms.Shop);
         else if (stageIndex.x > 2)
             ChangeRoom(Rooms.Data);
+        else if (stageIndex.y <= 2)
+            Helper.PlaySound(stageAudioMove);
 
         stageIndex.x = Mathf.Clamp(stageIndex.x, 0, 2);
         stageIndex.y = Mathf.Clamp(stageIndex.y, 0, 2);
@@ -321,6 +339,10 @@ public class Menu_StageSelect : Menu
         if (Input.GetButtonDown("Start"))
         {
             stageSelected = true;
+            if (GoToSelectedScene(true))
+                Helper.PlaySound(stageAudioConfirm);
+            else
+                Helper.PlaySound(stageAudioCancel);
         }
 
         if (stageSelected)
@@ -343,6 +365,8 @@ public class Menu_StageSelect : Menu
 
         if (fortressIndex.y > 0)
             ChangeRoom(Rooms.MainStage);
+        else if (fortressIndex.y == 0 && fortressIndex.x >= 0 && fortressIndex.x <= GameManager.maxFortressStage - 1)
+            Helper.PlaySound(fortressAudioMove);
 
         fortressIndex.x = Mathf.Clamp(fortressIndex.x, 0, GameManager.maxFortressStage - 1);
         fortressIndex.y = 0;
@@ -377,6 +401,8 @@ public class Menu_StageSelect : Menu
 
         if (shopIndex.x > 5)
             ChangeRoom(Rooms.MainStage);
+        else
+            Helper.PlaySound(shopAudioMove);
 
         if (shopIndex.y < shopIndex.z)
             shopIndex.z = shopIndex.y;
@@ -429,6 +455,11 @@ public class Menu_StageSelect : Menu
 
         if (dataIndex.x < 0)
             ChangeRoom(Rooms.MainStage);
+        else if (lastAngle == 0 || lastAngle == 180 || lastAngle == -180)
+            Helper.PlaySound(dataAudioChange);
+        else
+            Helper.PlaySound(dataAudioMove);
+
 
         dataIndex.x = Mathf.Clamp(dataIndex.x, 0, 1);
         dataIndex.y = Mathf.Clamp(dataIndex.y, 0, 9);

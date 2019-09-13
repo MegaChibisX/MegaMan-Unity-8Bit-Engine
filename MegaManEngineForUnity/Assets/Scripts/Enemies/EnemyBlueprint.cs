@@ -24,9 +24,10 @@ public class EnemyBlueprint : MonoBehaviour {
     [SerializeField]
     private Vector2 size;
 
-    [SerializeField]
     private bool upToDate = false;
-    public bool gotOutsideVew = true;
+    private bool gotOutsideVew = true;
+
+    public Color[] newColors;
 
 
     private void Start()
@@ -86,6 +87,12 @@ public class EnemyBlueprint : MonoBehaviour {
         blueprintInstance.transform.rotation = transform.rotation;
         blueprintInstance.transform.localScale = transform.localScale;
         gotOutsideVew = false;
+
+        if (newColors != null && newColors.Length > 0)
+        {
+            if (blueprintInstance.GetComponent<Enemy>() != null)
+                blueprintInstance.GetComponent<Enemy>().ChangeColorScheme(newColors);
+        }
 
         return true;
     }

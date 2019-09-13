@@ -14,6 +14,7 @@ public class Bo_StarMan : Boss
     public Sprite hurtSprite;
 
     public AudioClip shine;
+    public AudioClip healSound;
 
     public GameObject starBulletNormal;
     public GameObject starBulletIce;
@@ -44,7 +45,22 @@ public class Bo_StarMan : Boss
             invisTime -= Time.deltaTime;
     }
 
-    public override void Kill(bool makeItem)
+    public override void Damage(Pl_Weapon weapon)
+    {
+        float damage = weapon.damage;
+
+        if (shielded)
+        {
+            weapon.Deflect();
+            return;
+        }
+
+        if (weapon.weaponType == Pl_Weapon.WeaponTypes.Gemini)
+            damage *= 5;
+
+        Damage(damage, weapon.ignoreInvis);
+    }
+    public override void Kill(bool makeItem, bool makeBolt)
     {
         StopAllCoroutines();
         StartCoroutine(PlayDeathShort());
@@ -84,6 +100,7 @@ public class Bo_StarMan : Boss
         {
             health++;
             yield return new WaitForSeconds(0.05f);
+            Helper.PlaySound(aud, healSound, true);
         }
 
         // Unfreezes player and self.
@@ -123,7 +140,7 @@ public class Bo_StarMan : Boss
                 yield return ShootingStar((22 - Mathf.CeilToInt(health)) / 3 + 3, 0.5f);
 
                 if (Random.Range(0,4) < 1)
-                    yield return StarShield(6);
+                    yield return StarShield(Random.Range(4, 7));
             }
         }
     }

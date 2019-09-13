@@ -66,12 +66,12 @@ public class Boss : Enemy
     {
         StartCoroutine(PlayIntro());
     }
-    public override void Kill(bool makeItem)
+    public override void Kill(bool makeItem, bool makeBolt)
     {
         // Reduces the number of active bosses in the GameManager,
         // and then registers death as a normal enemy.
         GameManager.bossesActive--;
-        base.Kill(false);
+        base.Kill(false, false);
     }
     public override void Despawn()
     {
