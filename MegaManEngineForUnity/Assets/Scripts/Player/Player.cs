@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
 
     //public Pl_WeaponData.Weapons currentWeaponEnum;
     public Pl_WeaponData currentWeapon;
+    public Pl_WeaponData.Weapons defaultWeapon = Pl_WeaponData.Weapons.MegaBuster;
     public List<Pl_WeaponData.Weapons> weaponList;
     public int currentWeaponIndex = 0;
 
@@ -66,20 +67,18 @@ public class Player : MonoBehaviour
     public bool useIntro = true;
     public Menu_Cutscene cutscene;
 
-    public bool canMove = true;
     
     public enum PlayerStates { Normal, Still, Frozen, Climb, Hurt, Fallen, Paused }
     public PlayerStates state = PlayerStates.Normal;
 
-    public float health = 28;
-    public float maxHealth = 28;
-    [System.NonSerialized]
+    public bool canMove = true;
     public bool canBeHurt = true;
     public bool canAnimate = true;
+
+    public float health = 28;
+    public float maxHealth = 28;
     protected float knockbackTime = 0.0f;
     protected float invisTime = 0.0f;
-
-    public bool canSlide = true;
 
     public bool gearAvailable
     {
@@ -98,8 +97,8 @@ public class Player : MonoBehaviour
     public bool gearActive_Speed = false;
     [System.NonSerialized]
     public bool gearActive_Power = false;
-    public bool gravityInverted = false;
 
+    public bool gravityInverted = false;
     public float gravityScale = 100.0f;
     public float gravityEnvironmentMulti = 1.0f;
     protected Vector2 windVector;
@@ -108,7 +107,14 @@ public class Player : MonoBehaviour
     public float climbSpeed = 80;
     public float jumpForce = 370;
 
+    public int maxJumps = 1;
+    protected int jumpsLeft = 0;
+
+    public enum SlideType { Slide, Dash, None }
+    public SlideType slideType = SlideType.Slide;
+
     protected float slideTime = 0f;
+    private bool dashing = false;
     protected float chargeKeyHold = 0f;
     [System.NonSerialized]
     public float shootTime = 0f;
@@ -119,10 +125,11 @@ public class Player : MonoBehaviour
     protected bool gearRecovery = false;
 
     // Information about the collider.
-    public float width = 16.0f;
+    public float width = 14.0f;
     public float height = 17.67f;
     public Vector3 center = new Vector3(0.0f, -2.32f, 0.0f);
-    protected bool lastLookingLeft = false;
+    [System.NonSerialized]
+    public bool lastLookingLeft = false;
 
     public Vector3 right
     {
@@ -135,6 +142,8 @@ public class Player : MonoBehaviour
     {
         get
         {
+            if (anim == null)
+                return Vector3.up;
             return transform.up * (anim.transform.localScale.y > 0 ? 1 : -1);
         }
     }
@@ -149,13 +158,22 @@ public class Player : MonoBehaviour
         {
             // If there is a checkpoint active, you should spawn at the checkpoint.
             if (GameManager.checkpointActive)
+            {
                 transform.position = GameManager.checkpointLocation;
-            // If there is no checkpoint active, teleport right where you are.
+                // Some global variables need to be reset every time the room is reset. Go to GameManager for more information.
+                GameManager.ResetRoom();
+            }
+            // If there is no checkpoint active, teleport right where you are and save a checkpoint.
             else
+            {
                 GameManager.checkpointLocation = transform.position;
-
-            // Some global variables need to be reset every time the room is reset. Go to GameManager for more information.
-            GameManager.ResetRoom();
+                GameManager.checkpointActive = true;
+                GameManager.checkpointCamera_LeftCenter = CameraCtrl.instance.leftCenter;
+                GameManager.checkpointCamera_MaxRightMovement = CameraCtrl.instance.maxRightMovement;
+                GameManager.checkpointCamera_MaxUpMovement = CameraCtrl.instance.maxUpMovement;
+                // Some global variables need to be set once a stage starts. Go to GameManager for more information.
+                GameManager.StartRoom();
+            }
         }
 
         // Keeps track of some necessary components of the player.
@@ -199,6 +217,15 @@ public class Player : MonoBehaviour
 
         if (canMove)
         {
+            // Sets the jump counter.
+            if ((isGrounded || isInSand) && jumpsLeft != maxJumps)
+                jumpsLeft = maxJumps;
+            else if (!isGrounded && jumpsLeft == maxJumps)
+                jumpsLeft--;
+
+            if (isGrounded && dashing && slideTime <= 0.0f && body.velocity.y * gravityScale >= 0)
+                dashing = false;
+
             // The played can only move in some States.
             switch (state)
             {
@@ -238,19 +265,28 @@ public class Player : MonoBehaviour
         // bodyColorDark    = MegaMan's blue color
         // bodyColorLight   = MegaMan's cyan color
         // bodyColorOutline = MegaMan's line color
-        
+
         // If the desired color's alpha value is 0, then the player's color
         // will be the default color. This happens on single color basis, so
         // the player can, for example, only have their outline glow.
-        bodyColorDark.color = colors.colorDark;
-        if (bodyColorDark.color.a == 0)
-            bodyColorDark.color = defaultColors.colorDark;
-        bodyColorLight.color = colors.colorLight;
-        if (bodyColorLight.color.a == 0)
-            bodyColorLight.color = defaultColors.colorLight;
-        bodyColorOutline.color = colors.colorOutline;
-        if (bodyColorOutline.color.a == 0)
-            bodyColorOutline.color = defaultColors.colorOutline;
+        if (bodyColorDark != null)
+        {
+            bodyColorDark.color = colors.colorDark;
+            if (bodyColorDark.color.a == 0)
+                bodyColorDark.color = defaultColors.colorDark;
+        }
+        if (bodyColorLight != null)
+        {
+            bodyColorLight.color = colors.colorLight;
+            if (bodyColorLight.color.a == 0)
+                bodyColorLight.color = defaultColors.colorLight;
+        }
+        if (bodyColorOutline != null)
+        {
+            bodyColorOutline.color = colors.colorOutline;
+            if (bodyColorOutline.color.a == 0)
+                bodyColorOutline.color = defaultColors.colorOutline;
+        }
 
         // Invisibility flashing
         if (spriteContainer != null)
@@ -471,18 +507,26 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             // If the down button is pressed and you're on the ground, slide.
-            if (input.y == -1 && isGrounded && canSlide)
+            if (input.y == -1 && isGrounded && slideType != SlideType.None)
             {
                 slideTime = 0.5f;
-                slideCol.enabled = true;
-                normalCol.enabled = false;
+                if (slideType == SlideType.Slide)
+                {
+                    slideCol.enabled = true;
+                    normalCol.enabled = false;
+                }
+                else if (slideType == SlideType.Dash)
+                    dashing = true;
             }
             // If not in a slide, or in a slide without a block over the player, jump.
             else if (canStand &&
-                        (isGrounded ||
+                        (jumpsLeft > 0 ||
                         Physics2D.Linecast(transform.position + center, transform.position + center - up * height, 1 << 12) ||
                         Input.GetKey(KeyCode.LeftShift)))
+            {
                 body.velocity = new Vector2(body.velocity.x, jumpForce * timeScale / GameManager.globalTimeScale * up.y);
+                jumpsLeft--;
+            }
         }
         // If the jump button is released mid-air, cut the player's jump short.
         else if (Input.GetButtonUp("Jump"))
@@ -491,11 +535,16 @@ public class Player : MonoBehaviour
                 body.velocity = new Vector2(body.velocity.x, body.velocity.y * 0.5f);
         }
         // Slide
-        if (Input.GetButtonDown("Slide") && canSlide)
+        if (Input.GetButtonDown("Slide") && slideType != SlideType.None)
         {
             slideTime = 0.5f;
-            slideCol.enabled = true;
-            normalCol.enabled = false;
+            if (slideType == SlideType.Slide)
+            {
+                slideCol.enabled = true;
+                normalCol.enabled = false;
+            }
+            else if (slideType == SlideType.Dash)
+                dashing = true;
         }
 
         if (state != PlayerStates.Climb)
@@ -680,6 +729,11 @@ public class Player : MonoBehaviour
             gearTrailTime = 0.2f;
             if (gearActive_Speed)
                 MakeTrail();
+            else if (dashing)
+            {
+                MakeTrail();
+                gearTrailTime = 0.1f;
+            }
         }
 
         // If either Gear is active, handles gear related activities.
@@ -759,6 +813,8 @@ public class Player : MonoBehaviour
                 Climb();
             else if (slideTime > 0)
                 body.velocity = new Vector2(moveSpeed * 2f * anim.transform.localScale.x, body.velocity.y);
+            else if (dashing)
+                body.velocity = new Vector2(input.x * moveSpeed * 2f, body.velocity.y);
             else
                 body.velocity = new Vector2(input.x * moveSpeed, body.velocity.y);
 
@@ -774,7 +830,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-    protected void Climb()
+    protected virtual void Climb()
     {
         // If the player is not attacking, they can move up and down the ladder.
         body.velocity = Vector2.zero;
@@ -857,6 +913,7 @@ public class Player : MonoBehaviour
     {
         // Plays the landing sound.
         audioStage.PlaySound(SFXLibrary.land, true);
+        dashing = false;
     }
 
     public virtual void Damage(float damage)
@@ -921,7 +978,9 @@ public class Player : MonoBehaviour
     {
         // Sets up the weapons the player can use in game at this point.
         weaponList = new List<Pl_WeaponData.Weapons>();
-        weaponList.Add(Pl_WeaponData.Weapons.MegaBuster);
+        weaponList.Add(defaultWeapon);
+        weaponList.Add(Pl_WeaponData.Weapons.PharaohShot);
+        weaponList.Add(Pl_WeaponData.Weapons.GeminiLaser);
 
         if (GameManager.bossDead_PharaohMan)
             weaponList.Add(Pl_WeaponData.Weapons.PharaohShot);
@@ -981,6 +1040,12 @@ public class Player : MonoBehaviour
                     break;
                 case GameManager.Players.ProtoMan:
                     blankSpritePath = "Sprites/Players/ProtoMan/ProtoMan_Blank";
+                    break;
+                case GameManager.Players.MegaManPower:
+                    blankSpritePath = "Sprites/Players/MegaMan_Power/Power_Blank";
+                    break;
+                case GameManager.Players.Bass:
+                    blankSpritePath = "Sprites/Players/Bass/Bass_Blank";
                     break;
             }
 
@@ -1199,8 +1264,8 @@ public class Player : MonoBehaviour
         get
         {
             return ((body == null || body.velocity.y * up.y <= 0.0f) &&
-                    Physics2D.OverlapBox(transform.position + center - up * height * 0.5f,
-                                        new Vector2(width * 0.95f, height * 0.1f), 0, 1 << 8) != null);
+                    Physics2D.OverlapBox(transform.position + center - up * height * 0.6f,
+                                        new Vector2(width * 0.95f, height * 0.25f), 0, 1 << 8) != null);
         }
     }
     public bool facesWall

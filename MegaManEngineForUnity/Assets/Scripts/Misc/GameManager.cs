@@ -100,7 +100,11 @@ public static class GameManager
         // Resets the room.
         bossesActive = 0;
         roomFinishedLoading = false;
-
+        Time.timeScale = 1.0f;
+    }
+    public static void StartRoom()
+    {
+        ResetRoom();
 
         foreach (Pl_WeaponData wpn in Pl_WeaponData.WeaponList)
         {
@@ -133,7 +137,27 @@ public static class GameManager
 
         }
     }
-	
+    public static GameObject GetPlayerPrefabPath(Players pl)
+    {
+        // Gets the appropriate Character Sprite from the Resources.
+        switch (pl)
+        {
+            default:
+            case Players.MegaMan:
+                return (GameObject)Resources.Load<GameObject>("Prefabs/Players/MegaMan");
+            case Players.ProtoMan:
+                return (GameObject)Resources.Load<GameObject>("Prefabs/Players/ProtoMan");
+            case Players.MegaManJet:
+                return (GameObject)Resources.Load<GameObject>("Prefabs/Players/MegaMan_Jet");
+            case Players.MegaManPower:
+                return (GameObject)Resources.Load<GameObject>("Prefabs/Players/MegaMan_Power");
+            case Players.Bass:
+                return (GameObject)Resources.Load<GameObject>("Prefabs/Players/Bass");
+
+
+        }
+    }
+
     public static void ShakeCamera(float time, float strength)
     {
         if (CameraCtrl.instance != null)

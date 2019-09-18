@@ -22,6 +22,7 @@ public class Pl_Weapon : MonoBehaviour {
     // Checks if the weapon can ignore invisibily from bosses/enemies.
     // Plz use it wisely.
     public bool ignoreInvis = false;
+    public bool ignoreShield = false;
 
     // Checks if the weapon should be destroyed
     // when it hits a solid surface.

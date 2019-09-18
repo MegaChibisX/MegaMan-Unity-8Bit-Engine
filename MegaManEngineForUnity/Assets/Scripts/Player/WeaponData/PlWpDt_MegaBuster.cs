@@ -104,7 +104,26 @@ public class PlWpDt_MegaBuster : Pl_WeaponData
             if (chargeColors.Length >= 2)
             {
                 int index = Mathf.FloorToInt((Time.unscaledTime % 0.2f) * 15.0f);
-                return chargeColors[1, index];
+                WeaponColors colors = chargeColors[1, index];
+                if (owner)
+                {
+                    switch (index)
+                    {
+                        case 0:
+                            colors.colorDark = owner.defaultColors.colorLight;
+                            colors.colorOutline = owner.defaultColors.colorDark;
+                            break;
+                        case 1:
+                            colors.colorLight = owner.defaultColors.colorDark;
+                            colors.colorOutline = owner.defaultColors.colorLight;
+                            break;
+                        case 2:
+                            colors.colorOutline = owner.defaultColors.colorLight;
+                            colors.colorLight = owner.defaultColors.colorDark;
+                            break;
+                    }
+                }
+                return colors;
             }
         }
         // If semi charged, the right colors are decided based on Unity's timer.
@@ -129,7 +148,12 @@ public class PlWpDt_MegaBuster : Pl_WeaponData
         // shots forever. This would be considered lying though. 
         Pl_Shot newShot = null;
         if (charge > 1.0f)
-            newShot = Object.Instantiate(Resources.Load<Pl_Shot>("Prefabs/PlayerWeapons/MegaManChargedShot"));
+        {
+            if (owner != null &&owner.curPlayer == GameManager.Players.ProtoMan)
+                newShot = Object.Instantiate(Resources.Load<Pl_Shot>("Prefabs/PlayerWeapons/ProtoManChargedShot"));
+            else
+                newShot = Object.Instantiate(Resources.Load<Pl_Shot>("Prefabs/PlayerWeapons/MegaManChargedShot"));
+        }
         else if (charge > 0.3f)
             newShot = Object.Instantiate(Resources.Load<Pl_Shot>("Prefabs/PlayerWeapons/MegaManMidShot"));
         else
@@ -152,7 +176,11 @@ public class PlWpDt_MegaBuster : Pl_WeaponData
         owner.body.velocity = Vector2.zero;
 
         // Shoots the first shot.
-        Pl_Shot newShot = Object.Instantiate(Resources.Load<Pl_Shot>("Prefabs/PlayerWeapons/MegaManChargedShot"));
+        Pl_Shot newShot;
+        if (owner != null && owner.curPlayer == GameManager.Players.ProtoMan)
+            newShot = Object.Instantiate(Resources.Load<Pl_Shot>("Prefabs/PlayerWeapons/ProtoManChargedShot"));
+        else
+            newShot = Object.Instantiate(Resources.Load<Pl_Shot>("Prefabs/PlayerWeapons/MegaManChargedShot"));
 
         newShot.transform.position = owner.transform.position + offset;
         if (shootLeft)
@@ -168,7 +196,10 @@ public class PlWpDt_MegaBuster : Pl_WeaponData
         owner.body.velocity = -owner.right * 70.0f + owner.up * 200.0f;
 
         // Shoots the second shot.
-        newShot = Object.Instantiate(Resources.Load<Pl_Shot>("Prefabs/PlayerWeapons/MegaManPoweredShot"));
+        if (owner != null && owner.curPlayer == GameManager.Players.ProtoMan)
+            newShot = Object.Instantiate(Resources.Load<Pl_Shot>("Prefabs/PlayerWeapons/ProtoManPoweredShot"));
+        else
+            newShot = Object.Instantiate(Resources.Load<Pl_Shot>("Prefabs/PlayerWeapons/MegaManPoweredShot"));
         newShot.transform.position = owner.transform.position + offset;
         if (shootLeft)
             newShot.transform.localScale = Vector3.Scale(newShot.transform.localScale, new Vector3(-1, 1, 1));

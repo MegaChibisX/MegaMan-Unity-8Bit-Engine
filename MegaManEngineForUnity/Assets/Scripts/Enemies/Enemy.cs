@@ -48,7 +48,7 @@ public class Enemy : MonoBehaviour {
         // Unique reactions based on the weapon damage should be handled here.
         // Weaknesses and resistances, for example, should be done before calling Damage(float dmg, bool ignoreInvis).
         float damage = weapon.damage;
-        if (shielded)
+        if (shielded && !weapon.ignoreShield)
         {
             weapon.Deflect();
             return;

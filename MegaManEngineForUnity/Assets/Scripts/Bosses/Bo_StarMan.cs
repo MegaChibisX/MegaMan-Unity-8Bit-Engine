@@ -49,7 +49,7 @@ public class Bo_StarMan : Boss
     {
         float damage = weapon.damage;
 
-        if (shielded)
+        if (shielded && !weapon.ignoreShield)
         {
             weapon.Deflect();
             return;

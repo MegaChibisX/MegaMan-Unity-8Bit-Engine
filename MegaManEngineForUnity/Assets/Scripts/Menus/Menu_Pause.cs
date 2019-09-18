@@ -23,7 +23,8 @@ public class Menu_Pause : Menu
     private GUISkin font;
 
     // The sprites of the items in the menu.
-    private Sprite[] playerSprites;
+    //private Sprite[] playerSprites;
+    private PlayerData[] playerData;
     private Sprite[] recItemSprites;
     private Sprite[] utItemSprites;
     private string[] lowerTexts;
@@ -55,10 +56,12 @@ public class Menu_Pause : Menu
         font = (GUISkin)Resources.Load("GUI/8BitFont", typeof(GUISkin));
 
         // Gets sprites from the GameManager for each player.
-        playerSprites = new Sprite[GameManager.availablePlayers.Count];
-        for (int i = 0; i < playerSprites.Length; i++)
-            playerSprites[i] = GameManager.GetPlayerMenuSprite(GameManager.availablePlayers[i]);
-
+        //playerSprites = new Sprite[GameManager.availablePlayers.Count];
+        playerData = new PlayerData[] { new PlayerData(GameManager.Players.MegaMan),
+                                         new PlayerData(GameManager.Players.ProtoMan),
+                                         new PlayerData(GameManager.Players.Bass),
+                                         new PlayerData(GameManager.Players.MegaManJet),
+                                         new PlayerData(GameManager.Players.MegaManPower)};
 
         // Reads the sprites of a sprite sheet from the Resources and assigns the right ones to the right sprites.
         recItemSprites = new Sprite[(int)GameManager.RecoveryItems.Length];
@@ -122,21 +125,9 @@ public class Menu_Pause : Menu
             {
                 // Sets a new player.
                 case SelectModes.Players:
-                    string playerPath = "Prefabs/Players/MegaMan";
-                    switch ((GameManager.Players)selectIndex_Player.x)
-                    {
-                        case GameManager.Players.MegaManSuper:
-                            playerPath = "Prefabs/Players/MegaMan_Red";
-                            break;
-                        case GameManager.Players.ProtoMan:
-                            playerPath = "Prefabs/Players/ProtoMan";
-                            break;
-                        case GameManager.Players.MegaManJet:
-                            playerPath = "Prefabs/Players/MegaMan_Jet";
-                            break;
-                    }
+                    PlayerData data = playerData[selectIndex_Player.x];
 
-                    Player newPlayer = (Object.Instantiate((GameObject)Resources.Load(playerPath))).GetComponent<Player>();
+                    Player newPlayer = Object.Instantiate(GameManager.GetPlayerPrefabPath(data.player)).GetComponent<Player>();
                     Player oldPlayer = owner;
 
                     newPlayer.transform.position = oldPlayer.transform.position;
@@ -275,7 +266,7 @@ public class Menu_Pause : Menu
             owner.audioStage.PlaySound(owner.SFXLibrary.menuMove, true);
         }
 
-        selectIndex_Player.x = Mathf.Clamp(selectIndex_Player.x, 0, playerSprites.Length - 1);
+        selectIndex_Player.x = Mathf.Clamp(selectIndex_Player.x, 0, playerData.Length - 1);
         if (selectIndex_Player.x < selectIndex_Player.z)
             selectIndex_Player.z = selectIndex_Player.x;
         else if (selectIndex_Player.z < selectIndex_Player.x - 3)
@@ -446,9 +437,9 @@ public class Menu_Pause : Menu
         font.label.fontSize = (int)(blockSize * 0.5625f);
 
         // Draw the player section
-        for (int i = selectIndex_Player.z; i < Mathf.Min(playerSprites.Length, selectIndex_Player.z + 4); i++)
+        for (int i = selectIndex_Player.z; i < Mathf.Min(playerData.Length, selectIndex_Player.z + 4); i++)
         {
-            Sprite icon = playerSprites[i];
+            Sprite icon = playerData[i].sprite;
             if (!icon)
                 continue;
 
@@ -578,4 +569,17 @@ public class Menu_Pause : Menu
         font.label.fontSize = prevSize;
     }
 
+
+
+    public class PlayerData
+    {
+        public Sprite sprite;
+        public GameManager.Players player;
+
+        public PlayerData(GameManager.Players _player)
+        {
+            player = _player;
+            sprite = GameManager.GetPlayerMenuSprite(_player);
+        }
+    }
 }

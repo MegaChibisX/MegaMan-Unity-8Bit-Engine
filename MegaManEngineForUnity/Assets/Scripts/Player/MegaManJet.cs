@@ -49,7 +49,7 @@ public class MegaManJet : Player
 
         if (Input.GetButtonDown("Jump"))
         {
-            if (jetTime > 0.0f && !isGrounded)
+            if (jetTime > 0.0f && !isGrounded && jumpsLeft <= 0f)
                 shouldBeInJet = true;
         }
         else if (Input.GetButtonUp("Jump"))

@@ -26,7 +26,7 @@ public class Pl_WeaponData {
     // which has to match its position in the WeaponList, like
     // the examples below. The item 'Length' in the Weapons enum
     // needs to always be last.
-    public enum Weapons { MegaBuster, PharaohShot, GeminiLaser, Length }
+    public enum Weapons { MegaBuster, BassBuster, PowerPunch, PharaohShot, GeminiLaser, Length }
     // The default parameters for each Pl_WeaponData are explained in this class's constructor.
     public static Pl_WeaponData[] WeaponList =
     {
@@ -46,6 +46,26 @@ public class Pl_WeaponData {
                                                 }
                                             }
                                         ),
+        new PlWpDt_BassBuster(null, "B. BUSTER", new WeaponColors(new Color(0, 0, 0, 0),
+                                                                  new Color(0, 0, 0, 0),
+                                                                  new Color(0, 0, 0, 0)),
+                                                                  null),
+        new PlWpDt_PowerPunch(null, "P. PUNCH", new WeaponColors(new Color(0, 0, 0, 0),
+                                                                 new Color(0, 0, 0, 0),
+                                                                 new Color(0, 0, 0, 0)),
+                                                                 new WeaponColors[,]
+                                                                 {
+                                                                     {
+                                                                     new WeaponColors(new Color(0f/255f, 160f/255f, 255f/255f, 0), new Color(0f/256f, 97f/256f, 255f/255, 0), new Color(168f/255f, 0f/255f, 32f/255f)),
+                                                                     new WeaponColors(new Color(0f/255f, 160f/255f, 255f/255f, 0), new Color(0f/256f, 97f/256f, 255f/255, 0), new Color(228f/255f, 0f/255f, 88f/255f)),
+                                                                     new WeaponColors(new Color(0f/255f, 160f/255f, 255f/255f, 0), new Color(0f/256f, 97f/256f, 255f/255, 0), new Color(248f/255f, 88f/255f, 152f/255f))
+                                                                     },
+                                                                     {
+                                                                     new WeaponColors(new Color(5f/256f, 5f/256f, 5f/255), new Color(0f/256f, 232f/256f, 216f/255), new Color(0f/255f, 120f/255f, 248f/255f)),
+                                                                     new WeaponColors(new Color(0f/256f, 120f/256f, 248f/255f), new Color(5f/256f, 5f/256f, 5f/255), new Color(0f/255f, 0f/255f, 0f/255f)),
+                                                                     new WeaponColors(new Color(0f/256f, 120f/256f, 248f/255f), new Color(188f/256f, 188f/256f, 188f/255), new Color(0f/255f, 0f/255f, 0f/255f))
+                                                                     }
+                                                                 }),
         new PlWpDt_PharaohShot(null, "P. SHOT", new WeaponColors(new Color(240f/256f, 208f/256f, 176f/255),
                                                                  new Color(248f/255f, 120f/255f, 88f/255f),
                                                                  Color.black),
@@ -100,13 +120,15 @@ public class Pl_WeaponData {
     }
 
 
-    // Handles events when the weapon is first given to the player.
+    // Handles events when the weapon is first given to the player. It's called when the stage starts.
     public virtual void Init()
     {
         // Reads the sprites the weapon will use from the Resources folder.
         Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/Menus/BarsMenu");
         menuBarEmpty = sprites[0];
         menuBarFull  = sprites[1];
+
+        weaponEnergy = maxWeaponEnergy;
     }
     // Handles events when the weapon is selected by the player.
     public virtual void Start()

@@ -40,8 +40,6 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 > New enemies, including but not limited to: Totem Polen, Shield Attackers, Hothead, Count Bombs (Thanks JKF-Infiniti), etc.
 
-> Stage select screen.
-
 > In-game animation cutscenes.
 
 > More enemies, bosses, players.
@@ -84,8 +82,26 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 # Update Log
 
+## 0.5.0
+> Player creation tutorial added. Check the Readme folder.
+
+> Weapon creation tutorial added. Two for one this time.
+
+> Players can now dash and dash jump.
+
+> ProtoMan's shield now works.
+
+> Added PlWp_Shield script.
+
+> Power Adaptor and its weapon added.
+
+> Bass and his weapon added.
+
+> ProtoMan's attacks are now recolored, to reflect his MM7 attacks better.
+
+
 ## 0.4.0
-> Enemy creation tutorial added. Check the Readmy folder.
+> Enemy creation tutorial added. Check the Readme folder.
 
 > Player weapon types added. Will be addressed soon.
 
