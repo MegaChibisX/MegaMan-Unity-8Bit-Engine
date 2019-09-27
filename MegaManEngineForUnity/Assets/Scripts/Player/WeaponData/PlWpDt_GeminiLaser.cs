@@ -70,7 +70,7 @@ public class PlWpDt_GeminiLaser : Pl_WeaponData {
                 {
                     // Creates an instance of the shot and angles it appropriately.
                     GameObject o = Object.Instantiate(laserBouncyInstance);
-                    o.transform.position = owner.transform.position + owner.center + owner.right * owner.width;
+                    o.transform.position = owner.transform.position + owner._center + owner.right * owner.width;
                     o.transform.rotation = Quaternion.LookRotation(Vector3.forward, shotAngle);
                     o.GetComponent<SpriteRenderer>().flipX = owner.right.x > 0;
 
@@ -109,7 +109,7 @@ public class PlWpDt_GeminiLaser : Pl_WeaponData {
                 {
                     // Spawns the Laser Fragment and positions it in the right place.
                     GameObject o = Object.Instantiate(laserInstance);
-                    o.transform.position = owner.transform.position + owner.center + owner.right * (owner.width + i * 6);
+                    o.transform.position = owner.transform.position + owner._center + owner.right * (owner.width + i * 6);
                     o.GetComponent<SpriteRenderer>().flipX = owner.right.x > 0;
 
                     // Gives the shot the noise and right order.

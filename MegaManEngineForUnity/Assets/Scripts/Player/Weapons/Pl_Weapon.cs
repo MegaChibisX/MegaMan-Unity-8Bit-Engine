@@ -13,7 +13,7 @@ using UnityEngine;
 public class Pl_Weapon : MonoBehaviour {
 
 
-    public enum WeaponTypes { Normal, Pharaoh, Gemini, Metal, Star }
+    public enum WeaponTypes { Normal, Pharaoh, Gemini, Metal, Star, Bomb, Wind, Galaxy, Commando, Rush }
     public WeaponTypes weaponType;
 
 
@@ -34,6 +34,8 @@ public class Pl_Weapon : MonoBehaviour {
     // when it hits an enemy with more health than
     // the damage of this weapon.
     public bool destroyOnBigEnemies = true;
+    // Destroys the weapon if it's no longer inside the Camera view.
+    public bool destroyOutsideView = false; 
 
     // Each Weapon needs to have a rigidbody,
     // and a Deflect Audio Clip is appreciated.
@@ -46,6 +48,11 @@ public class Pl_Weapon : MonoBehaviour {
     {
         // Sets the rigidbody.
         body = GetComponent<Rigidbody2D>();
+    }
+    public virtual void Update()
+    {
+        if (destroyOutsideView && !InView())
+            Destroy(gameObject);
     }
     public virtual void Deflect()
     {
@@ -104,6 +111,28 @@ public class Pl_Weapon : MonoBehaviour {
             if (destroyOnWalls)
                 Destroy(gameObject);
         }
+    }
+
+    public bool InView()
+    {
+        CameraCtrl cmr = CameraCtrl.instance;
+
+        if (!cmr)
+            return false;
+
+        int withinBounds = 0;
+
+        // Checks if the Blueprint is in view.
+            if (transform.position.x + 128f < cmr.transform.position.x + 104)
+                withinBounds++;
+            if (transform.position.x + 128f > cmr.transform.position.x - 104)
+                withinBounds++;
+            if (transform.position.y + 128f < cmr.transform.position.y + 104)
+                withinBounds++;
+            if (transform.position.y + 128f > cmr.transform.position.y - 104)
+                withinBounds++;
+
+        return withinBounds == 4;
     }
 
 }

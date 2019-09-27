@@ -72,13 +72,13 @@ public class EnemyBlueprint : MonoBehaviour {
 
         Gizmos.color = InView(true) ? Color.yellow : new Color(1.0f, 0.5f, 0.0f);
         Gizmos.DrawCube(transform.position + (Vector3)center + Vector3.up * size.y * 25f - Vector3.right * 5f, Vector3.one * 3.5f + Vector3.forward * 100.0f);
-    }                                   
+    }
 
 
     public bool SpawnEnemy()
     {
         // Spawns the enemy, if there isn't one already in the scene.
-        if (blueprintInstance)
+        if (blueprintInstance || !blueprint)
             return false;
 
         blueprintInstance = Instantiate(blueprint);

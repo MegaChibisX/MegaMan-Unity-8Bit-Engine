@@ -33,6 +33,8 @@ public class Menu_Pause : Menu
     public enum SelectModes { Weapons, Players, RecoveryItems, UtilityItems, LowerText }
     public SelectModes mode;
 
+    private float inputCooldown;
+    private Vector2 lastInput;
 
 
     public void Start(Player player)
@@ -98,6 +100,13 @@ public class Menu_Pause : Menu
     public override void Update()
     {
 
+        if (new Vector2(Mathf.Round(Input.GetAxisRaw("Horizontal")),
+                        Mathf.Round(Input.GetAxisRaw("Vertical"))) !=
+            lastInput)
+            inputCooldown = 0.0f;
+        else if (inputCooldown > 0.0f)
+            inputCooldown -= Time.unscaledDeltaTime;
+
         // Handles input based on the active segment.
         switch (mode)
         {
@@ -129,6 +138,7 @@ public class Menu_Pause : Menu
 
                     Player newPlayer = Object.Instantiate(GameManager.GetPlayerPrefabPath(data.player)).GetComponent<Player>();
                     Player oldPlayer = owner;
+                    newPlayer.body = newPlayer.GetComponent<Rigidbody2D>();
 
                     newPlayer.transform.position = oldPlayer.transform.position;
                     newPlayer.transform.rotation = oldPlayer.transform.rotation;
@@ -139,6 +149,9 @@ public class Menu_Pause : Menu
                     newPlayer.useIntro = false;
                     owner = newPlayer;
 
+                    newPlayer.RefreshWeaponList();
+                    newPlayer.health = oldPlayer.health;
+                    newPlayer.SetWeapon(oldPlayer.currentWeaponIndex);
                     foreach (Pl_WeaponData wpn in Pl_WeaponData.WeaponList)
                         wpn.owner = newPlayer;
 
@@ -185,6 +198,8 @@ public class Menu_Pause : Menu
                             break;
                         case "RETRY":
                             // Retry
+                            Debug.Log("M");
+                            owner.pauseMenu = null;
                             owner.Kill();
                             break;
                         case "EXIT":
@@ -210,8 +225,12 @@ public class Menu_Pause : Menu
     /// </summary>
     private void InputWeapon()
     {
-        if (Input.GetButtonDown("Vertical"))
+        if (Mathf.RoundToInt(Input.GetAxisRaw("Vertical")) != 0 && inputCooldown <= 0.0f)
         {
+            lastInput = new Vector2(Mathf.Round(Input.GetAxisRaw("Horizontal")),
+                           Mathf.Round(Input.GetAxisRaw("Vertical")));
+            inputCooldown = 0.25f;
+
             owner.audioStage.PlaySound(owner.SFXLibrary.menuMove, true);
 
             if (Input.GetAxisRaw("Vertical") > 0 && selectIndex_Weapon.y == 0)
@@ -219,7 +238,7 @@ public class Menu_Pause : Menu
                 mode = SelectModes.Players;
                 return;
             }
-            else if (Input.GetAxisRaw("Vertical") < 0 && selectIndex_Weapon.y >= (owner.weaponList.Count) / 2 - 1)
+            else if (Input.GetAxisRaw("Vertical") < 0 && selectIndex_Weapon.y * 2 + selectIndex_Weapon.x >= owner.weaponList.Count - 2)
             {
                 if (selectIndex_Weapon.x == 0)
                     mode = SelectModes.RecoveryItems;
@@ -229,8 +248,12 @@ public class Menu_Pause : Menu
             }
             selectIndex_Weapon.y += Input.GetAxisRaw("Vertical") > 0 ? -1 : 1;
         }
-        if (Input.GetButtonDown("Horizontal"))
+        if (Mathf.RoundToInt(Input.GetAxisRaw("Horizontal")) != 0 && inputCooldown <= 0.0f)
         {
+            lastInput = new Vector2(Mathf.Round(Input.GetAxisRaw("Horizontal")),
+                           Mathf.Round(Input.GetAxisRaw("Vertical")));
+            inputCooldown = 0.25f;
+
             selectIndex_Weapon.x += Input.GetAxisRaw("Horizontal") > 0 ? 1 : -1;
 
             owner.audioStage.PlaySound(owner.SFXLibrary.menuMove, true);
@@ -238,20 +261,30 @@ public class Menu_Pause : Menu
 
         if (selectIndex_Weapon.y < 0)
             selectIndex_Weapon.y = 0;
-        else if (selectIndex_Weapon.y >= (owner.weaponList.Count) / 2)
-            selectIndex_Weapon.y = (owner.weaponList.Count - 1) / 2;
+        else if (selectIndex_Weapon.y > (owner.weaponList.Count + 1) / 2)
+            selectIndex_Weapon.y = (owner.weaponList.Count + 1) / 2;
+
+        if (selectIndex_Weapon.y - selectIndex_Weapon.z < 0)
+            selectIndex_Weapon.z = selectIndex_Weapon.y;
+        else if (selectIndex_Weapon.y - selectIndex_Weapon.z >= 6)
+            selectIndex_Weapon.z = selectIndex_Weapon.y - 5;
 
         if (selectIndex_Weapon.x < 0)
             selectIndex_Weapon.x = 0;
-        else if (selectIndex_Weapon.x == 1 && owner.weaponList.Count == selectIndex_Weapon.y * 2 + selectIndex_Weapon.x)
-            selectIndex_Weapon.x = 0;
         else if (selectIndex_Weapon.x > 1)
             selectIndex_Weapon.x = 1;
+
+        if (selectIndex_Weapon.y * 2 + selectIndex_Weapon.x >= owner.weaponList.Count)
+            selectIndex_Weapon.x = 0;
     }
     private void InputPlayer()
     {
-        if (Input.GetButtonDown("Vertical"))
+        if (Mathf.RoundToInt(Input.GetAxisRaw("Vertical")) != 0 && inputCooldown <= 0.0f)
         {
+            lastInput = new Vector2(Mathf.Round(Input.GetAxisRaw("Horizontal")),
+                           Mathf.Round(Input.GetAxisRaw("Vertical")));
+            inputCooldown = 0.25f;
+
             owner.audioStage.PlaySound(owner.SFXLibrary.menuMove, true);
             if (Input.GetAxisRaw("Vertical") < 0)
             {
@@ -259,8 +292,12 @@ public class Menu_Pause : Menu
                 return;
             }
         }
-        if (Input.GetButtonDown("Horizontal"))
+        if (Mathf.RoundToInt(Input.GetAxisRaw("Horizontal")) != 0 && inputCooldown <= 0.0f)
         {
+            lastInput = new Vector2(Mathf.Round(Input.GetAxisRaw("Horizontal")),
+                           Mathf.Round(Input.GetAxisRaw("Vertical")));
+            inputCooldown = 0.25f;
+
             selectIndex_Player.x += Input.GetAxisRaw("Horizontal") > 0 ? 1 : -1;
 
             owner.audioStage.PlaySound(owner.SFXLibrary.menuMove, true);
@@ -274,8 +311,12 @@ public class Menu_Pause : Menu
     }
     private void InputRecItems()
     {
-        if (Input.GetButtonDown("Vertical"))
+        if (Mathf.RoundToInt(Input.GetAxisRaw("Vertical")) != 0 && inputCooldown <= 0.0f)
         {
+            lastInput = new Vector2(Mathf.Round(Input.GetAxisRaw("Horizontal")),
+                           Mathf.Round(Input.GetAxisRaw("Vertical")));
+            inputCooldown = 0.25f;
+
             if (Input.GetAxisRaw("Vertical") > 0)
                 mode = SelectModes.Weapons;
             else
@@ -284,8 +325,12 @@ public class Menu_Pause : Menu
             owner.audioStage.PlaySound(owner.SFXLibrary.menuMove, true);
             return;
         }
-        if (Input.GetButtonDown("Horizontal"))
+        if (Mathf.RoundToInt(Input.GetAxisRaw("Horizontal")) != 0 && inputCooldown <= 0.0f)
         {
+            lastInput = new Vector2(Mathf.Round(Input.GetAxisRaw("Horizontal")),
+                           Mathf.Round(Input.GetAxisRaw("Vertical")));
+            inputCooldown = 0.25f;
+
             selectIndex_RecItems.x += Input.GetAxisRaw("Horizontal") > 0 ? 1 : -1;
 
             owner.audioStage.PlaySound(owner.SFXLibrary.menuMove, true);
@@ -301,8 +346,12 @@ public class Menu_Pause : Menu
     }
     private void InputUtItems()
     {
-        if (Input.GetButtonDown("Vertical"))
+        if (Mathf.RoundToInt(Input.GetAxisRaw("Vertical")) != 0 && inputCooldown <= 0.0f)
         {
+            lastInput = new Vector2(Mathf.Round(Input.GetAxisRaw("Horizontal")),
+                           Mathf.Round(Input.GetAxisRaw("Vertical")));
+            inputCooldown = 0.25f;
+
             if (Input.GetAxisRaw("Vertical") > 0)
                 mode = SelectModes.Weapons;
             else
@@ -311,8 +360,12 @@ public class Menu_Pause : Menu
             owner.audioStage.PlaySound(owner.SFXLibrary.menuMove, true);
             return;
         }
-        if (Input.GetButtonDown("Horizontal"))
+        if (Mathf.RoundToInt(Input.GetAxisRaw("Horizontal")) != 0 && inputCooldown <= 0.0f)
         {
+            lastInput = new Vector2(Mathf.Round(Input.GetAxisRaw("Horizontal")),
+                           Mathf.Round(Input.GetAxisRaw("Vertical")));
+            inputCooldown = 0.25f;
+
             selectIndex_UtItems.x += Input.GetAxisRaw("Horizontal") > 0 ? 1 : -1;
 
             owner.audioStage.PlaySound(owner.SFXLibrary.menuMove, true);
@@ -329,10 +382,14 @@ public class Menu_Pause : Menu
     }
     private void InputLowerText()
     {
-        if (Input.GetButtonDown("Vertical"))
+        if (Mathf.RoundToInt(Input.GetAxisRaw("Vertical")) != 0 && inputCooldown <= 0.0f)
         {
             if (Input.GetAxisRaw("Vertical") > 0)
             {
+                lastInput = new Vector2(Mathf.Round(Input.GetAxisRaw("Horizontal")),
+                               Mathf.Round(Input.GetAxisRaw("Vertical")));
+                inputCooldown = 0.25f;
+
                 if (selectIndex_LowerText.x > 0)
                     mode = SelectModes.UtilityItems;
                 else
@@ -342,8 +399,12 @@ public class Menu_Pause : Menu
                 return;
             }
         }
-        if (Input.GetButtonDown("Horizontal"))
+        if (Mathf.RoundToInt(Input.GetAxisRaw("Horizontal")) != 0 && inputCooldown <= 0.0f)
         {
+            lastInput = new Vector2(Mathf.Round(Input.GetAxisRaw("Horizontal")),
+                           Mathf.Round(Input.GetAxisRaw("Vertical")));
+            inputCooldown = 0.25f;
+
             selectIndex_LowerText.x += Input.GetAxisRaw("Horizontal") > 0 ? 1 : -1;
 
             owner.audioStage.PlaySound(owner.SFXLibrary.menuMove, true);
@@ -357,6 +418,9 @@ public class Menu_Pause : Menu
         // Closes the pause menu.
         owner.pauseMenu = null;
         Time.timeScale = GameManager.globalTimeScale;
+        owner.body.bodyType = RigidbodyType2D.Dynamic;
+        owner.SetLocalTimeScale(Player.timeScale);
+        owner.body.velocity = Vector2.zero;
     }
     public IEnumerator Heal(float units, bool recoverHealth, bool recoverWeapons, GameManager.RecoveryItems recItem)
     {
@@ -436,6 +500,22 @@ public class Menu_Pause : Menu
         GUI.DrawTexture(new Rect(cmrBase.x, cmrBase.y, Camera.main.pixelWidth, Camera.main.pixelHeight), background);
         font.label.fontSize = (int)(blockSize * 0.5625f);
 
+        // Draw the bolts
+        Sprite bolt = (Sprite)Resources.LoadAll("Sprites/Stage/Items")[10];
+        GUI.DrawTextureWithTexCoords(new Rect(cmrBase.x + 12.825f * blockSize,
+                                      cmrBase.y + 1.45f * blockSize,
+                                      1.0f * blockSize,
+                                      1.0f * blockSize),
+                                      bolt.texture, new Rect(bolt.textureRect.x / bolt.texture.width, bolt.textureRect.y / bolt.texture.height,
+                                      bolt.textureRect.width / bolt.texture.width, bolt.textureRect.height / bolt.texture.height));
+        GUI.Label(new Rect(cmrBase.x + 14.3f * blockSize,
+                                      cmrBase.y + 1.7f * blockSize,
+                                      2.125f * blockSize,
+                                      1.0f * blockSize),
+                                      GameManager.bolts.ToString("0000"),
+                                      font.label);
+
+
         // Draw the player section
         for (int i = selectIndex_Player.z; i < Mathf.Min(playerData.Length, selectIndex_Player.z + 4); i++)
         {
@@ -456,7 +536,7 @@ public class Menu_Pause : Menu
         // Draw the weapon section
         for (int x = 0; x < Mathf.Min(owner.weaponList.Count, 2); x++)
         {
-            for (int y = 0; y < (owner.weaponList.Count + 2) / 2; y++)
+            for (int y = selectIndex_Weapon.z; y < Mathf.Min((owner.weaponList.Count + 2) / 2, selectIndex_Weapon.z + 6); y++)
             {
 
                 if (y * 2 + x >= owner.weaponList.Count)
@@ -468,13 +548,13 @@ public class Menu_Pause : Menu
                 {
                     Sprite icon = (selectIndex_Weapon.x == x && selectIndex_Weapon.y == y && mode == SelectModes.Weapons ? weapon.weaponIcon : weapon.weaponIconGray);
                     GUI.DrawTextureWithTexCoords(new Rect(cmrBase.x + 3.0f * blockSize + x * 5.0f * blockSize,
-                                 cmrBase.y + 3.5f * blockSize + y * 1.0f * blockSize,
+                                 cmrBase.y + 3.5f * blockSize + (y - selectIndex_Weapon.z) * 1.0f * blockSize,
                                  1.0f * blockSize,
                                  1.0f * blockSize),
                                  icon.texture, new Rect(icon.textureRect.x / icon.texture.width, icon.textureRect.y / icon.texture.height,
                                  icon.textureRect.width / icon.texture.width, icon.textureRect.height / icon.texture.height));
                     GUI.Label(new Rect(cmrBase.x + 4.25f * blockSize + x * 5.0f * blockSize,
-                                       cmrBase.y + 3.5f * blockSize + y * 1.0f * blockSize,
+                                       cmrBase.y + 3.5f * blockSize + (y - selectIndex_Weapon.z) * 1.0f * blockSize,
                                        6.0f * blockSize,
                                        1.0f * blockSize),
                                        weapon.menuName,
@@ -484,7 +564,7 @@ public class Menu_Pause : Menu
                     {
                         icon = (weapon.weaponEnergy >= i ? weapon.menuBarFull : weapon.menuBarEmpty);
                         GUI.DrawTextureWithTexCoords(new Rect(cmrBase.x + 4.25f * blockSize + x * 5.0f * blockSize + i * 0.125f * blockSize,
-                                                              cmrBase.y + 4.0f * blockSize + y * 1.0f * blockSize,
+                                                              cmrBase.y + 4.0f * blockSize + (y - selectIndex_Weapon.z) * 1.0f * blockSize,
                                                               0.125f * blockSize,
                                                               0.5f * blockSize),
                                                               icon.texture, new Rect(icon.textureRect.x / icon.texture.width, icon.textureRect.y / icon.texture.height,

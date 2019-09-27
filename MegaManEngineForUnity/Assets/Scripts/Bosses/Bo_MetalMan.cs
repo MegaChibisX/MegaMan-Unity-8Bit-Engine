@@ -19,6 +19,8 @@ public class Bo_MetalMan : Boss
     protected AudioSource aud;
 
     public Collider2D col;
+    public GameObject convLeft;
+    public GameObject convRight;
 
 
 
@@ -27,7 +29,7 @@ public class Bo_MetalMan : Boss
         base.Start();
 
         // Destroy Metal Man if he has already been beaten.
-        if (GameManager.bossDead_MetalMan)
+        if (GameManager.bossDead_MetalMan && !ignorePreviousDeath)
             Destroy(transform.parent.gameObject);
 
         anim = GetComponentInChildren<Animator>();
@@ -35,6 +37,7 @@ public class Bo_MetalMan : Boss
         aud = GetComponent<AudioSource>();
 
         anim.gameObject.SetActive(false);
+        SetConveyor(true);
     }
     private void LateUpdate()
     {
@@ -68,7 +71,18 @@ public class Bo_MetalMan : Boss
     {
         // Metal Man stops doing what he's doing and dies.
         StopAllCoroutines();
-        StartCoroutine(PlayDeathLong());
+        if (!ignorePreviousDeath)
+            GameManager.bossDead_MetalMan = true;
+        StartCoroutine(PlayDeathShort());
+        if (GameManager.bossesActive <= 0)
+            CameraCtrl.instance.PlayMusic(null);
+    }
+    private void SetConveyor(bool right)
+    {
+        if (convRight)
+            convRight.SetActive(right);
+        if (convLeft)
+            convLeft.SetActive(!right);
     }
 
 
@@ -79,6 +93,9 @@ public class Bo_MetalMan : Boss
         while (true)
         {
             yield return null;
+
+            if (Random.Range(0, 10) == 0 && convRight != null)
+                SetConveyor(!convRight.activeSelf);
 
             anim.transform.localScale = new Vector3(GameManager.playerPosition.x > transform.position.x ? -1 : 1, 1, 1);
 
@@ -131,17 +148,21 @@ public class Bo_MetalMan : Boss
     {
         yield return null;
 
+
         Vector3 jumpTarget = rightSide.position;
         if (Vector3.Distance(transform.position, leftSide.position) > Vector3.Distance(transform.position, rightSide.position))
             jumpTarget = leftSide.position;
 
-        Vector3 velocity = Helper.LaunchVelocity(transform.position, jumpTarget, 70, Physics2D.gravity.y * body.gravityScale);
+        Vector3 velocity = Helper.LaunchVelocity(transform.position, jumpTarget, 60, Physics2D.gravity.y * body.gravityScale);
         body.velocity = velocity;
 
         anim.Play("Jump");
 
         while (body.velocity.y > 1.0f || !isGrounded)
             yield return null;
+
+        if (convRight != null)
+            SetConveyor(!convRight.activeSelf);
 
         body.velocity = Vector3.zero;
 
@@ -223,6 +244,8 @@ public class Bo_MetalMan : Boss
         Time.timeScale = 0.0f;
         if (Player.instance != null)
         {
+            Player.instance.StopAllCoroutines();
+            Player.instance.body.velocity = Vector2.zero;
             Player.instance.CanMove(false);
             Player.instance.SetGear(false, false);
             Player.instance.RefreshWeaponList();
@@ -257,7 +280,7 @@ public class Bo_MetalMan : Boss
         Time.timeScale = 1.0f;
         if (Player.instance != null)
         {
-            if (GameManager.bossesActive > 0)
+            if (GameManager.bossesActive > 0 || !endStageAfterFight)
             {
                 Player.instance.CanMove(true);
                 Player.instance.canBeHurt = true;

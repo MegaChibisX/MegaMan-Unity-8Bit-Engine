@@ -22,7 +22,7 @@ public class Stage_YokuController : MonoBehaviour {
 
     // If the player is inside this area, the sound plays. If not,
     // the player is too far away to hear the noise.
-    private Rect viewArea;
+    public Rect viewArea;
 
 
     private void Start()
@@ -76,10 +76,11 @@ public class Stage_YokuController : MonoBehaviour {
                         viewArea.width = b.transform.position.x + 8;
 
                     if (b.transform.position.y - 8 < viewArea.x)
-                        viewArea.x = b.transform.position.y - 8;
+                        viewArea.y = b.transform.position.y - 8;
                     else if (b.transform.position.y + 8 > viewArea.height)
                         viewArea.height = b.transform.position.y + 8;
                 }
+                j++;
             }
         }
 

@@ -158,7 +158,6 @@ public class Enemy : MonoBehaviour {
     }
     public virtual void  ChangeColorScheme(Color[] colors) { }
 
-
 }
 
 [System.Serializable]

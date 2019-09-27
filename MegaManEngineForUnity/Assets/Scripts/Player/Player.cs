@@ -66,9 +66,11 @@ public class Player : MonoBehaviour
     public bool paused = false;
     public bool useIntro = true;
     public Menu_Cutscene cutscene;
+    [System.NonSerialized]
+    public Vector2 prePauseVelocity;
 
     
-    public enum PlayerStates { Normal, Still, Frozen, Climb, Hurt, Fallen, Paused }
+    public enum PlayerStates { Normal, Still, Frozen, Climb, Hurt, Fallen, Paused, Riding }
     public PlayerStates state = PlayerStates.Normal;
 
     public bool canMove = true;
@@ -124,10 +126,19 @@ public class Player : MonoBehaviour
     protected float gearTrailTime = 0.0f;
     protected bool gearRecovery = false;
 
+    public Ride ride;
+
     // Information about the collider.
     public float width = 14.0f;
     public float height = 17.67f;
     public Vector3 center = new Vector3(0.0f, -2.32f, 0.0f);
+    public Vector3 _center
+    {
+        get
+        {
+            return new Vector3(center.x, center.y * (gravityInverted ? -1 : 1), center.z);
+        }
+    }
     [System.NonSerialized]
     public bool lastLookingLeft = false;
 
@@ -166,6 +177,10 @@ public class Player : MonoBehaviour
             // If there is no checkpoint active, teleport right where you are and save a checkpoint.
             else
             {
+                if (CameraCtrl.instance == null)
+                    FindObjectOfType<CameraCtrl>().Start();
+
+
                 GameManager.checkpointLocation = transform.position;
                 GameManager.checkpointActive = true;
                 GameManager.checkpointCamera_LeftCenter = CameraCtrl.instance.leftCenter;
@@ -181,10 +196,6 @@ public class Player : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
 
-        // Variable resets.
-        health = maxHealth;
-        slideCol.enabled = false;
-
         // Sets the weapons the player should have at the beginning of the stage.
         RefreshWeaponList();
         if (currentWeaponIndex >= weaponList.Count)
@@ -192,7 +203,13 @@ public class Player : MonoBehaviour
         else if (currentWeaponIndex < 0)
             currentWeaponIndex = 0;
 
-        SetWeapon(currentWeaponIndex);
+        // Variable resets.
+        if (health == 0)
+        { 
+            health = maxHealth;
+            SetWeapon(currentWeaponIndex);
+        }
+        slideCol.enabled = false;
         SetState(PlayerStates.Normal);
 
         // Sets the material for the Gear Bar. Look at the documentation for more information.
@@ -205,6 +222,7 @@ public class Player : MonoBehaviour
     }
     protected virtual void Update()
     {
+
         // If there is a cutscene that must be playing, play the cutscene.
         if (cutscene.isActive)
             cutscene.Update();
@@ -239,6 +257,12 @@ public class Player : MonoBehaviour
                 case PlayerStates.Hurt:
                 case PlayerStates.Paused:
                     break;
+                case PlayerStates.Riding:
+                    if (ride == null)
+                        Dismount();
+                    else
+                        Ride();
+                    break;
             }
             // Handles attack related activities.
             HandleInput_Attacking();
@@ -252,15 +276,13 @@ public class Player : MonoBehaviour
         // After everything else has been done for the current frame, this variable is set to reflect the current frame,
         // as it will be red in the next one again.
         wasGrounded = isGrounded;
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            Earthquake(1.0f);
     }
     protected virtual void LateUpdate()
     {
         // The color of the player needs to change depending on the player's weapon
         // and their level of charge.
-        Pl_WeaponData.WeaponColors colors = currentWeapon.GetColors();
+
+        Pl_WeaponData.WeaponColors colors = currentWeapon == null ? defaultColors : currentWeapon.GetColors();
 
         // bodyColorDark    = MegaMan's blue color
         // bodyColorLight   = MegaMan's cyan color
@@ -301,7 +323,9 @@ public class Player : MonoBehaviour
     }
     protected virtual void FixedUpdate()
     {
-        body.position += (Vector2)windVector;
+        // Moves with wind.
+        if (canMove)
+            body.position += (Vector2)windVector;
         windVector = Vector3.zero;
 
         // Handles movement related activities that should be done in FixedUpdate
@@ -319,17 +343,17 @@ public class Player : MonoBehaviour
         // This is all for better display of the character.
         // Comment out random lines and see what happens.
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(transform.position + center, new Vector3(width, height, width));
+        Gizmos.DrawWireCube(transform.position + _center, new Vector3(width, height, width));
         Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position + center, transform.position + center - up * height);
+        Gizmos.DrawLine(transform.position + _center, transform.position + _center - up * height);
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position + center, transform.position + center + right * width);
+        Gizmos.DrawLine(transform.position + _center, transform.position + _center + right * width);
         Gizmos.color = isGrounded ? Color.green : Color.red;
-        Gizmos.DrawCube(transform.position + center - up * height * 0.3f, new Vector3(width, height * 0.4f, width));
+        Gizmos.DrawCube(transform.position + _center - up * height * 0.3f, new Vector3(width, height * 0.4f, width));
         Gizmos.color = facesWall ? Color.green : Color.red;
-        Gizmos.DrawCube(transform.position + center + right * width * 0.4f, new Vector3(width * 0.1f, height, width));
+        Gizmos.DrawCube(transform.position + _center + right * width * 0.4f, new Vector3(width * 0.1f, height, width));
         Gizmos.color = canStand ? Color.red : Color.green;
-        Gizmos.DrawCube(transform.position + center + up * height * 0.3f, new Vector3(width * 0.5f, height * 0.2f, width));
+        Gizmos.DrawCube(transform.position + _center + up * height * 0.3f, new Vector3(width * 0.5f, height * 0.2f, width));
     }
     protected virtual void OnGUI()
     {
@@ -421,14 +445,6 @@ public class Player : MonoBehaviour
                 if (invisTime <= 0.0f && canBeHurt)
                     Damage(otherBody.GetComponent<Enemy>().damage);
             }
-            // If in contact with a Boss Door, go through the door.
-            else if (otherBody.GetComponent<Stage_BossDoor>())
-            {
-                Stage_BossDoor door = otherBody.GetComponent<Stage_BossDoor>();
-                
-                SetGear(false, false);
-                StartCoroutine(door.moveThroughDoors(this));
-            }
         }
     }
     protected virtual void OnCollisionStay2D(Collision2D collision)
@@ -438,7 +454,20 @@ public class Player : MonoBehaviour
         {
             if (otherBody.gameObject.layer == 13)
             {
+                print(collision.contacts[0].point);
+                print("S");
                 Kill();
+            }
+            // If in contact with a Boss Door, go through the door.
+            else if (otherBody.GetComponent<Stage_BossDoor>() && canMove)
+            {
+                Stage_BossDoor door = otherBody.GetComponent<Stage_BossDoor>();
+
+                if (door.CheckForEmptySpace(this))
+                {
+                    SetGear(false, false);
+                    StartCoroutine(door.moveThroughDoors(this));
+                }
             }
         }
     }
@@ -474,6 +503,10 @@ public class Player : MonoBehaviour
                 GameManager.checkpointCamera_MaxRightMovement = CameraCtrl.instance.maxRightMovement;
                 GameManager.checkpointCamera_MaxUpMovement = CameraCtrl.instance.maxUpMovement;
             }
+            else if (otherBody.GetComponent<Ride>())
+            {
+                Mount(otherBody.GetComponent<Ride>());
+            }
         }
     }
     protected virtual void OnTriggerStay2D(Collider2D collider)
@@ -489,6 +522,13 @@ public class Player : MonoBehaviour
             else if (otherBody.GetComponent<Stage_GravityScale>() != null)
             {
                 gravityEnvironmentMulti *= otherBody.GetComponent<Stage_GravityScale>().gravityScale;
+            }
+            else  if (otherBody.GetComponent<Stage_Sand>() != null)
+            {
+                float sinkSpeed = otherBody.GetComponent<Stage_Sand>().sinkSpeed;
+
+                if (body.velocity.y * anim.transform.localScale.y < 0)
+                    body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y, -sinkSpeed, sinkSpeed));
             }
         }
     }
@@ -521,10 +561,9 @@ public class Player : MonoBehaviour
             // If not in a slide, or in a slide without a block over the player, jump.
             else if (canStand &&
                         (jumpsLeft > 0 ||
-                        Physics2D.Linecast(transform.position + center, transform.position + center - up * height, 1 << 12) ||
-                        Input.GetKey(KeyCode.LeftShift)))
+                        isInSand))
             {
-                body.velocity = new Vector2(body.velocity.x, jumpForce * timeScale / GameManager.globalTimeScale * up.y);
+                body.velocity = new Vector2(body.velocity.x, jumpForce * timeScale / (GameManager.globalTimeScale != 0 ? GameManager.globalTimeScale : 1) * up.y);
                 jumpsLeft--;
             }
         }
@@ -552,7 +591,7 @@ public class Player : MonoBehaviour
             // Ladder layer = 10
             // Look for a ladder where the player is standing. If it's there, climb.
             if (Mathf.Abs(input.y) > 0.5f &&
-                    Physics2D.OverlapPoint(transform.position + center, 1 << 10))
+                    Physics2D.OverlapPoint(transform.position + _center, 1 << 10))
             {
                 transform.position = new Vector3(Mathf.Round((transform.position.x - 8.0f) / 16.0f) * 16.0f + 8.0f,
                     transform.position.y, transform.position.z);
@@ -561,7 +600,7 @@ public class Player : MonoBehaviour
             // Ladder layer = 10
             // Look for a ladder where under the player. If it's there, climb.
             else if (input.y < -0.5f &&
-                        Physics2D.OverlapPoint(transform.position + center - up * height * 0.6f, 1 << 10))
+                        Physics2D.OverlapPoint(transform.position + _center - up * height * 0.6f, 1 << 10))
             {
                 transform.position = new Vector3(Mathf.Round((transform.position.x - 8.0f) / 16.0f) * 16.0f + 8.0f,
                     transform.position.y - height * 0.6f, transform.position.z);
@@ -597,8 +636,8 @@ public class Player : MonoBehaviour
                 currentWeaponIndex += Mathf.RoundToInt(Input.GetAxisRaw("WeaponSwitch"));
 
                 if (currentWeaponIndex < 0)
-                    currentWeaponIndex = (int)Pl_WeaponData.Weapons.Length - 1;
-                else if (currentWeaponIndex == (int)Pl_WeaponData.Weapons.Length)
+                    currentWeaponIndex = (int)weaponList.Count - 1;
+                else if (currentWeaponIndex >= (int)weaponList.Count)
                     currentWeaponIndex = 0;
 
                 if (currentWeapon != null)
@@ -613,27 +652,21 @@ public class Player : MonoBehaviour
         if (!gearRecovery && gearAvailable)
         {
             // If Power Gear key is held, then it goes Double Gear. If not, Speed Gear.
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetButtonDown("GearSwitch") && Input.GetAxisRaw("GearSwitch") <= 0)
             {
-                if (Input.GetKey(KeyCode.E) && !gearActive_Speed)
+                if (Input.GetAxisRaw("GearSwitch") == 0 && !gearActive_Speed)
                     SetGear(true, true);
                 else
                     SetGear(!gearActive_Speed, false);
             }
             // If Speed Gear key is held, then it goes Double Gear. If not, Power Gear.
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetButtonDown("GearSwitch") && Input.GetAxisRaw("GearSwitch") >= 0)
             {
-                if (Input.GetKey(KeyCode.Q) && !gearActive_Power)
+                if (Input.GetAxisRaw("GearSwitch") == 0 && !gearActive_Power)
                     SetGear(true, true);
                 else
                     SetGear(false, !gearActive_Power);
             }
-        }
-        // Inverts gravity. For testing purposes. If it's still here in the final product, I screwed up.
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            gravityInverted = !gravityInverted;
-            SetGravity(gravityScale == 0 ? 0 : 1, gravityInverted);
         }
 
     }
@@ -646,7 +679,7 @@ public class Player : MonoBehaviour
             input.x = Mathf.Clamp(Mathf.Round(Input.GetAxisRaw("Horizontal") * 1.5f), -1f, 1f);
         else
         {
-            if (Physics2D.Raycast(transform.position + center, -up, height * 0.6f, 1 << 11))
+            if (Physics2D.Raycast(transform.position + _center, -up, height * 0.6f, 1 << 11))
             {
                 input.x = Mathf.MoveTowards(input.x, Input.GetAxisRaw("Horizontal"), Time.unscaledDeltaTime * 0.5f);
             }
@@ -661,6 +694,7 @@ public class Player : MonoBehaviour
             if (pauseMenu == null)
             {
                 Time.timeScale = GameManager.globalTimeScale;
+                SetLocalTimeScale(timeScale);
                 paused = false;
             }
             else
@@ -669,7 +703,7 @@ public class Player : MonoBehaviour
         else
         {
             // If the pause menu button is pressed, does everything that needs to be done for the game to be paused.
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetButtonDown("Start") && canMove)
             {
                 GameManager.globalTimeScale = Time.timeScale;
                 Time.timeScale = 0.0f;
@@ -677,6 +711,10 @@ public class Player : MonoBehaviour
 
                 pauseMenu = new Menu_Pause();
                 pauseMenu.Start(this);
+
+                prePauseVelocity = body.velocity;
+                body.velocity = Vector2.zero;
+                body.bodyType = RigidbodyType2D.Static;
             }
         }
     }
@@ -709,15 +747,18 @@ public class Player : MonoBehaviour
             throwTime -= deltaTime;
 
 
-        // Invisibility time, when the player can't get damaged.
-        if (invisTime > 0.0f)
-            invisTime -= deltaTime;
-        // Knock back time, when the player will be frozen and moving back, usually after a hit.
-        if (knockbackTime > 0.0f)
+        if (!paused)
         {
-            knockbackTime -= deltaTime;
-            if (knockbackTime <= 0.0f)
-                SetState(PlayerStates.Normal);
+            // Invisibility time, when the player can't get damaged.
+            if (invisTime > 0.0f)
+                invisTime -= deltaTime;
+            // Knock back time, when the player will be frozen and moving back, usually after a hit.
+            if (knockbackTime > 0.0f)
+            {
+                knockbackTime -= deltaTime;
+                if (knockbackTime <= 0.0f)
+                    SetState(PlayerStates.Normal);
+            }
         }
 
         // How often a trail will spawn when the Speed Gear is active.
@@ -804,13 +845,21 @@ public class Player : MonoBehaviour
     }
     protected virtual void HandlePhysics_Movement()
     {
-        if (canMove)
+        if (canMove && !paused)
         {
+            if (isGrounded && CameraCtrl.instance.shakeTime > 0 && CameraCtrl.instance.shakeDropPlayer)
+                Earthquake(1.0f);
+
             // Decides how the player's should move.
             if (state == PlayerStates.Hurt)
                 KnockBack();
             else if (state == PlayerStates.Climb)
                 Climb();
+            else if (state == PlayerStates.Riding)
+            {
+                if (ride != null)
+                    transform.position = ride.seat.position;
+            }
             else if (slideTime > 0)
                 body.velocity = new Vector2(moveSpeed * 2f * anim.transform.localScale.x, body.velocity.y);
             else if (dashing)
@@ -820,7 +869,7 @@ public class Player : MonoBehaviour
 
             // Conveyor movement.
             Collider2D col = null;
-            if (col = Physics2D.OverlapBox(transform.position + center - up * height * 0.5f,
+            if (col = Physics2D.OverlapBox(transform.position + _center - up * height * 0.5f,
                                             new Vector2(width * 0.95f, height * 0.1f), 0, 1 << 8))
             {
                 if (col.gameObject.tag == "ConveyorLeft")
@@ -837,7 +886,7 @@ public class Player : MonoBehaviour
         if (shootTime <= 0.0f && throwTime <= 0.0f)
             body.MovePosition(transform.position + up * input.y * climbSpeed * fixedDeltaTime);
 
-        if (!Physics2D.OverlapPoint(transform.position + center - up * height * 0.5f, 1 << 10) ||
+        if (!Physics2D.OverlapPoint(transform.position + _center - up * height * 0.5f, 1 << 10) ||
             Input.GetButton("Jump"))
         {
             SetState(PlayerStates.Normal);
@@ -906,7 +955,7 @@ public class Player : MonoBehaviour
     {
         // If not sliding, moves back. If sliding, stays in place.
         body.velocity = Vector3.zero;
-        if (slideTime <= 0.0f)
+        if (slideTime <= 0.0f && !paused)
             body.MovePosition(transform.position - right * 40 * fixedDeltaTime);
     }
     protected virtual void Land()
@@ -914,6 +963,14 @@ public class Player : MonoBehaviour
         // Plays the landing sound.
         audioStage.PlaySound(SFXLibrary.land, true);
         dashing = false;
+    }
+    protected  void Ride()
+    {
+        if (Input.GetButtonDown("Jump") && input.y > 0)
+            Dismount();
+
+        if (ride)
+            transform.position = ride.seat.position;
     }
 
     public virtual void Damage(float damage)
@@ -924,6 +981,7 @@ public class Player : MonoBehaviour
         audioStage.PlaySound(SFXLibrary.hurt, true);
         if (health <= 0)
         {
+            print("D");
             Kill();
         }
 
@@ -944,6 +1002,7 @@ public class Player : MonoBehaviour
         o.transform.position = transform.position;
 
         o.AddComponent<Misc_ResetScene>().timeToReset = 5.0f;
+        CameraCtrl.instance.PlayMusic(null);
 
         Destroy(gameObject);
     }
@@ -979,13 +1038,31 @@ public class Player : MonoBehaviour
         // Sets up the weapons the player can use in game at this point.
         weaponList = new List<Pl_WeaponData.Weapons>();
         weaponList.Add(defaultWeapon);
-        weaponList.Add(Pl_WeaponData.Weapons.PharaohShot);
+        weaponList.Add(Pl_WeaponData.Weapons.HyperBomb);
+        weaponList.Add(Pl_WeaponData.Weapons.MetalBlade);
         weaponList.Add(Pl_WeaponData.Weapons.GeminiLaser);
+        weaponList.Add(Pl_WeaponData.Weapons.PharaohShot);
+        weaponList.Add(Pl_WeaponData.Weapons.StarCrash);
+        weaponList.Add(Pl_WeaponData.Weapons.WindStorm);
+        weaponList.Add(Pl_WeaponData.Weapons.BlackHoleBomb);
+        weaponList.Add(Pl_WeaponData.Weapons.CommandoBomb);
 
-        if (GameManager.bossDead_PharaohMan)
-            weaponList.Add(Pl_WeaponData.Weapons.PharaohShot);
+        if (GameManager.bossDead_BombMan)
+            weaponList.Add(Pl_WeaponData.Weapons.HyperBomb);
+        if (GameManager.bossDead_MetalMan)
+            weaponList.Add(Pl_WeaponData.Weapons.MetalBlade);
         if (GameManager.bossDead_GeminiMan)
             weaponList.Add(Pl_WeaponData.Weapons.GeminiLaser);
+        if (GameManager.bossDead_PharaohMan)
+            weaponList.Add(Pl_WeaponData.Weapons.PharaohShot);
+        if (GameManager.bossDead_StarMan)
+            weaponList.Add(Pl_WeaponData.Weapons.StarCrash);
+        if (GameManager.bossDead_WindMan)
+            weaponList.Add(Pl_WeaponData.Weapons.WindStorm);
+        if (GameManager.bossDead_GalaxyMan)
+            weaponList.Add(Pl_WeaponData.Weapons.BlackHoleBomb);
+        if (GameManager.bossDead_CommandoMan)
+            weaponList.Add(Pl_WeaponData.Weapons.CommandoBomb);
     }
 
     public void SetGear(bool speedGear, bool powerGear)
@@ -1068,6 +1145,44 @@ public class Player : MonoBehaviour
 
     }
 
+    public virtual void Mount(Ride newRide)
+    {
+        // If there is no available ride, doesn't mount.
+        if (!canMove || newRide == null || !newRide.canBeRidden || ride != null)
+            return;
+
+        // Dismounts already existing ride.
+        if (ride != null)
+            Dismount();
+
+        // Freezes the player.
+        SetState(PlayerStates.Riding);
+        transform.position = newRide.seat.position;
+        body.bodyType = RigidbodyType2D.Kinematic;
+        body.velocity = Vector3.zero;
+
+        ride = newRide;
+        ride.rider = this;
+        ride.Mount();
+    }
+    public virtual void Dismount()
+    {
+        // Allows the player to move again.
+        body.bodyType = RigidbodyType2D.Dynamic;
+        if (state == PlayerStates.Riding)
+        {
+            SetState(PlayerStates.Normal);
+            // Jumps
+            body.velocity = new Vector2(body.velocity.x, jumpForce * timeScale / GameManager.globalTimeScale * up.y);
+        }
+
+        // Dismounts from the ride.
+        if (ride != null)
+            ride.Dismount();
+        ride = null;
+    }
+
+
     public void SetState(PlayerStates newState)
     {
         // Each state has its own conditions that need to be met
@@ -1080,17 +1195,20 @@ public class Player : MonoBehaviour
                 SetGravity(1.0f, gravityInverted);
                 SetLocalTimeScale(timeScale);
                 anim.speed = 1.0f;
+                Dismount();
                 break;
             case PlayerStates.Climb:
                 canMove = true;
                 SetGravity(0.0f, gravityInverted);
                 anim.speed = 0.0f;
+                Dismount();
                 break;
             case PlayerStates.Still:
                 canMove = false;
                 SetGravity(1.0f, gravityInverted);
                 SetLocalTimeScale(timeScale);
                 anim.speed = 1.0f;
+                Dismount();
                 break;
             case PlayerStates.Hurt:
                 canMove = true;
@@ -1144,7 +1262,7 @@ public class Player : MonoBehaviour
     }
     public void ApplyGravity()
     {
-        if (!body.isKinematic)
+        if (!body.isKinematic && pauseMenu == null)
             body.velocity += Vector2.down * 10f * gravityScale * gravityEnvironmentMulti * body.mass * body.mass * fixedDeltaTime;
         gravityEnvironmentMulti = 1.0f;
     }
@@ -1228,10 +1346,11 @@ public class Player : MonoBehaviour
 
     protected IEnumerator KnockOff(float time)
     {
+        yield return null;
+
         canMove = false;
         canAnimate = false;
         body.velocity = Vector3.zero;
-        yield return null;
 
         anim.Play("Fallen");
 
@@ -1251,12 +1370,12 @@ public class Player : MonoBehaviour
     public bool isInSand
     {
         // Checks if the player is inside sand.
-        get { return Physics2D.OverlapBox(transform.position + center, new Vector2(width, height), 0.0f, 1 << 12); }
+        get { return Physics2D.OverlapBox(transform.position + _center, new Vector2(width, height), 0.0f, 1 << 12) != null; }
     }
     public bool isInWater
     {
         // Checks if the player is in water.
-        get { return Physics2D.OverlapBox(transform.position + center, new Vector2(width, height), 0.0f, 1 << 4); }
+        get { return Physics2D.OverlapBox(transform.position + _center, new Vector2(width, height), 0.0f, 1 << 4); }
     }
     public bool isGrounded
     {
@@ -1264,7 +1383,7 @@ public class Player : MonoBehaviour
         get
         {
             return ((body == null || body.velocity.y * up.y <= 0.0f) &&
-                    Physics2D.OverlapBox(transform.position + center - up * height * 0.6f,
+                    Physics2D.OverlapBox(transform.position + _center - up * height * 0.6f,
                                         new Vector2(width * 0.95f, height * 0.25f), 0, 1 << 8) != null);
         }
     }
@@ -1273,7 +1392,7 @@ public class Player : MonoBehaviour
         // Checks if the player is touching a wall.
         get
         {
-            return Physics2D.OverlapBox(transform.position + center + right * width * 0.3f,
+            return Physics2D.OverlapBox(transform.position + _center + right * width * 0.3f,
                                         new Vector2(width * 0.6f, height * 0.9f), 0, 1 << 8) != null;
         }
     }
@@ -1282,7 +1401,7 @@ public class Player : MonoBehaviour
         // Checks if there is a solid where the player's standing collider should be.
         get
         {
-            return Physics2D.OverlapBox(transform.position + center + up * height * 0.375f,
+            return Physics2D.OverlapBox(transform.position + _center + up * height * 0.375f,
                                         new Vector2(width * 0.5f, height * 0.45f), 0, 1 << 8) == null;
         }
     }

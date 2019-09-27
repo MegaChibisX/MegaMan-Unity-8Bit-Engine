@@ -20,7 +20,9 @@ public class Boss : Enemy
 
     protected bool fightStarted;
     protected float invisTime = 0.0f;
-    public bool endStageAfterFight = false;
+
+    public bool endStageAfterFight = true;
+    public bool ignorePreviousDeath = false;
     
 
 
@@ -54,7 +56,7 @@ public class Boss : Enemy
         // If the fight hasn't started, the boss can't get hurt.
         // Bosses linger in the arena before they appear, so this way
         // the player can't kill them before entering their arena.
-        if (!fightStarted || invisTime > 0.0f)
+        if (!fightStarted || (invisTime > 0.0f && !ignoreInvis))
             return;
 
         invisTime = 1.0f;
@@ -82,6 +84,52 @@ public class Boss : Enemy
     {
         // Boss intros should override this function.
         yield return null;
+    }
+    public IEnumerator PlayDeathShort()
+    {
+        if (!fightStarted)
+            yield break;
+
+        fightStarted = false;
+        GameManager.bossesActive--;
+        deathExplosionBoss = Instantiate(deathExplosionBoss);
+        deathExplosionBoss.transform.position = transform.position;
+        GetComponentInChildren<SpriteRenderer>().gameObject.SetActive(false);
+
+        if (GameManager.bossesActive == 0 && endStageAfterFight)
+        {
+            if (Player.instance != null)
+                Player.instance.canBeHurt = false;
+            yield return new WaitForSeconds(4.0f);
+
+            Time.timeScale = 0.0f;
+            if (Player.instance != null)
+            {
+                Player.instance.StopAllCoroutines();
+                Player.instance.body.velocity = Vector2.zero;
+                Player.instance.CanMove(false);
+                Player.instance.SetGear(false, false);
+                Player.instance.RefreshWeaponList();
+            }
+
+            yield return new WaitForSeconds(2.0f);
+
+            Time.timeScale = 1.0f;
+            if (Player.instance != null)
+            {
+                if (GameManager.bossesActive > 0 || !endStageAfterFight)
+                {
+                    Player.instance.CanMove(true);
+                    Player.instance.canBeHurt = true;
+                }
+                else
+                {
+                    Player.instance.Outro();
+                }
+            }
+        }
+
+        Destroy(gameObject);
     }
 
 }

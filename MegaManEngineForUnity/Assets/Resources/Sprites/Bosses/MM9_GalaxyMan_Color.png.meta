@@ -1,0 +1,698 @@
+fileFormatVersion: 2
+guid: 3fa11be8a74448742b9634cc040fa330
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: MM9_GalaxyMan_0
+    21300002: MM9_GalaxyMan_1
+    21300004: MM9_GalaxyMan_2
+    21300006: MM9_GalaxyMan_3
+    21300008: MM9_GalaxyMan_4
+    21300010: MM9_GalaxyMan_5
+    21300012: MM9_GalaxyMan_6
+    21300014: MM9_GalaxyMan_7
+    21300016: MM9_GalaxyMan_8
+    21300018: MM9_GalaxyMan_9
+    21300020: MM9_GalaxyMan_10
+    21300022: MM9_GalaxyMan_11
+    21300024: MM9_GalaxyMan_12
+    21300026: MM9_GalaxyMan_13
+    21300028: MM9_GalaxyMan_14
+    21300030: MM9_GalaxyMan_15
+    21300032: MM9_GalaxyMan_16
+    21300034: MM9_GalaxyMan_17
+    21300036: MM9_GalaxyMan_18
+    21300038: MM9_GalaxyMan_19
+    21300040: MM9_GalaxyMan_20
+    21300042: MM9_GalaxyMan_21
+    21300044: MM9_GalaxyMan_22
+    21300046: MM9_GalaxyMan_23
+    21300048: MM9_GalaxyMan_24
+    21300050: MM9_GalaxyMan_25
+    21300052: MM9_GalaxyMan_26
+    21300054: MM9_GalaxyMan_27
+  externalObjects: {}
+  serializedVersion: 7
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 103
+        width: 35
+        height: 32
+      alignment: 9
+      pivot: {x: 0.4857143, y: 0.53125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a8c823373bd5124d963bd88512e44af
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_1
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 107
+        width: 40
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55b8cbf9042e0b44194108788c5278d4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_2
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 103
+        width: 34
+        height: 34
+      alignment: 9
+      pivot: {x: 0.47058824, y: 0.5588235}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2a39347f3d61fd40a8ebcf8a7f39f60
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_3
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 106
+        width: 30
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01a0fd3ef88662c45b5f1995f3f14d92
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_4
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 108
+        width: 30
+        height: 26
+      alignment: 9
+      pivot: {x: 0.5, y: 0.42307693}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73c9c3bd4bfe0ca45b7e5b4c10b0b084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_5
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 107
+        width: 30
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5, y: 0.46428573}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d87ea167bccd8ab419f40f5070818183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_6
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 101
+        width: 37
+        height: 38
+      alignment: 9
+      pivot: {x: 0.4864865, y: 0.6052632}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8143fd327f96e247bc16b75b446e38d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_7
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 101
+        width: 35
+        height: 34
+      alignment: 9
+      pivot: {x: 0.4857143, y: 0.5588235}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 787b24e60fbeeaa41a89a9508009f000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_8
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 114
+        width: 11
+        height: 6
+      alignment: 9
+      pivot: {x: 0.6363636, y: 1.1666667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ad31a9d4bd7ef943a323fb9cc6c06c2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_9
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 102
+        width: 34
+        height: 34
+      alignment: 9
+      pivot: {x: 0.47058824, y: 0.5588235}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cbf73f2f2d495c4b9c33d0614baae26
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_10
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 109
+        width: 11
+        height: 11
+      alignment: 9
+      pivot: {x: 0.6363636, y: 0.6363636}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27a14adc1c097f24192736200401e146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_11
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 105
+        width: 30
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.36666667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b973c9fe3e21a547acf1218defc74b8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_12
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 79
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 153042451ab8701498e5d3209579575d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_13
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 79
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aae2eed3ad0fdd444bf5c5b3af372d39
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_14
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 79
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2b263942bb6d9145ad646c899ed5528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_15
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 79
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1255f46d1064eb84fba9ae70e6901734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 46
+        width: 32
+        height: 30
+      alignment: 9
+      pivot: {x: 0.46875, y: 0.4666667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1aa79a53e33b6b41bf8d48f76d46895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_17
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 46
+        width: 36
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5277778, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f3045e6a4a329b49bf99e279d5d99d5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_18
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 47
+        width: 31
+        height: 26
+      alignment: 9
+      pivot: {x: 0.516129, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4354d2d6f5f62444bb7ff46ed2b642d3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_19
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 46
+        width: 32
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4666667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32736c93d332cfa45a1a3a7fd87f64df
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_20
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 46
+        width: 36
+        height: 28
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ef7d1d26f26e9f42bd597d91875b337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_21
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 47
+        width: 31
+        height: 26
+      alignment: 9
+      pivot: {x: 0.4516129, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2508f7bbf324d7459729ffe2ad3270e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_22
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 44
+        width: 32
+        height: 30
+      alignment: 9
+      pivot: {x: 0.46875, y: 0.53333336}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdbeb5ab17b06c3478fc2709d8136430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_23
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 46
+        width: 37
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5405406, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97833ed23b73c6142811057f7f8583ea
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_24
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 47
+        width: 32
+        height: 26
+      alignment: 9
+      pivot: {x: 0.53125, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a12a9a06b02a7b948bd613d9d97150dd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_25
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 44
+        width: 32
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.53333336}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44a1332d0e8c83e40bd79c88b85657a7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_26
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 46
+        width: 37
+        height: 28
+      alignment: 9
+      pivot: {x: 0.43243244, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05f7f79010674a44c941e95a65c53664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MM9_GalaxyMan_27
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 47
+        width: 32
+        height: 26
+      alignment: 9
+      pivot: {x: 0.4375, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 145d8d31f5e6c084fa1b5702280ac400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5da98c5a2fbdf3d4fb865cdfa44ff229
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

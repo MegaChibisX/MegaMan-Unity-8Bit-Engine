@@ -30,6 +30,10 @@ public class Bo_StarMan : Boss
 
     protected override void Start()
     {
+        // Destroyes the boss if the boss should be dead.
+        if (GameManager.bossDead_StarMan && !ignorePreviousDeath)
+            Destroy(gameObject);
+
         body = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
         rend = anim.GetComponent<SpriteRenderer>();
@@ -63,9 +67,15 @@ public class Bo_StarMan : Boss
     public override void Kill(bool makeItem, bool makeBolt)
     {
         StopAllCoroutines();
-        StartCoroutine(PlayDeathShort());
 
-        
+        // Registers death to GameManager.
+        if (!ignorePreviousDeath)
+            GameManager.bossDead_StarMan = true;
+        StartCoroutine(PlayDeathShort());
+        if (GameManager.bossesActive <= 0)
+            CameraCtrl.instance.PlayMusic(null);
+
+
     }
 
     public override IEnumerator PlayIntro()
@@ -145,36 +155,7 @@ public class Bo_StarMan : Boss
         }
     }
 
-    public IEnumerator PlayDeathShort()
-    {
-        if (!fightStarted)
-            yield break;
 
-        // Registers death to GameManager.
-        GameManager.bossesActive--;
-        GameManager.bossDead_StarMan = true;
-
-        deathExplosionBoss = Instantiate(deathExplosionBoss);
-        deathExplosionBoss.transform.position = transform.position;
-        rend.gameObject.SetActive(false);
-
-        if (Player.instance != null)
-            Player.instance.canBeHurt = false;
-
-        yield return new WaitForSeconds(4.0f);
-
-        Time.timeScale = 0.0f;
-        if (Player.instance != null)
-        {
-            Player.instance.CanMove(false);
-            Player.instance.SetGear(false, false);
-            Player.instance.RefreshWeaponList();
-        }
-
-        yield return new WaitForSeconds(2.0f);
-
-        Player.instance.Outro();
-    }
 
 
     public IEnumerator JumpAcrossRoom(bool leftSide)
@@ -198,7 +179,7 @@ public class Bo_StarMan : Boss
             yield return null;
 
         anim.Play("Stand");
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.4f);
     }
     public IEnumerator ShootAtDir(Vector2 direction, GameObject shot)
     {
@@ -313,7 +294,7 @@ public class Bo_StarMan : Boss
         {
             GameObject star = Instantiate((i % 3 == 2 ? shootingStarIce : shootingStarNormal));
             star.transform.position = GameManager.playerPosition + Vector3.up * 240;
-            GameManager.ShakeCamera(0.2f, 3f);
+            GameManager.ShakeCamera(0.2f, 3f,  false);
 
             yield return new WaitForSeconds(0.5f);
         }

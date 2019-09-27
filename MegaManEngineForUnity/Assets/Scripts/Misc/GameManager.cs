@@ -29,6 +29,7 @@ public static class GameManager
 
 
     // Items owned
+    public static int bolts;
     public static bool item_DoubleGear;
 
 
@@ -44,6 +45,10 @@ public static class GameManager
     public static bool bossDead_GeminiMan;
     public static bool bossDead_MetalMan;
     public static bool bossDead_StarMan;
+    public static bool bossDead_BombMan;
+    public static bool bossDead_WindMan;
+    public static bool bossDead_GalaxyMan;
+    public static bool bossDead_CommandoMan;
 
 
 
@@ -77,19 +82,25 @@ public static class GameManager
 
         recItemsOwned = new int[(int)RecoveryItems.Length];
         for (int i = 0; i < recItemsOwned.Length; i++)
-            recItemsOwned[i] = Random.Range(0, 11);
+            recItemsOwned[i] = 0;
         utItemsOwned = new int[(int)UtilityItems.Length];
         for (int i = 0; i < utItemsOwned.Length; i++)
-            utItemsOwned[i] = Random.Range(0, 11);
+            utItemsOwned[i] = 0;
 
+        bolts = 0;
         item_DoubleGear = true;
 
-        globalTimeScale = 1.0f;
+    globalTimeScale = 1.0f;
 
         bossesActive = 0;
         bossDead_PharaohMan = false;
         bossDead_GeminiMan = false;
         bossDead_MetalMan = false;
+        bossDead_StarMan = false;
+        bossDead_BombMan = false;
+        bossDead_WindMan = false;
+        bossDead_GalaxyMan = false;
+        bossDead_CommandoMan = false;
 
         lastStageSelected = Vector2Int.one;
         maxFortressStage = 3;
@@ -108,7 +119,8 @@ public static class GameManager
 
         foreach (Pl_WeaponData wpn in Pl_WeaponData.WeaponList)
         {
-            wpn.Init();
+            if (wpn != null) 
+                wpn.Init();
         }
     }
 
@@ -158,11 +170,125 @@ public static class GameManager
         }
     }
 
-    public static void ShakeCamera(float time, float strength)
+    public static void ShakeCamera(float time, float strength, bool dropPlayer)
     {
         if (CameraCtrl.instance != null)
-            CameraCtrl.instance.Shake(time, strength);
+            CameraCtrl.instance.Shake(time, strength, dropPlayer);
     }
 
+    /// <summary>
+    /// This saves the current game data. Simplified to be more intuitive.
+    /// Writing an external file and reading from it is really common when it comes to coding,
+    /// so you can find plenty of info online if you've got questions.
+    /// They can also be edited by the player with a text editor as they are right now.
+    /// </summary>
+    /// <returns></returns>
+    public static string SaveData(int position)
+    {
+        //  Writes the data as a string.
+        string data = "";
+        data += bossDead_BombMan ? "1" : "0";
+        data += bossDead_MetalMan ? "1" : "0";
+        data += bossDead_GeminiMan ? "1" : "0";
+        data += bossDead_PharaohMan ? "1" : "0";
+        data += bossDead_StarMan ? "1" : "0";
+        data += bossDead_WindMan ? "1" : "0";
+        data += bossDead_GalaxyMan ? "1" : "0";
+        data += bossDead_CommandoMan ? "1" : "0";
+
+        data += maxFortressStage.ToString("00");
+
+        data += recItemsOwned[(int)RecoveryItems.ETank].ToString("00");
+        data += recItemsOwned[(int)RecoveryItems.WTank].ToString("00");
+        data += recItemsOwned[(int)RecoveryItems.MTank].ToString("00");
+        data += recItemsOwned[(int)RecoveryItems.LTank].ToString("00");
+        data += recItemsOwned[(int)RecoveryItems.RedBullTank].ToString("00");
+        data += recItemsOwned[(int)RecoveryItems.Yashichi].ToString("00");
+
+        data += bolts.ToString("0000");
+
+        // Creates a new file.
+        string path = Application.dataPath + "/GameSaveData/";
+        string fileName = "SaveData_" + position.ToString("00");
+        Debug.Log(path);
+
+        // Creates a folder, if one doesn't already exist.
+        System.IO.Directory.CreateDirectory(path);
+
+        System.IO.StreamWriter sw = System.IO.File.CreateText(path + fileName);
+        using (sw)
+        {
+            sw.Write(data);
+        }
+        sw.Close();
+
+        return data;
+    }
+    public static string LoadData(int position,  bool load)
+    {
+        string path = Application.dataPath + "/GameSaveData/";
+        string fileName = "SaveData_" + position.ToString("00");
+        Debug.Log(path);
+
+        if (!System.IO.File.Exists(path + fileName))
+            return null;
+
+        System.IO.StreamReader sr = System.IO.File.OpenText(path + fileName);
+
+        string s = "";
+        using (sr)
+        {
+            if ((s = sr.ReadLine()) == null)
+            {
+                sr.Close();
+                return null;
+            }
+
+            if (!load)
+            {
+                sr.Close();
+                return s;
+            }
+
+            int output = 0;
+            int.TryParse(s[0].ToString(), out output);
+            bossDead_BombMan = output == 1;
+            int.TryParse(s[1].ToString(), out output);
+            bossDead_MetalMan = output == 1;
+            int.TryParse(s[2].ToString(), out output);
+            bossDead_GeminiMan = output == 1;
+            int.TryParse(s[3].ToString(), out output);
+            bossDead_PharaohMan = output == 1;
+            int.TryParse(s[4].ToString(), out output);
+            bossDead_StarMan = output == 1;
+            int.TryParse(s[5].ToString(), out output);
+            bossDead_WindMan = output == 1;
+            int.TryParse(s[6].ToString(), out output);
+            bossDead_GalaxyMan = output == 1;
+            int.TryParse(s[7].ToString(), out output);
+            bossDead_CommandoMan = output == 1;
+            int.TryParse(s.Substring(8, 2), out output);
+            maxFortressStage = output;
+            int.TryParse(s.Substring(10, 2), out output);
+            recItemsOwned[(int)RecoveryItems.ETank]= output;
+            int.TryParse(s.Substring(12, 2), out output);
+            recItemsOwned[(int)RecoveryItems.WTank] = output;
+            int.TryParse(s.Substring(14, 2), out output);
+            recItemsOwned[(int)RecoveryItems.MTank] = output;
+            int.TryParse(s.Substring(16, 2), out output);
+            recItemsOwned[(int)RecoveryItems.LTank] = output;
+            int.TryParse(s.Substring(18, 2), out output);
+            recItemsOwned[(int)RecoveryItems.RedBullTank] = output;
+            int.TryParse(s.Substring(20, 2), out output);
+            recItemsOwned[(int)RecoveryItems.Yashichi] = output;
+
+            int.TryParse(s.Substring(22, 4), out output);
+            bolts = output;
+
+        }
+
+        sr.Close();
+        return s;
+    }
 
 }

@@ -55,7 +55,6 @@ public class En_Springer : Enemy
         // If it hits the player, it goes boing.
         if (boingTime <= 0.0 && collision.attachedRigidbody != null && collision.attachedRigidbody.GetComponent<Player>() != null)
         {
-            Debug.Log(collision.name);
             boingTime = 2.0f;
             anim.Play("Boing");
         }

@@ -1,0 +1,122 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Bo_ : Boss
+{
+
+    private Animator anim;
+    private SpriteRenderer rend;
+    private AudioSource aud;
+	public BoxCollider2D col;
+
+    public Sprite hurtSprite;
+    public AudioClip healSound;
+
+    protected override void Start()
+    {
+        // Destroyes the boss if the boss should be dead.
+        if (GameManager.bossDead_ && !ignorePreviousDeath)
+            Destroy(gameObject);
+
+        body = GetComponent<Rigidbody2D>();
+        anim = GetComponentInChildren<Animator>();
+        rend = anim.GetComponent<SpriteRenderer>();
+        aud = GetComponent<AudioSource>();
+
+        anim.gameObject.SetActive(false);
+    }
+    private void LateUpdate()
+    {
+        if (invisTime % 0.2f > 0.07f)
+            rend.sprite = hurtSprite;
+        if (invisTime > 0.0f)
+            invisTime -= Time.deltaTime;
+    }
+
+    public override void Damage(Pl_Weapon weapon)
+    {
+        float damage = weapon.damage;
+
+        if (shielded && !weapon.ignoreShield)
+        {
+            weapon.Deflect();
+            return;
+        }
+
+        Damage(damage, weapon.ignoreInvis);
+    }
+    public override void Kill(bool makeItem, bool makeBolt)
+    {
+        StopAllCoroutines();
+
+        // Registers death to GameManager.
+        if (!ignorePreviousDeath)
+            GameManager.bossDead_ = true;
+        StartCoroutine(PlayDeathShort());
+		if (GameManager.bossesActive <= 0)
+			CameraCtrl.instance.PlayMusic(null);
+    }
+
+
+    public override IEnumerator PlayIntro()
+    {
+
+        // The fight can't start if it has already started.
+        if (fightStarted)
+            yield break;
+
+        yield return null;
+
+        // Sets up the boss.
+        health = 0;
+        canBeHit = false;
+        fightStarted = true;
+        body.isKinematic = true;
+        // Sets the GameManager to register one more boss active.
+        GameManager.bossesActive++;
+
+        // Freezes the player.
+        if (Player.instance != null)
+            Player.instance.CanMove(false);
+
+
+        // Plays intro.
+        anim.gameObject.SetActive(true);
+        anim.Play("Intro");
+        yield return new WaitForSeconds(3f);
+
+        // Slowly gains health.
+        for (int i = 0; i < 28; i++)
+        {
+            health++;
+            yield return new WaitForSeconds(0.05f);
+            Helper.PlaySound(aud, healSound, true);
+        }
+
+        // Unfreezes player and self.
+        body.isKinematic = false;
+
+        if (Player.instance != null)
+            Player.instance.CanMove(true);
+
+
+        yield return new WaitForSeconds(0.4f);
+
+        // Starts battle.
+        canBeHit = true;
+        //StartCoroutine(Behavior());
+    }
+	
+	
+	private bool isGrounded
+    {
+        get
+        {
+            return body.velocity.y <= 0 &&
+                Physics2D.OverlapBox((Vector2)transform.position + col.offset - (Vector2)transform.up, new Vector2(col.size.x * 0.9f, col.size.y), 0, 1 << 8);
+        }
+    }
+
+
+}

@@ -52,8 +52,6 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 > Comments in: Menu_Ctrl.
 
-> 
-
 
 
 ## Known bugs
@@ -81,6 +79,36 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 
 # Update Log
+
+# 0.6.0
+> Boss Rush added.
+
+> Bomb Man, Wind Man, Commando Man and Galaxy Man added.
+
+> Rides added.
+
+> Hyper Bomb, Metal Blade, Star Crash, Wind Storm, Black Hole Bomb and Commando Bomb added.
+
+> Improved Controller input.
+
+> Added intro screen.
+
+> Bolts can now be collected.
+
+> Shop now works (left to the stage select)
+
+> Music in stages.
+
+> Boss music.
+
+> Boss doors can no longer transport you to oblivion, inside a wall.
+
+> Boss doors can no longer transport you to absolute oblivion, if the game window isn't focused mid-move.
+
+> Saving and loading now available.
+
+> The fortress stage select now works. Try the first stage out to get to the Boss Rush.
+
 
 ## 0.5.0
 > Player creation tutorial added. Check the Readme folder.

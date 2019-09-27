@@ -69,10 +69,10 @@ public class En_SuperBallMachineJr : Enemy
 
         // Shoots shot, sets its appropriate position and velocity.
         GameObject ball = Instantiate(shot);
-        ball.transform.position = transform.position - transform.right * 8.0f + transform.up * 10.0f;
+        ball.transform.position = transform.position - transform.right * transform.localScale.x * 8.0f + transform.up * 10.0f;
         if (ball.GetComponent<Rigidbody2D>())
         {
-            ball.GetComponent<Rigidbody2D>().velocity = (transform.up * 10.0f - transform.right * 8.0f).normalized * 180.0f;
+            ball.GetComponent<Rigidbody2D>().velocity = (transform.up * 10.0f - transform.right * transform.localScale.x * 8.0f).normalized * 180.0f;
         }
     }
 

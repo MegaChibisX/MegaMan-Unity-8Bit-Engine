@@ -20,6 +20,9 @@ public class CameraCtrl : MonoBehaviour {
     // Unity's Camera component which is what shows the stage.
     public Camera cmr;
 
+    // The Audio Source component that plays the music.
+    public AudioSource aud;
+
     // The Stage_ChangeCameraBorders class is used to update
     // the borders of the Camera when the player enters a new room.
     // startBorders updates the borders at the beginning of the
@@ -36,11 +39,17 @@ public class CameraCtrl : MonoBehaviour {
     private bool inTransition = false;
 
     // Adds shake to the camera
-    private float shakeTime;
-    private float shakeStrength;
+    public float shakeTime;
+    public float shakeStrength;
+    public bool shakeDropPlayer;
 
 
-    private void Start()
+    // Keeps track of the window's size.
+    public int winX;
+    public int winY;
+
+
+    public void Start()
     {
         instance = this;
         // If there is a Start Border and no Checkpoint active,
@@ -71,13 +80,30 @@ public class CameraCtrl : MonoBehaviour {
         transform.position = new Vector3(startPos.x, startPos.y, transform.position.z);
 
         // Sets the proper aspect ratio.
+        winX = Screen.width;
+        winY = Screen.height;
         Helper.SetAspectRatio(GetComponent<Camera>());
+
+        if (player == null)
+        {
+            Player tryPlayer = FindObjectOfType<Player>();
+            if (tryPlayer != null)
+                player = tryPlayer.transform;
+        }
     }
 
     private void LateUpdate()
     {
         // Moves the camera.
         MoveCamera();
+
+        // Resets the camera's aspect ratio.
+        if (winX != Screen.width || winY != Screen.height)
+        {
+            winX = Screen.width;
+            winY = Screen.height;
+            Helper.SetAspectRatio(GetComponent<Camera>());
+        }
 
         // Adds shake to the camera.
         if (shakeTime > 0.0f)
@@ -137,10 +163,16 @@ public class CameraCtrl : MonoBehaviour {
         SetNewCameraBorders(borders.leftCenter, borders.maxRightMovement, borders.maxUpMovement, setToTransition);
     }
 
-    public void Shake(float time, float strength)
+    public void Shake(float time, float strength, bool dropPlayer)
     {
         shakeTime = time;
         shakeStrength = strength;
+        shakeDropPlayer = dropPlayer;
+    }
+    public  void PlayMusic(AudioClip track)
+    {
+        if (track != aud.clip)
+            aud.PlaySound(track, true);
     }
 
     private void OnDrawGizmosSelected()

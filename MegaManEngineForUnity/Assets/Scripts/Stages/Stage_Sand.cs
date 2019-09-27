@@ -20,22 +20,6 @@ public class Stage_Sand : MonoBehaviour {
         up = Quaternion.AngleAxis(angle + 90.0f, Vector3.forward) * Vector2.right;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        // Limits any rigidbody's velocity.
-        Rigidbody2D body = collision.attachedRigidbody;
-        if (body)
-        {
-            Vector2 r = Vector2.Scale(body.velocity, right);
-            Vector2 u = Vector2.Scale(body.velocity, up);
-    
-            if (body.velocity.y < 0)
-                r = Vector2.Lerp(r, right * sinkSpeed, 0.7f);
-
-            body.velocity = r + u;
-        }
-    }
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.magenta * 0.5f;

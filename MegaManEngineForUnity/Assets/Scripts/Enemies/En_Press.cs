@@ -32,7 +32,6 @@ public class En_Press : Enemy
 
     private void Update()
     {
-
         // If the press needs to wait, waits.
         if (waitTime > 0.0f)
         {

@@ -41,6 +41,10 @@ public class Menu_StageSelect : Menu
     public SpriteRenderer geminiIcon;
     public SpriteRenderer metalIcon;
     public SpriteRenderer starIcon;
+    public SpriteRenderer bombIcon;
+    public SpriteRenderer windIcon;
+    public SpriteRenderer galaxyIcon;
+    public SpriteRenderer commandoIcon;
 
     [Header("Fortress Stage Select Elements")]
 
@@ -49,6 +53,8 @@ public class Menu_StageSelect : Menu
 
     public Vector2 fortressSelectorOrigin;
     public Vector2Int fortressIndex;
+
+    public Sprite[] fortressStageIcons;
 
     public Sprite selectFlashFort1;
     public Sprite selectFlashFort2;
@@ -71,6 +77,10 @@ public class Menu_StageSelect : Menu
     public Item.Items[] itemCatalog;
     public SpriteRenderer[] itemSlots;
 
+    public SpriteRenderer itemDisplay;
+
+    public float purchaseCooldown;
+
     [Header("Data Elements")]
 
     public AudioClip dataAudioMove;
@@ -83,6 +93,8 @@ public class Menu_StageSelect : Menu
     public Sprite SaveSprite;
     public Sprite LoadSprite;
 
+    public string dataDesc;
+
 
     public override void Start()
     {
@@ -92,20 +104,10 @@ public class Menu_StageSelect : Menu
         inputCooldown = 0.0f;
         lastAngle = -1000;
 
-        if (GameManager.maxFortressStage > 0)
-        {
-            fortIcons = new SpriteRenderer[GameManager.maxFortressStage];
-            fortIcons[0] = fortIconReference;
-            for (int i = 0; i < fortIcons.Length; i++)
-            {
-                if (i > 0)
-                    fortIcons[i] = Object.Instantiate(fortIcons[0]);
-                fortIcons[i].transform.position = new Vector3(272f * (1 + i) / (1 + GameManager.maxFortressStage) - 136f,
-                                                              fortIcons[0].transform.position.y,
-                                                              fortIcons[0].transform.position.z);
-                fortIcons[i].transform.parent = fortIcons[0].transform.parent;
-            }
-        }
+        RefreshFortressStages();
+
+        string s = GameManager.LoadData(dataIndex.y, false);
+        SetDataDescription(s);
 
         ChangeRoom(Rooms.MainStage);
         stageSelected = false;
@@ -189,8 +191,11 @@ public class Menu_StageSelect : Menu
                         }
                         break;
                     case Rooms.FortressStage:
-                        stageCooldown = 0.5f;
-                        stageSelected = false;
+                        if (!GoToSelectedScene())
+                        {
+                            stageCooldown = 0.5f;
+                            stageSelected = false;
+                        }
                         break;
                 }
             }
@@ -222,6 +227,9 @@ public class Menu_StageSelect : Menu
     {
         switch (activeRoom)
         {
+            case Rooms.Shop:
+                GUIShopStageSelect();
+                break;
             case Rooms.Data:
                 GUIDataStageSelect();
                 break;
@@ -239,12 +247,36 @@ public class Menu_StageSelect : Menu
 
                 if (GameManager.bossDead_PharaohMan)
                     pharaohIcon.enabled = false;
+                else
+                    pharaohIcon.enabled = true;
                 if (GameManager.bossDead_GeminiMan)
                     geminiIcon.enabled = false;
+                else
+                    geminiIcon.enabled = true;
                 if (GameManager.bossDead_MetalMan)
                     metalIcon.enabled = false;
+                else
+                    metalIcon.enabled = true;
                 if (GameManager.bossDead_StarMan)
                     starIcon.enabled = false;
+                else
+                    starIcon.enabled = true;
+                if (GameManager.bossDead_BombMan)
+                    bombIcon.enabled = false;
+                else
+                    bombIcon.enabled = true;
+                if (GameManager.bossDead_WindMan)
+                    windIcon.enabled = false;
+                else
+                    windIcon.enabled = true;
+                if (GameManager.bossDead_GalaxyMan)
+                    galaxyIcon.enabled = false;
+                else
+                    galaxyIcon.enabled = true;
+                if (GameManager.bossDead_CommandoMan)
+                    commandoIcon.enabled = false;
+                else
+                    commandoIcon.enabled = true;
                 break;
             case Rooms.FortressStage:
                 cmrPos = new Vector2(0, 248);
@@ -278,33 +310,70 @@ public class Menu_StageSelect : Menu
     }
     public bool GoToSelectedScene(bool checkOnly = false)
     {
-        if (stageIndex.x == 0 && stageIndex.y == 0)
+        if (activeRoom == Rooms.MainStage)
         {
-            if (!checkOnly)
-                Helper.GoToStage("Scene");
-            return true;
+            if (stageIndex.x == 0 && stageIndex.y == 0)
+            {
+                if (!checkOnly)
+                    Helper.GoToStage("Stage_PharaohMan");
+                return true;
+            }
+            if (stageIndex.x == 2 && stageIndex.y == 0)
+            {
+                if (!checkOnly)
+                    Helper.GoToStage("Stage_GeminiMan");
+                return true;
+            }
+            if (stageIndex.x == 2 && stageIndex.y == 1)
+            {
+                if (!checkOnly)
+                    Helper.GoToStage("Stage_MetalMan");
+                return true;
+            }
+            if (stageIndex.x == 0 && stageIndex.y == 2)
+            {
+                if (!checkOnly)
+                    Helper.GoToStage("Stage_StarMan");
+                return true;
+            }
+            if (stageIndex.x == 1 && stageIndex.y == 0)
+            {
+                if (!checkOnly)
+                    Helper.GoToStage("Stage_BombMan");
+                return true;
+            }
+            if (stageIndex.x == 0 && stageIndex.y == 1)
+            {
+                if (!checkOnly)
+                    Helper.GoToStage("Stage_WindMan");
+                return true;
+            }
+            if (stageIndex.x == 1 && stageIndex.y == 2)
+            {
+                if (!checkOnly)
+                    Helper.GoToStage("Stage_GalaxyMan");
+                return true;
+            }
+            if (stageIndex.x == 2 && stageIndex.y == 2)
+            {
+                if (!checkOnly)
+                    Helper.GoToStage("Stage_CommandoMan");
+                return true;
+            }
         }
-        if (stageIndex.x == 2 && stageIndex.y == 0)
+        else if (activeRoom == Rooms.FortressStage)
         {
-            if (!checkOnly)
-                Helper.GoToStage("SomeStage");
-            return true;
-        }
-        if (stageIndex.x == 2 && stageIndex.y == 1)
-        {
-            if (!checkOnly)
-                Helper.GoToStage("Temp");
-            return true;
-        }
-        if (stageIndex.x == 0 && stageIndex.y == 2)
-        {
-            if (!checkOnly)
-                Helper.GoToStage("Temp2");
-            return true;
+            if (fortressIndex.x == 0)
+            {
+                if (!checkOnly)
+                    Helper.GoToStage("BossRush");
+                return true;
+            }
         }
 
         return false;
     }
+   
 
 
     private void InputMainStageSelect()
@@ -373,6 +442,15 @@ public class Menu_StageSelect : Menu
     }
     private void UpdateFortressStageSelect()
     {
+        if (Input.GetButtonDown("Start"))
+        {
+            stageSelected = true;
+            if (GoToSelectedScene(true))
+                Helper.PlaySound(stageAudioConfirm);
+            else
+                Helper.PlaySound(stageAudioCancel);
+        }
+
         for (int i = 0; i < fortIcons.Length; i++)
         {
             if (fortressIndex.x == i)
@@ -384,6 +462,32 @@ public class Menu_StageSelect : Menu
             }
             else
                 fortIcons[i].sprite = selectFlashFort1;
+        }
+    }
+    public void RefreshFortressStages()
+    {
+        for (int i = 1; i < fortIcons.Length; i++)
+        {
+            if (fortIcons[i] != null)
+                Object.Destroy(fortIcons[i].gameObject);
+        }
+        if (GameManager.maxFortressStage > 0)
+        {
+            fortIcons = new SpriteRenderer[GameManager.maxFortressStage];
+            fortIcons[0] = fortIconReference;
+            for (int i = 0; i < fortIcons.Length; i++)
+            {
+                if (i > 0)
+                    fortIcons[i] = Object.Instantiate(fortIcons[0]);
+                fortIcons[i].transform.position = new Vector3(272f * (1 + i) / (1 + GameManager.maxFortressStage) - 136f,
+                                                              fortIcons[0].transform.position.y,
+                                                              fortIcons[0].transform.position.z);
+                fortIcons[i].transform.parent = fortIcons[0].transform.parent;
+
+                SpriteRenderer icon = fortIcons[i].transform.GetChild(0).GetComponent<SpriteRenderer>();
+                if (fortressStageIcons.Length > i)
+                    icon.sprite = fortressStageIcons[i];
+            }
         }
     }
 
@@ -413,6 +517,7 @@ public class Menu_StageSelect : Menu
         shopIndex.x = Mathf.Clamp(shopIndex.x, 0, 5);
         shopIndex.y = Mathf.Clamp(shopIndex.y, 0, maxY - 1);
         shopIndex.z = Mathf.Clamp(shopIndex.z, 0, maxY - 2);
+        GameObject item;
 
         for (int x = 0; x < 6; x++)
         {
@@ -422,7 +527,7 @@ public class Menu_StageSelect : Menu
                     itemSlots[z * 6 + x].sprite = null;
                 else
                 {
-                    GameObject item = Item.GetObjectFromItem(itemCatalog[(shopIndex.z + z) * 6 + x]);
+                    item = Item.GetObjectFromItem(itemCatalog[(shopIndex.z + z) * 6 + x]);
                     if (item != null)
                         itemSlots[z * 6 + x].sprite = item.GetComponentInChildren<SpriteRenderer>().sprite;
                     else
@@ -431,6 +536,12 @@ public class Menu_StageSelect : Menu
 
             }    
         }
+
+        item = Item.GetObjectFromItem(itemCatalog[(shopIndex.y) * 6 + shopIndex.x]);
+        if (item != null)
+            itemDisplay.sprite = item.GetComponentInChildren<SpriteRenderer>().sprite;
+        else
+            itemDisplay.sprite = null;
     }
     private void UpdateShopStageSelect()
     {
@@ -439,6 +550,85 @@ public class Menu_StageSelect : Menu
         shopSelect.transform.position = new Vector3(shopSelectorOrigin.x + shopIndex.x * 32,
                                                     shopSelectorOrigin.y - (shopIndex.y - shopIndex.z) * 48,
                                                     shopSelect.transform.position.z);
+
+        if (purchaseCooldown > 0.0f)
+            purchaseCooldown -= Time.deltaTime;
+        else if (Input.GetButtonDown("Start"))
+        {
+
+            if ((shopIndex.y) * 6 + shopIndex.x >= Item.itemList.Length)
+                return;
+
+            Item.Items item = itemCatalog[(shopIndex.y) * 6 + shopIndex.x];
+            if (GameManager.bolts >= Item.itemList[(int)item].boltCost)
+            {
+                Item.AddItemQuantity(item, 1);
+                GameManager.bolts -= Item.itemList[(int)item].boltCost;
+                Helper.PlaySound(stageAudioConfirm);
+            }
+            else
+                Helper.PlaySound(stageAudioCancel);
+
+            purchaseCooldown = 0.25f;
+        }
+    }
+    private void GUIShopStageSelect()
+    {
+        if (!cameraInRoom)
+            return;
+
+        Vector2 cmrBase = new Vector2(Camera.main.rect.x * Screen.width, Camera.main.rect.y * Screen.height);
+        int blockSize = (int)(Camera.main.pixelWidth / 16);
+
+        font.label.fontSize = (int)(blockSize * 0.5625f);
+
+        GameObject item;
+
+        // Draw the price of each item.
+        for (int x = 0; x < 6; x++)
+        {
+            for (int z = 0; z < 2; z++)
+            {
+                if ((shopIndex.z + z) * 6 + x >= itemCatalog.Length)
+                    itemSlots[z * 6 + x].sprite = null;
+                else
+                {
+                    item = Item.GetObjectFromItem(itemCatalog[(shopIndex.z + z) * 6 + x]);
+                    if (item != null)
+                    {
+                        Vector3 pos = cmr.WorldToScreenPoint(itemSlots[z * 6 + x].transform.position);
+                        GUI.Label(new Rect(cmrBase.x + blockSize * (2.425f + 2.00f * x),
+                                           cmrBase.y + blockSize * (3.5f + 2.75f * z),
+                                           blockSize * 2f,
+                                           blockSize * 2f),
+                                           Item.itemList[(int)itemCatalog[(shopIndex.z + z) * 6 + x]].boltCost.ToString("000"),
+                                           font.label);
+                    }
+                }
+            }
+        }
+
+        // Draw the quantity of the currently selected item.
+        item = Item.GetObjectFromItem(itemCatalog[(shopIndex.y) * 6 + shopIndex.x]);
+        if (item != null)
+        {
+            GUI.Label(new Rect(cmrBase.x + 3.5f * blockSize,
+                               cmrBase.y + 12.5f * blockSize,
+                               2.125f * blockSize,
+                               1.0f * blockSize),
+                               Item.GetItemQuantity(itemCatalog[(shopIndex.y) * 6 + shopIndex.x]).ToString("000"),
+                               font.label);
+        }
+
+        // Draw the number of bolts left.
+
+        GUI.Label(new Rect(cmrBase.x + 11.5f * blockSize,
+                           cmrBase.y + 12.5f * blockSize,
+                           2.125f * blockSize,
+                           1.0f * blockSize),
+                           GameManager.bolts.ToString("0000"),
+                           font.label);
+
     }
 
     private void InputDataStageSelect()
@@ -452,6 +642,9 @@ public class Menu_StageSelect : Menu
             dataIndex.y -= 1;
         else
             dataIndex.y += 1;
+
+        string s = GameManager.LoadData(dataIndex.y, false);
+        SetDataDescription(s);
 
         if (dataIndex.x < 0)
             ChangeRoom(Rooms.MainStage);
@@ -467,6 +660,66 @@ public class Menu_StageSelect : Menu
     private void UpdateDataStageSelect()
     {
         SLButton.sprite = dataIndex.x == 0 ? SaveSprite : LoadSprite;
+
+        if (Input.GetButtonDown("Start"))
+        {
+            if (dataIndex.x == 0)
+                GameManager.SaveData(dataIndex.y);
+            else
+            {
+                GameManager.LoadData(dataIndex.y, true);
+                RefreshFortressStages();
+            }
+        }
+    }
+    private void SetDataDescription(string s)
+    {
+        dataDesc = "";
+
+        if (s == null || s.Length < 26)
+            return;
+
+        int output = 0;
+        int.TryParse(s[0].ToString(), out output);
+        dataDesc += "BombMan:         " + (output == 1 ? "Dead" : "Alive") + "\n";
+        int.TryParse(s[1].ToString(), out output);
+        dataDesc += "MetalMan:        " + (output == 1 ? "Dead" : "Alive") + "\n";
+        int.TryParse(s[2].ToString(), out output);
+        dataDesc += "GeminiMan:       " + (output == 1 ? "Dead" : "Alive") + "\n";
+        int.TryParse(s[3].ToString(), out output);
+        dataDesc += "PharaohMan:   " + (output == 1 ? "Dead" : "Alive") + "\n";
+        int.TryParse(s[4].ToString(), out output);
+        dataDesc += "StarMan:          " + (output == 1 ? "Dead" : "Alive") + "\n";
+        int.TryParse(s[5].ToString(), out output);
+        dataDesc += "WindMan:          " + (output == 1 ? "Dead" : "Alive") + "\n";
+        int.TryParse(s[6].ToString(), out output);
+        dataDesc += "GalaxyMan:      " + (output == 1 ? "Dead" : "Alive") + "\n";
+        int.TryParse(s[7].ToString(), out output);
+        dataDesc += "CommandoMan: " + (output == 1 ? "Dead" : "Alive") + "\n";
+
+        dataDesc += "\n";
+        int.TryParse(s.Substring(8, 2), out output);
+        Debug.Log(output);
+        dataDesc += "Fortress Stages: " + output.ToString() + "\n";
+
+        dataDesc += "\n";
+        int.TryParse(s.Substring(10, 2), out output);
+        dataDesc += "E Tanks:  " + output.ToString() + "\n";
+        int.TryParse(s.Substring(12, 2), out output);
+        dataDesc += "W Tanks:  " + output.ToString() + "\n";
+        int.TryParse(s.Substring(14, 2), out output);
+        dataDesc += "M Tanks:  " + output.ToString() + "\n";
+        int.TryParse(s.Substring(16, 2), out output);
+        dataDesc += "L Tanks:  " + output.ToString() + "\n";
+        int.TryParse(s.Substring(18, 2), out output);
+        dataDesc += "RedBulls: " + output.ToString() + "\n";
+        int.TryParse(s.Substring(20, 2), out output);
+        dataDesc += "Yashichi: " + output.ToString() + "\n";
+
+        dataDesc += "\n";
+        int.TryParse(s.Substring(22, 4), out output);
+        dataDesc += "Bolts: " + output;
+
     }
     private void GUIDataStageSelect()
     {
@@ -489,6 +742,13 @@ public class Menu_StageSelect : Menu
                       text,
                       font.label);
         }
+
+        GUI.Label(new Rect(cmrBase.x + dataSelectorOrigin.x * pixelSize + 94f * pixelSize,
+                   cmrBase.y + dataSelectorOrigin.y * pixelSize,
+                   128f * pixelSize,
+                   240f * pixelSize),
+                   dataDesc,
+                   font.label);
     }
 
 }

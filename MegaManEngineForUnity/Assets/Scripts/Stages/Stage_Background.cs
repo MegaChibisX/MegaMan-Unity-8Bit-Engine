@@ -23,10 +23,12 @@ public class Stage_Background : MonoBehaviour {
     // All of this technical which makes background parallax possible.
     private void Start()
     {
-        halfSize.x *= (1 + speed.x * 2);
-        halfSize.y *= (1 + speed.y * 2);
+        //halfSize.x *= (1 + speed.x * 2);
+        //halfSize.y *= (1 + speed.y * 2);
+        halfSize.x *= 2;
+        halfSize.y *= 2;
     }
-    private void Update()
+    private void LateUpdate()
     {
         if (followTarget == null)
         {

@@ -23,6 +23,7 @@ public class Stage_BossDoor : MonoBehaviour {
     public Stage_ChangeCameraBorders bordersGreenSide;
 
     public Boss bossToActivate;
+    public AudioClip newTrack;
 
     public int doorWidth = 2;       // Each 16 pixels count as 1 unit.
 
@@ -52,7 +53,15 @@ public class Stage_BossDoor : MonoBehaviour {
             }
         }
     }
+    public bool CheckForEmptySpace(Player contact)
+    {
+        float moveRightMult = Vector2.Angle(transform.right, contact.transform.position - transform.position) > 90 ? 1.0f : -1.0f;
+        float moveDistance = contact.width * 2.0f + doorWidth * 16.0f;
 
+        return Physics2D.OverlapBox(contact.transform.position + transform.right * moveDistance * moveRightMult,
+                                    new Vector2(contact.width, contact.height),
+                                    0, 1 << 8) == null;
+    }
     /// <summary>
     /// Moves the player through the boss doors.
     /// </summary>
@@ -122,29 +131,6 @@ public class Stage_BossDoor : MonoBehaviour {
             yield return null;
         }
 
-        //foreach (Animation anim in doors)
-        //{
-        //    if (!anim.GetClip(doorCloseAnimation.name))
-        //        anim.AddClip(doorCloseAnimation, doorCloseAnimation.name);
-        //    anim.Play(doorCloseAnimation.name);
-        //}
-
-        //waitTime = 0.0f;
-        //playSoundAt = 0.11f;
-        //while (waitTime < doorCloseAnimation.length)
-        //{
-        //    foreach (Animation anim in doors)
-        //    {
-        //        anim[doorCloseAnimation.name].time += Time.unscaledDeltaTime;
-        //    }
-        //    waitTime += Time.unscaledDeltaTime;
-
-        //    if (waitTime > playSoundAt && waitTime - Time.unscaledDeltaTime <= playSoundAt)
-        //        audSource.PlaySound(shutterSound, true);
-
-        //    yield return null;
-        //}
-
         waitTime = 0.0f;
         for (int i = 1; i <= doorSize; i++)
         {
@@ -169,14 +155,17 @@ public class Stage_BossDoor : MonoBehaviour {
             yield return new WaitForSeconds(1.0f);
             if (Player.instance != null)
                 Player.instance.body.isKinematic = true;
+            Player.instance.canBeHurt = true;
             bossToActivate.StartFight();
         }
+        else if (Player.instance != null)
+            {
+                Player.instance.CanMove(true);
+                Player.instance.canBeHurt = true;
+            }
 
-        if (Player.instance != null)
-        {
-            Player.instance.CanMove(true);
-            Player.instance.canBeHurt = true;
-        }
+        if (newTrack)
+            CameraCtrl.instance.PlayMusic(newTrack);
 
     }
 
@@ -254,14 +243,17 @@ public class Stage_BossDoor : MonoBehaviour {
             yield return new WaitForSeconds(1.0f);
             if (Player.instance != null)
                 Player.instance.body.isKinematic = true;
+            Player.instance.canBeHurt = true;
             bossToActivate.StartFight();
         }
-
-        if (Player.instance != null)
+        else if (Player.instance != null)
         {
             Player.instance.CanMove(true);
             Player.instance.canBeHurt = true;
         }
+
+        if (newTrack)
+            CameraCtrl.instance.PlayMusic(newTrack);
 
     }
 

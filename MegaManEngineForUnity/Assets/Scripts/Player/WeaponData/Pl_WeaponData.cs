@@ -26,7 +26,7 @@ public class Pl_WeaponData {
     // which has to match its position in the WeaponList, like
     // the examples below. The item 'Length' in the Weapons enum
     // needs to always be last.
-    public enum Weapons { MegaBuster, BassBuster, PowerPunch, PharaohShot, GeminiLaser, Length }
+    public enum Weapons { MegaBuster, BassBuster, PowerPunch, PharaohShot, GeminiLaser, MetalBlade, StarCrash, HyperBomb, WindStorm, BlackHoleBomb, CommandoBomb, Length }
     // The default parameters for each Pl_WeaponData are explained in this class's constructor.
     public static Pl_WeaponData[] WeaponList =
     {
@@ -72,6 +72,30 @@ public class Pl_WeaponData {
                                                                  null),
         new PlWpDt_GeminiLaser(null, "G. LASER", new WeaponColors(new Color(248f/256f,248f/256f, 248f/256f),
                                                                   new Color(60f/256f, 180f/256f, 255f/256f),
+                                                                  new Color(0,0,0)),
+                                                                  null),
+        new PlWpDt_MetalBlade(null, "M. BLADE", new WeaponColors(new Color(255f/256f,248f/256f, 168f/256f),
+                                                                 new Color(136f/256f, 112f/256f, 0f/256f),
+                                                                 new Color(0,0,0)),
+                                                                 null),
+        new PlWpDt_StarCrash(null, "S. CRASH", new WeaponColors(new Color(248f/256f,184f/256f, 0f/256f),
+                                                                 new Color(228f/256f, 92f/256f, 16f/256f),
+                                                                 new Color(0,0,0)),
+                                                                 null),
+        new PlWpDt_HyperBomb(null, "H. BOMB", new WeaponColors(new Color(256f/256f,256f/256f, 256f/256f),
+                                                               new Color(0f/256f, 188f/256f, 0f/256f),
+                                                               new Color(0,0,0)),
+                                                               null),
+        new PlWpDt_WindStorm(null, "W. STORM", new WeaponColors(new Color(256f/256f, 256f/256f, 256f/256f),
+                                                                new Color(128f/256f,128f/256f, 128f/256f),
+                                                                new Color(0,0,0)),
+                                                                null),
+        new PlWpDt_BlackHoleBomb(null, "B.H. BOMB", new WeaponColors(new Color(169f/256f,121f/256f, 246f/256f),
+                                                                     new Color(142f/256f, 0f/256f, 238f/256f),
+                                                                     new Color(0,0,0)),
+                                                                     null),
+        new PlWpDt_CommandoBomb(null, "C. BOMB", new WeaponColors(new Color(184f/256f,184f/256f, 184f/256f),
+                                                                  new Color(200f/256f, 72f/256f, 8f/256f),
                                                                   new Color(0,0,0)),
                                                                   null)
     };

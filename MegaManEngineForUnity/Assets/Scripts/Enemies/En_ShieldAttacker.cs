@@ -20,6 +20,7 @@ public class En_ShieldAttacker : Enemy
     public SpriteRenderer rendOutput2;
 
     private Animator anim;
+    private BoxCollider2D col;
 
     protected override void Start()
     {
@@ -33,6 +34,7 @@ public class En_ShieldAttacker : Enemy
         maxRight += transform.position.x;
 
         anim = GetComponentInChildren<Animator>();
+        col = GetComponentInChildren<BoxCollider2D>();
     }
     private void LateUpdate()
     {
@@ -43,6 +45,9 @@ public class En_ShieldAttacker : Enemy
     {
         if (moving)
         {
+
+            if (isWalled)
+                StartCoroutine(Turn());
             Vector3 targetPos = new Vector3(goingLeft ? maxLeft : maxRight, transform.position.y, transform.position.z);
 
             if ((targetPos - transform.position).sqrMagnitude < 0.1f)
@@ -101,6 +106,16 @@ public class En_ShieldAttacker : Enemy
         Gizmos.DrawSphere(transform.position + Vector3.right * maxRight, 4f);
         Gizmos.DrawLine(transform.position + Vector3.right * maxLeft,
                         transform.position + Vector3.right * maxRight);
+    }
+
+    private bool isWalled
+    {
+        get
+        {
+            return
+                Physics2D.OverlapBox((Vector2)transform.position + col.offset - (Vector2)transform.right * transform.localScale.x * col.size.y * 0.5f,
+                                            new Vector2(col.size.x, col.size.y * 0.45f), 0, 1 << 8);
+        }
     }
 
 

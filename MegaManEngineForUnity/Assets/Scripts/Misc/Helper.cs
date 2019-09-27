@@ -76,6 +76,7 @@ public static class Helper
     // Changes the aspect ratio of the screen to the appropriate one for a MM game.
     public static void SetAspectRatio(Camera cmr)
     {
+
         // Sets the desired aspect ratio (the values in this example are
         // hard-coded for 16:9, but you could make them into public
         // variables instead so you can set them at design time).

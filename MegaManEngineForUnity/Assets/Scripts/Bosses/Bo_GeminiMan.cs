@@ -51,7 +51,7 @@ public class Bo_GeminiMan : Boss
     protected override void Start()
     {
         // Destroyes the boss if the boss should be dead.
-        if (GameManager.bossDead_GeminiMan)
+        if (GameManager.bossDead_GeminiMan && !ignorePreviousDeath)
             Destroy(gameObject);
 
         // Warns the developer if some component is missing from the boss gameObject.
@@ -128,7 +128,17 @@ public class Bo_GeminiMan : Boss
     {
         // Gemini Man stops doing what he's doing and dies.
         StopAllCoroutines();
-        StartCoroutine(PlayDeathLong());
+        if (isPrimary && otherGemini != null)
+        {
+            GameObject expl = Instantiate(explosionObject);
+            expl.transform.position = otherGemini.transform.position;
+            Destroy(otherGemini.gameObject);
+        }
+        if (!ignorePreviousDeath)
+            GameManager.bossDead_GeminiMan = true;
+        StartCoroutine(PlayDeathShort());
+        if (GameManager.bossesActive <= 0)
+            CameraCtrl.instance.PlayMusic(null);
     }
 
 
@@ -249,7 +259,7 @@ public class Bo_GeminiMan : Boss
         Time.timeScale = 1.0f;
         if (Player.instance != null)
         {
-            if (GameManager.bossesActive > 0)
+            if (GameManager.bossesActive > 0 || !endStageAfterFight)
             {
                 Player.instance.CanMove(true);
                 Player.instance.canBeHurt = true;
@@ -497,6 +507,8 @@ public class Bo_GeminiMan : Boss
     {
         yield return null;
     
+
+
         if (lookAtPlayer)
             anim.transform.localScale = new Vector3((GameManager.playerPosition.x < transform.position.x) ? 1 : -1, 1, 1);
 
@@ -508,6 +520,7 @@ public class Bo_GeminiMan : Boss
         if (freezeOther)
             otherGemini.Freeze(true);
         body.isKinematic = true;
+        body.velocity = Vector2.zero;
         isBusy = true;
 
         yield return new WaitForSeconds(waitBefore);

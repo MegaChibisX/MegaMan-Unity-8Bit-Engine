@@ -381,6 +381,7 @@
     <Compile Include="Assets\Scripts\Misc\Editor\SnapToGridEditor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Scripts\Bosses\BossScriptCheatSheet.txt" />
     <None Include="Assets\Sprites\GUI\CutoutSpriteShader.shader" />
     <None Include="Assets\Sprites\GUI\Font\pixel2svg-0.3.0\pixel2svg-0.3.0\MegaMan 9 - Glyphr Project - 2019.1.17-22.03.41.txt" />
     <None Include="Assets\Sprites\GUI\Font\pixel2svg-0.3.0\pixel2svg-0.3.0\MegaMan 9 - Glyphr Project - 2019.1.17-22.58.50.txt" />

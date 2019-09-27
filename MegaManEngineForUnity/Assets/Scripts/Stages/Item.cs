@@ -192,7 +192,7 @@ public class Item
         chances.Add(new KeyValuePair<Items, float>(Items.empty, 5.0f * multiNone));
         chances.Add(new KeyValuePair<Items, float>(Items.boltSmall, 3 * multiSmall));
         chances.Add(new KeyValuePair<Items, float>(Items.boltBig, multiBig));
-        chances.Add(new KeyValuePair<Items, float>(Items.boltHuge, 0.1f * multiHuge));
+        chances.Add(new KeyValuePair<Items, float>(Items.boltHuge, 0.02f * multiHuge));
 
         // Gets a random number inside the list and returns the item that matches it.
         float totalChances = 0;
@@ -247,6 +247,53 @@ public class Item
             case Items.DoubleGearChip:
                 return (GameObject)Resources.Load("Prefabs/Items/Double Gear Chip", typeof(GameObject));
         }
+    }
+
+    public static int GetItemQuantity(Items item)
+    {
+        switch (item)
+        {
+            case Items.ETank:
+                return GameManager.recItemsOwned[(int)GameManager.RecoveryItems.ETank];
+            case Items.WTank:
+                return GameManager.recItemsOwned[(int)GameManager.RecoveryItems.WTank];
+            case Items.MTank:
+                return GameManager.recItemsOwned[(int)GameManager.RecoveryItems.MTank];
+            case Items.LTank:
+                return GameManager.recItemsOwned[(int)GameManager.RecoveryItems.LTank];
+            default:
+                return 0;
+        }
+    }
+    public static bool AddItemQuantity(Items item, int  number)
+    {
+        switch (item)
+        {
+            case Items.ETank:
+                GameManager.recItemsOwned[(int)GameManager.RecoveryItems.ETank] += number;
+                return true;
+            case Items.WTank:
+                GameManager.recItemsOwned[(int)GameManager.RecoveryItems.WTank] += number;
+                return true;
+            case Items.MTank:
+                GameManager.recItemsOwned[(int)GameManager.RecoveryItems.MTank] += number;
+                return true;
+            case Items.LTank:
+                GameManager.recItemsOwned[(int)GameManager.RecoveryItems.LTank] += number;
+                return true;
+            case Items.boltSmall:
+                GameManager.bolts += 1;
+                return true;
+            case Items.boltBig:
+                GameManager.bolts += 5;
+                return true;
+            case Items.boltHuge:
+                GameManager.bolts += 100;
+                return true;
+            default:
+                return false;
+        }
+        return true;
     }
 
 

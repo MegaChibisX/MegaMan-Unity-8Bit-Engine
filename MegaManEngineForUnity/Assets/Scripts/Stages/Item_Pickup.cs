@@ -80,6 +80,15 @@ public class Item_Pickup : MonoBehaviour {
                     case Item.Items.LTank:
                         GameManager.recItemsOwned[(int)GameManager.RecoveryItems.LTank]++;
                         break;
+                    case Item.Items.boltSmall:
+                        GameManager.bolts += 1;
+                        break;
+                    case Item.Items.boltBig:
+                        GameManager.bolts += 5;
+                        break;
+                    case Item.Items.boltHuge:
+                        GameManager.bolts += 100;
+                        break;
 
                 }
             }
@@ -97,6 +106,11 @@ public class Item_Pickup : MonoBehaviour {
             }
             Destroy(gameObject);
         }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (GetComponent<Rigidbody2D>())
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
     }
 
 

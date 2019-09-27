@@ -1,0 +1,698 @@
+fileFormatVersion: 2
+guid: 82660c30f7cb73a458f8fdb917f3f074
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: mm10_commandoman_0
+    21300002: mm10_commandoman_1
+    21300004: mm10_commandoman_2
+    21300006: mm10_commandoman_3
+    21300008: mm10_commandoman_4
+    21300010: mm10_commandoman_5
+    21300012: mm10_commandoman_6
+    21300014: mm10_commandoman_7
+    21300016: mm10_commandoman_8
+    21300018: mm10_commandoman_9
+    21300020: mm10_commandoman_10
+    21300022: mm10_commandoman_11
+    21300024: mm10_commandoman_12
+    21300026: mm10_commandoman_13
+    21300028: mm10_commandoman_14
+    21300030: mm10_commandoman_15
+    21300032: mm10_commandoman_16
+    21300034: mm10_commandoman_17
+    21300036: mm10_commandoman_18
+    21300038: mm10_commandoman_19
+    21300040: mm10_commandoman_20
+    21300042: mm10_commandoman_21
+    21300044: mm10_commandoman_22
+    21300046: mm10_commandoman_23
+    21300048: mm10_commandoman_24
+    21300050: mm10_commandoman_25
+    21300052: mm10_commandoman_26
+    21300054: mm10_commandoman_27
+  externalObjects: {}
+  serializedVersion: 7
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: mm10_commandoman_0
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 164
+        width: 43
+        height: 33
+      alignment: 9
+      pivot: {x: 0.4883721, y: 0.4848485}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 571c38e2102ff914594c4e057375b046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_1
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 164
+        width: 42
+        height: 38
+      alignment: 9
+      pivot: {x: 0.52380955, y: 0.42105263}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e08bf071701cc5f45ae1f3dc25c1c6d5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_2
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 164
+        width: 45
+        height: 48
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0.33333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9234231c9d13dc4885947d6636fd518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_3
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 165
+        width: 47
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cb0a49e95513ec4dababd2984b6f3b5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_4
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 162
+        width: 47
+        height: 29
+      alignment: 9
+      pivot: {x: 0.46808508, y: 0.55172414}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18dd5c7e84e40f54ab69b49f6bb1ae30
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_5
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 162
+        width: 47
+        height: 30
+      alignment: 9
+      pivot: {x: 0.46808508, y: 0.53333336}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23a2e07e9decff149983c25da726406d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_6
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 111
+        width: 53
+        height: 33
+      alignment: 9
+      pivot: {x: 0.49056605, y: 0.4848485}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d07911d3ea6417b4e9e388d5b550c829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_7
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 111
+        width: 53
+        height: 33
+      alignment: 9
+      pivot: {x: 0.4716981, y: 0.4848485}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d79ade95871b96b4d9f27830fdbefafa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_8
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 111
+        width: 53
+        height: 33
+      alignment: 9
+      pivot: {x: 0.49056605, y: 0.4848485}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66856911df6655940a253d8c03eeb177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_9
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 108
+        width: 53
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5283019, y: 0.4871795}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 710371fa58990e845b1a71f973952169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_10
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 108
+        width: 53
+        height: 39
+      alignment: 9
+      pivot: {x: 0.509434, y: 0.4871795}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3b64a59fae0b0f49946d1b3e9a5bc97
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_11
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 108
+        width: 53
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5283019, y: 0.4871795}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5abd127b5bbdaf047baebd49f409dd68
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_12
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 52
+        width: 48
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4871795}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d34c68856787764ab95a821a23498be
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_13
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 54
+        width: 41
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc50a8522c471d542bdab9d2f9508192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_14
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 54
+        width: 41
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dc7283606b89974eab1b19260de065e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_15
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 55
+        width: 43
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8d5cbfc0ba85594bb3d380c7a792baf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_16
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 1
+        width: 14
+        height: 14
+      alignment: 9
+      pivot: {x: 0.5714286, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d73439ecc18ee6a43a2d2441dbc790a5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_17
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 2
+        width: 12
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5833334, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c358115953fbedc499c6b61db8dcb0f7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_18
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 1
+        width: 14
+        height: 14
+      alignment: 9
+      pivot: {x: 0.5, y: 0.42857146}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82ed03de79bab1445966cd878f8f8cb8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_19
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 2
+        width: 12
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5, y: 0.4166667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ac49a68cd7f0074c90ea4212d3cf340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_20
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 3
+        width: 6
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cc52eb51afc13248a1309adfa0ded6f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_21
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 3
+        width: 8
+        height: 45
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd83edc6c9449594db73c04a926fd7ba
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_22
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 3
+        width: 8
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47004a6a83524fb45801e64226350606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_23
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 3
+        width: 6
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd5f7d23661583f4481d0ca3d1e02c67
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_24
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 7
+        width: 16
+        height: 6
+      alignment: 9
+      pivot: {x: 1, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc131e4f1be84a74abb47eb0f173f7a4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_25
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 6
+        width: 43
+        height: 8
+      alignment: 9
+      pivot: {x: 1, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40960ff19bad88b4190203f3432a403c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_26
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 6
+        width: 28
+        height: 8
+      alignment: 9
+      pivot: {x: 1, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d33a1e069388fc40b613f3276041ea5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mm10_commandoman_27
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 7
+        width: 12
+        height: 6
+      alignment: 9
+      pivot: {x: 1, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d25ff1bf9c055824aa0e5f346b6ed260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: f6256b87fc76e5a46aa6074012de0a1b
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
