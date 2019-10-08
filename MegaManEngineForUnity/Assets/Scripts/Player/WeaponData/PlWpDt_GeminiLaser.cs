@@ -45,6 +45,10 @@ public class PlWpDt_GeminiLaser : Pl_WeaponData {
 
     public override void Press()
     {
+        // Doesn't attack if sliding or dashing
+        if (owner.slideTime > 0.0f)
+            return;
+
         // Gemini Laser can be fired as long as the weapon energy is more than zero,
         // even if the player has less then the required weapon energy for a shot.
         if (weaponEnergy > 0)

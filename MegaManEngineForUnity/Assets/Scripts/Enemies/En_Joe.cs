@@ -73,6 +73,7 @@ public class En_Joe : Enemy
                 if ((GameManager.playerPosition.x - transform.position.x) * transform.localScale.x > 32)
                 {
                     yield return JumpBack();
+                    body.velocity = Vector3.zero;
                     time = 2.5f;
                 }
             }

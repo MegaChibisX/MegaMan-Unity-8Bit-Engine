@@ -27,8 +27,12 @@ public class Stage_Teleporter : MonoBehaviour
         Player player;
         if  (other.attachedRigidbody != null && (player = other.attachedRigidbody.GetComponent<Player>()) != null)
         {
-            if ((boss && activateBoss) || (!boss && needBossDead) || (!activateBoss && !needBossDead)) 
-            StartCoroutine(Teleport(player));
+            if ((boss && activateBoss) || (!boss && needBossDead) || (!activateBoss && !needBossDead))
+            {
+                player.SetWeapon(player.currentWeaponIndex, true);
+                player.StopAllCoroutines();
+                StartCoroutine(Teleport(player));
+            }
         }
     }
     private void OnDrawGizmosSelected()

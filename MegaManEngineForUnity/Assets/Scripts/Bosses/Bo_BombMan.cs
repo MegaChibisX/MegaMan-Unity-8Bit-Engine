@@ -6,11 +6,10 @@ public class Bo_BombMan : Boss
 {
 
     private Animator anim;
-    private SpriteRenderer rend;
     private AudioSource aud;
     public BoxCollider2D col;
 
-    public Sprite hurtSprite;
+
     public AudioClip healSound;
 
     private string curAnim;
@@ -35,7 +34,7 @@ public class Bo_BombMan : Boss
 
         anim.gameObject.SetActive(false);
     }
-    private void LateUpdate()
+    protected override void LateUpdate()
     {
         if (invisTime % 0.2f > 0.07f)
             rend.sprite = hurtSprite;

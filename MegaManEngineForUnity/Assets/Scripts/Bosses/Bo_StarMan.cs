@@ -6,12 +6,9 @@ public class Bo_StarMan : Boss
 {
 
     protected Animator anim;
-    protected SpriteRenderer rend;
     protected AudioSource aud;
 
     public BoxCollider2D col;
-
-    public Sprite hurtSprite;
 
     public AudioClip shine;
     public AudioClip healSound;
@@ -41,7 +38,7 @@ public class Bo_StarMan : Boss
 
         anim.gameObject.SetActive(false);
     }
-	private void LateUpdate()
+    protected override void LateUpdate()
     {
         if (invisTime % 0.2f > 0.07f)
             rend.sprite = hurtSprite;
@@ -178,6 +175,10 @@ public class Bo_StarMan : Boss
         while (!isGrounded)
             yield return null;
 
+        yield return null;
+
+        body.velocity = Vector3.zero;
+
         anim.Play("Stand");
         yield return new WaitForSeconds(0.4f);
     }
@@ -235,6 +236,8 @@ public class Bo_StarMan : Boss
             while (!isGrounded)
                 yield return null;
 
+            body.velocity = Vector3.zero;
+
             anim.Play("Stand");
             yield return new WaitForSeconds(0.5f);
         }
@@ -264,6 +267,8 @@ public class Bo_StarMan : Boss
         while (!isGrounded)
             yield return null;
 
+        body.velocity = Vector3.zero;
+
         anim.Play("Stand");
         yield return new WaitForSeconds(0.3f);
     }
@@ -271,6 +276,8 @@ public class Bo_StarMan : Boss
     {
         while (!isGrounded)
             yield return null;
+
+        body.velocity = Vector3.zero; body.velocity = Vector3.zero;
 
         anim.Play("StandUp");
         yield return new WaitForSeconds(0.5f);

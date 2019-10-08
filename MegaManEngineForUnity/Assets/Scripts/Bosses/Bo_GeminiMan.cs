@@ -10,7 +10,6 @@ public class Bo_GeminiMan : Boss
     // Animator, collider, sprite renderer and audio for the boss.
     private Animator anim;
     private BoxCollider2D col;
-    private SpriteRenderer spr;
     private AudioSource aud;
 
     // Other Gemini Man
@@ -35,9 +34,6 @@ public class Bo_GeminiMan : Boss
     // Gemini Man's weapons
     public GameObject smallShot;
 
-    // A simple hurt sprite that Gemini Man displays instead of his
-    // animation when he is hurt.
-    public Sprite hurtSprite;
     // A regular explosion that is used in Gemini Man's death for fanciness.
     public GameObject explosionObject;
 
@@ -61,8 +57,8 @@ public class Bo_GeminiMan : Boss
         col = GetComponentInChildren<BoxCollider2D>();
         if (col == null)
             Debug.LogWarning("Gemini Man named " + name + "has no BoxCollider2D!");
-        spr = GetComponentInChildren<SpriteRenderer>();
-        if (spr == null)
+        rend = GetComponentInChildren<SpriteRenderer>();
+        if (rend == null)
             Debug.LogWarning("Gemini Man named " + name + "has no Sprite Renderer!");
         aud = GetComponentInChildren<AudioSource>();
         if (aud == null)
@@ -81,11 +77,11 @@ public class Bo_GeminiMan : Boss
         if (isPrimary)
             otherGemini.GetComponentInChildren<SpriteRenderer>().enabled = false;
     }
-    private void LateUpdate()
+    protected override void LateUpdate()
     {
         // If invisible, makes the boss flash.
         if (invisTime % 0.2f > 0.07f)
-            spr.sprite = hurtSprite;
+            rend.sprite = hurtSprite;
         if (invisTime > 0.0f)
             invisTime -= Time.deltaTime;
     }

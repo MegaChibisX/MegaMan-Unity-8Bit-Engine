@@ -9,13 +9,11 @@ public class Bo_MetalMan : Boss
     public Transform leftSide;
     public Transform rightSide;
 
-    public Sprite hurtSprite;
     public AudioClip healSound;
 
     public GameObject metalBlade;
 
     protected Animator anim;
-    protected SpriteRenderer spr;
     protected AudioSource aud;
 
     public Collider2D col;
@@ -33,17 +31,17 @@ public class Bo_MetalMan : Boss
             Destroy(transform.parent.gameObject);
 
         anim = GetComponentInChildren<Animator>();
-        spr = anim.GetComponent<SpriteRenderer>();
+        rend = anim.GetComponent<SpriteRenderer>();
         aud = GetComponent<AudioSource>();
 
         anim.gameObject.SetActive(false);
         SetConveyor(true);
     }
-    private void LateUpdate()
+    protected override void LateUpdate()
     {
         // If invisible, makes the boss flash.
         if (invisTime % 0.2f > 0.07f)
-            spr.sprite = hurtSprite;
+            rend.sprite = hurtSprite;
         if (invisTime > 0.0f)
             invisTime -= Time.deltaTime;
     }

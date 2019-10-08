@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour {
     public bool shielded = false;
     public bool destroyOutsideCamera = true;
 
+    protected float invisTime;
+
     // The center position of the enemy. Usually set based on the collider,
     // if it is not set manually. Each enemy needs to set it on its own if it needs to.
     public Vector3 center;
@@ -26,14 +28,28 @@ public class Enemy : MonoBehaviour {
     // The explosion the enemy should create once it dies. It is usually either small, big or big and hurting.
     public GameObject deathExplosion;
 
+    // The sprite that flashes during damage
+    public Sprite hurtSprite;
+
     // The rigidbody of the enemy, which handles physics.
     protected Rigidbody2D body;
+
+    // The sprite renderer of the sprite.
+    protected SpriteRenderer rend;
 
 
     protected virtual void Start()
     {
         // Sets a reference for the rigidbody of this gameObject.
         body = GetComponent<Rigidbody2D>();
+        rend = GetComponentInChildren<SpriteRenderer>();
+    }
+    protected virtual void LateUpdate()
+    {
+        if (invisTime % 0.2f > 0.07f)
+            rend.sprite = hurtSprite;
+        if (invisTime > 0.0f)
+            invisTime -= Time.deltaTime;
     }
     protected virtual void OnDrawGizmosSelected()
     {
@@ -59,6 +75,7 @@ public class Enemy : MonoBehaviour {
     {
         // Lowers the enemy's health and kills if needed.
         health -= dmg;
+        invisTime = 0.5f;
         if (health <= 0)
         {
             Kill(true, true);

@@ -30,6 +30,9 @@ public class PlWpDt_HyperBomb : Pl_WeaponData
 
     public override void Press()
     {
+        if (owner.slideTime > 0.0f)
+            return;
+
         if (weaponEnergy > 0.0f)
         {
             weaponEnergy -= 2.0f;

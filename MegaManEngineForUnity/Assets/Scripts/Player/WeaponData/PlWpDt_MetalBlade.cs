@@ -31,6 +31,9 @@ public class PlWpDt_MetalBlade : Pl_WeaponData
 
     public override void Press()
     {
+        if (owner.slideTime > 0.0f)
+            return;
+
         if (weaponEnergy > 0)
         {
             if (owner.gearActive_Power)
@@ -49,7 +52,6 @@ public class PlWpDt_MetalBlade : Pl_WeaponData
 
     private void Throw(Vector2 dir)
     {
-        Debug.Log(dir);
         if (dir == Vector2.zero)
             dir = owner.right;
         dir.Normalize();
@@ -65,7 +67,6 @@ public class PlWpDt_MetalBlade : Pl_WeaponData
 
     private void ThrowBig(Vector2 dir)
     {
-        Debug.Log(dir);
         if (dir == Vector2.zero)
             dir = owner.right;
         dir.Normalize();
@@ -75,6 +76,8 @@ public class PlWpDt_MetalBlade : Pl_WeaponData
         GameObject blade = Object.Instantiate(metalWheel);
         blade.transform.position = owner.transform.position + new Vector3(dir.x, dir.y, -1f) * 16f;
         blade.transform.rotation = Quaternion.LookRotation(Vector3.forward, Quaternion.AngleAxis(90f, Vector3.forward) * dir);
+        blade.transform.localScale = new Vector3(1, owner.anim.transform.localScale.y);
+        blade.GetComponent<Rigidbody2D>().gravityScale = 10 * owner.anim.transform.localScale.y;
 
         owner.throwTime = 0.25f;
     }

@@ -14,7 +14,6 @@ public class EnWp_Shot : Enemy
     public float speed = 200.0f;
     public bool destroyOnWall = false;
 
-    protected SpriteRenderer rend;
     public int frameSpeed = 12;
     public Sprite[] sprites;
 

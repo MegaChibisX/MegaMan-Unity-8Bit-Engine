@@ -116,6 +116,7 @@ public static class GameManager
     public static void StartRoom()
     {
         ResetRoom();
+        bossesActive = 0;
 
         foreach (Pl_WeaponData wpn in Pl_WeaponData.WeaponList)
         {

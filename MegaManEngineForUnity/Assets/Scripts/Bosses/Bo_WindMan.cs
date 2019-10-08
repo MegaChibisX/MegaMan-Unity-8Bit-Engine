@@ -6,13 +6,11 @@ public class Bo_WindMan : Boss
 {
 
     private Animator anim;
-    private SpriteRenderer rend;
     private AudioSource aud;
 
     public BoxCollider2D col;
     public ParticleSystem particles;
 
-    public Sprite hurtSprite;
     public AudioClip healSound;
 
     public EnWp_WaveShot shot;
@@ -32,7 +30,7 @@ public class Bo_WindMan : Boss
         anim.gameObject.SetActive(false);
         wind.gameObject.SetActive(false);
     }
-    private void LateUpdate()
+    protected override void LateUpdate()
     {
         if (invisTime % 0.2f > 0.07f)
             rend.sprite = hurtSprite;

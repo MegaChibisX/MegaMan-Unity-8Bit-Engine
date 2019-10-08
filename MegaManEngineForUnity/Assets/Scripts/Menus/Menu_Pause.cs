@@ -129,7 +129,8 @@ public class Menu_Pause : Menu
 
 
         // Uses current item or section.
-        if (Input.GetButtonDown("Start")) {
+        if (Input.GetButtonDown("Start"))
+        {
             switch (mode)
             {
                 // Sets a new player.
@@ -421,6 +422,7 @@ public class Menu_Pause : Menu
         owner.body.bodyType = RigidbodyType2D.Dynamic;
         owner.SetLocalTimeScale(Player.timeScale);
         owner.body.velocity = Vector2.zero;
+        owner.body.simulated = true;
     }
     public IEnumerator Heal(float units, bool recoverHealth, bool recoverWeapons, GameManager.RecoveryItems recItem)
     {

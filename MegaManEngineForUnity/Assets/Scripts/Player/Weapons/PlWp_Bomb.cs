@@ -7,6 +7,8 @@ public class PlWp_Bomb : Pl_Weapon
 
     public GameObject explosion;
     public float fuse = 5f;
+    public bool explodeOnEveryBounce = false;
+    private float cooldown = 0.25f;
 
 
     public override void Update()
@@ -15,6 +17,8 @@ public class PlWp_Bomb : Pl_Weapon
         fuse -= Time.deltaTime;
         if (fuse <= 0.0f)
             Explode();
+        if (cooldown > 0.0f)
+            cooldown -= Time.unscaledDeltaTime;
     }
     public override void Deflect()
     {
@@ -61,6 +65,8 @@ public class PlWp_Bomb : Pl_Weapon
         {
             if (destroyOnWalls)
                 Explode();
+            else if (explodeOnEveryBounce)
+                ExplodeHarmlessly();
         }
     }
 
@@ -73,6 +79,18 @@ public class PlWp_Bomb : Pl_Weapon
             explosion.GetComponent<Pl_Weapon>().damage = damage;
 
         Destroy(gameObject);
+    }
+    public void ExplodeHarmlessly()
+    {
+        if (cooldown > 0.0f)
+            return;
+
+        GameObject exp = Instantiate(explosion);
+        exp.transform.position = transform.position;
+        if (exp.GetComponent<Pl_Weapon>())
+            exp.GetComponent<Pl_Weapon>().damage = 1;
+
+        cooldown = 0.5f;
     }
 
 }

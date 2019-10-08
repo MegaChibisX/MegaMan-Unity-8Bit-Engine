@@ -19,7 +19,6 @@ public class Boss : Enemy
     public Sprite healthBarEmpty;
 
     protected bool fightStarted;
-    protected float invisTime = 0.0f;
 
     public bool endStageAfterFight = true;
     public bool ignorePreviousDeath = false;
@@ -91,12 +90,11 @@ public class Boss : Enemy
             yield break;
 
         fightStarted = false;
-        GameManager.bossesActive--;
         deathExplosionBoss = Instantiate(deathExplosionBoss);
         deathExplosionBoss.transform.position = transform.position;
         GetComponentInChildren<SpriteRenderer>().gameObject.SetActive(false);
 
-        if (GameManager.bossesActive == 0 && endStageAfterFight)
+        if (GameManager.bossesActive == 1 && endStageAfterFight)
         {
             if (Player.instance != null)
                 Player.instance.canBeHurt = false;
@@ -117,7 +115,7 @@ public class Boss : Enemy
             Time.timeScale = 1.0f;
             if (Player.instance != null)
             {
-                if (GameManager.bossesActive > 0 || !endStageAfterFight)
+                if (GameManager.bossesActive > 1 || !endStageAfterFight)
                 {
                     Player.instance.CanMove(true);
                     Player.instance.canBeHurt = true;

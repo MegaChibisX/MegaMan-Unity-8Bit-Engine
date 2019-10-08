@@ -5,8 +5,6 @@ using UnityEngine;
 public class En_TotemPolen : Enemy
 {
 
-    public SpriteRenderer rend;
-
     public Sprite spriteIdle;
     public Sprite[] spriteShoot;
 

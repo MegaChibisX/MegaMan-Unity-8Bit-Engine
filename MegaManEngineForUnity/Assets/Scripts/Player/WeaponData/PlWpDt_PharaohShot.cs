@@ -67,6 +67,9 @@ public class PlWpDt_PharaohShot : Pl_WeaponData {
 
     public override void Press()
     {
+        if (owner.slideTime > 0.0f)
+            return;
+
         if (weaponEnergy > 0)
         {
             // If the Power Gear is active, just 3 simple big shots are shot.

@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     {
         get
         {
-            return Time.fixedUnscaledDeltaTime * timeScale;
+            return Time.fixedUnscaledDeltaTime * timeScale * (Time.timeScale == 0 ? 0 : (1 / Time.timeScale));
         }
     }
     
@@ -115,7 +115,11 @@ public class Player : MonoBehaviour
     public enum SlideType { Slide, Dash, None }
     public SlideType slideType = SlideType.Slide;
 
-    protected float slideTime = 0f;
+    public float slideTime
+    {
+        get;
+        protected set;
+    }
     private bool dashing = false;
     protected float chargeKeyHold = 0f;
     [System.NonSerialized]
@@ -222,7 +226,6 @@ public class Player : MonoBehaviour
     }
     protected virtual void Update()
     {
-
         // If there is a cutscene that must be playing, play the cutscene.
         if (cutscene.isActive)
             cutscene.Update();
@@ -233,7 +236,7 @@ public class Player : MonoBehaviour
         // Mostly input and pause menu right now.
         HandleInput_Technical();
 
-        if (canMove)
+        if (canMove && !paused)
         {
             // Sets the jump counter.
             if ((isGrounded || isInSand) && jumpsLeft != maxJumps)
@@ -527,7 +530,7 @@ public class Player : MonoBehaviour
             {
                 float sinkSpeed = otherBody.GetComponent<Stage_Sand>().sinkSpeed;
 
-                if (body.velocity.y * anim.transform.localScale.y < 0)
+                if (body.velocity.y * anim.transform.localScale.y <= 0)
                     body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y, -sinkSpeed, sinkSpeed));
             }
         }
@@ -549,14 +552,17 @@ public class Player : MonoBehaviour
             // If the down button is pressed and you're on the ground, slide.
             if (input.y == -1 && isGrounded && slideType != SlideType.None)
             {
-                slideTime = 0.5f;
-                if (slideType == SlideType.Slide)
+                if (slideTime <= 0.0f)
                 {
-                    slideCol.enabled = true;
-                    normalCol.enabled = false;
+                    slideTime = 0.5f;
+                    if (slideType == SlideType.Slide)
+                    {
+                        slideCol.enabled = true;
+                        normalCol.enabled = false;
+                    }
+                    else if (slideType == SlideType.Dash)
+                        dashing = true;
                 }
-                else if (slideType == SlideType.Dash)
-                    dashing = true;
             }
             // If not in a slide, or in a slide without a block over the player, jump.
             else if (canStand &&
@@ -633,16 +639,23 @@ public class Player : MonoBehaviour
             // Switch weapons.
             if (Input.GetButtonDown("WeaponSwitch"))
             {
-                currentWeaponIndex += Mathf.RoundToInt(Input.GetAxisRaw("WeaponSwitch"));
+                if (Input.GetAxis("WeaponSwitch") == 0)
+                {
+                    SetWeapon(0);
+                }
+                else
+                {
+                    currentWeaponIndex += Mathf.RoundToInt(Input.GetAxisRaw("WeaponSwitch"));
 
-                if (currentWeaponIndex < 0)
-                    currentWeaponIndex = (int)weaponList.Count - 1;
-                else if (currentWeaponIndex >= (int)weaponList.Count)
-                    currentWeaponIndex = 0;
+                    if (currentWeaponIndex < 0)
+                        currentWeaponIndex = (int)weaponList.Count - 1;
+                    else if (currentWeaponIndex >= (int)weaponList.Count)
+                        currentWeaponIndex = 0;
 
-                if (currentWeapon != null)
-                    currentWeapon.Cancel();
-                SetWeapon(currentWeaponIndex);
+                    if (currentWeapon != null)
+                        currentWeapon.Cancel();
+                    SetWeapon(currentWeaponIndex);
+                }
             }
         }
 
@@ -694,6 +707,7 @@ public class Player : MonoBehaviour
             if (pauseMenu == null)
             {
                 Time.timeScale = GameManager.globalTimeScale;
+                Time.fixedDeltaTime = Time.timeScale * 0.02f;
                 SetLocalTimeScale(timeScale);
                 paused = false;
             }
@@ -714,7 +728,8 @@ public class Player : MonoBehaviour
 
                 prePauseVelocity = body.velocity;
                 body.velocity = Vector2.zero;
-                body.bodyType = RigidbodyType2D.Static;
+                body.bodyType = RigidbodyType2D.Kinematic;
+                body.simulated = false;
             }
         }
     }
@@ -884,7 +899,7 @@ public class Player : MonoBehaviour
         // If the player is not attacking, they can move up and down the ladder.
         body.velocity = Vector2.zero;
         if (shootTime <= 0.0f && throwTime <= 0.0f)
-            body.MovePosition(transform.position + up * input.y * climbSpeed * fixedDeltaTime);
+            body.MovePosition(transform.position + up * input.y * climbSpeed * fixedDeltaTime * Time.timeScale);
 
         if (!Physics2D.OverlapPoint(transform.position + _center - up * height * 0.5f, 1 << 10) ||
             Input.GetButton("Jump"))
@@ -956,7 +971,7 @@ public class Player : MonoBehaviour
         // If not sliding, moves back. If sliding, stays in place.
         body.velocity = Vector3.zero;
         if (slideTime <= 0.0f && !paused)
-            body.MovePosition(transform.position - right * 40 * fixedDeltaTime);
+            body.MovePosition(transform.position - right * 40 * Time.fixedDeltaTime);
     }
     protected virtual void Land()
     {
@@ -1006,11 +1021,9 @@ public class Player : MonoBehaviour
 
         Destroy(gameObject);
     }
-    public void SetWeapon(int weaponIndex)
+    public void SetWeapon(int weaponIndex, bool force = false)
     {
-        // Some weapons need to be cancelled when switched out.
-        if (currentWeapon != null)
-            currentWeapon.Cancel();
+
 
         // If there are no available weapons, exit.
         if (weaponList == null || weaponList.Count == 0)
@@ -1024,6 +1037,13 @@ public class Player : MonoBehaviour
             weaponIndex = weaponList.Count - 1;
         else if (weaponIndex < 0)
             weaponIndex = 0;
+
+        if (weaponIndex != currentWeaponIndex || force)
+        {
+            // Some weapons need to be cancelled when switched out.
+            if (currentWeapon != null)
+                currentWeapon.Cancel();
+        }
 
         // Sets and starts the active weapon.
         currentWeaponIndex = weaponIndex;
@@ -1078,6 +1098,7 @@ public class Player : MonoBehaviour
         if (speedGear)
         {
             Time.timeScale = 0.25f;
+            Time.fixedDeltaTime = Time.timeScale * 0.02f;
             GameManager.globalTimeScale = Time.timeScale;
             SetGravity(1.0f, gravityInverted);
             SetLocalTimeScale(1.0f);
@@ -1085,6 +1106,7 @@ public class Player : MonoBehaviour
         else
         {
             Time.timeScale = 1.0f;
+            Time.fixedDeltaTime = Time.timeScale * 0.02f;
             GameManager.globalTimeScale = Time.timeScale;
             SetGravity(1.0f, gravityInverted);
             SetLocalTimeScale(1.0f);
@@ -1148,7 +1170,7 @@ public class Player : MonoBehaviour
     public virtual void Mount(Ride newRide)
     {
         // If there is no available ride, doesn't mount.
-        if (!canMove || newRide == null || !newRide.canBeRidden || ride != null)
+        if (!canMove || newRide == null || !newRide.canBeRidden || ride != null || newRide.transform.localScale.y != anim.transform.localScale.y)
             return;
 
         // Dismounts already existing ride.
@@ -1251,7 +1273,6 @@ public class Player : MonoBehaviour
         float prevMass = body.mass;
         body.mass = 1.0f;
 
-
         _timeScale = Mathf.Abs(_timeScale);
         timeScale = _timeScale;
 
@@ -1262,12 +1283,16 @@ public class Player : MonoBehaviour
     }
     public void ApplyGravity()
     {
-        if (!body.isKinematic && pauseMenu == null)
+        if (!body.isKinematic && !paused)
             body.velocity += Vector2.down * 10f * gravityScale * gravityEnvironmentMulti * body.mass * body.mass * fixedDeltaTime;
         gravityEnvironmentMulti = 1.0f;
     }
     public virtual void SetGravity(float magnitude, bool inverted)
     {
+        // Gets out of the ride if the gravity switches
+        if (inverted != gravityInverted)
+            Dismount();
+
         // The collider of the player needs to be considered when the player flips,
         // not the center of the player themselves.
         if (inverted)
@@ -1281,10 +1306,12 @@ public class Player : MonoBehaviour
         magnitude /= GameManager.globalTimeScale * GameManager.globalTimeScale;
 
         // Each state has different needs.
-        if (state == PlayerStates.Climb || isInSand)
+        if (state == PlayerStates.Climb)
             gravityScale = 0.0f;
         else if (isInWater)
             gravityScale = 50.0f * magnitude * (inverted ? -1 : 1);
+        else if (isInSand)
+            gravityScale = 25.0f * magnitude * (inverted ? -1 : 1);
         else
             gravityScale = 100.0f * magnitude * (inverted ? -1 : 1);
     }
@@ -1335,6 +1362,8 @@ public class Player : MonoBehaviour
 
         yield return new WaitForSeconds(2.0f);
 
+        GameManager.bossesActive = 0;
+
         anim.applyRootMotion = true;
         Helper.GoToStage("StageSelect");
     }
@@ -1357,7 +1386,7 @@ public class Player : MonoBehaviour
         while (time > 0.0f)
         {
             time -= Time.fixedUnscaledDeltaTime;
-            body.MovePosition(transform.position - right * 4.0f * Time.fixedDeltaTime);
+            body.MovePosition(transform.position - right * 4.0f * Time.fixedDeltaTime * Time.timeScale);
 
             yield return new WaitForFixedUpdate();
         }

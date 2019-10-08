@@ -6,11 +6,9 @@ public class Bo_CommandoMan : Boss
 {
 
     private Animator anim;
-    private SpriteRenderer rend;
     private AudioSource aud;
     public BoxCollider2D col;
 
-    public Sprite hurtSprite;
     public AudioClip healSound;
 
     public EnWp_CommandoBomb bomb;
@@ -28,7 +26,7 @@ public class Bo_CommandoMan : Boss
 
         anim.gameObject.SetActive(false);
     }
-    private void LateUpdate()
+    protected override void LateUpdate()
     {
         if (invisTime % 0.2f > 0.07f)
             rend.sprite = hurtSprite;

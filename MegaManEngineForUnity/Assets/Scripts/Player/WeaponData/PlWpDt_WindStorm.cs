@@ -32,6 +32,9 @@ public class PlWpDt_WindStorm : Pl_WeaponData
 
     public override void Press()
     {
+        if (owner.slideTime > 0.0f)
+            return;
+
         if (weaponEnergy > 0.0f)
         {
             owner.shootTime = 0.2f;

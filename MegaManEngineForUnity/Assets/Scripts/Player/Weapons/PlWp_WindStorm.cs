@@ -74,10 +74,10 @@ public class PlWp_WindStorm : Pl_Shot
                     }
                     break;
                 case Item.Items.bigEnergy:
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < 3; i++)
                     {
-                        GameObject o = Instantiate(Item.GetObjectFromItem(Item.Items.smallEnergy));
-                        o.transform.position = item.transform.position + Vector3.right * (-2 + i) * 10;
+                        GameObject o = Instantiate(Item.GetObjectFromItem(Item.Items.smallHealth));
+                        o.transform.position = item.transform.position + Vector3.right * (-1 + i) * 10;
                     }
                     break;
                 case Item.Items.bigGear:
@@ -90,7 +90,7 @@ public class PlWp_WindStorm : Pl_Shot
                 case Item.Items.boltBig:
                     for (int i = 0; i < 5; i++)
                     {
-                        GameObject o = Instantiate(Item.GetObjectFromItem(Item.GetRandomItem(0, 2, 1, 2, 1, 0, 0, 0)));
+                        GameObject o = Instantiate(Item.GetObjectFromItem(Item.GetRandomItem(0, 5, 1, 5, 1, 0, 0, 0)));
                         o.transform.position = item.transform.position + Vector3.right * (-2 + i) * 10;
                     }
                     break;
@@ -113,11 +113,12 @@ public class PlWp_WindStorm : Pl_Shot
                 break;
             }
 
-            GameObject item = Instantiate(Item.GetObjectFromItem(Item.GetRandomItem(0, 2, 1, 2, 1, 1, 0.5f, 2)));
+            GameObject item = Instantiate(Item.GetObjectFromItem(Item.GetRandomItem(0, 2, 0, 0, 0, 1, 0, 2)));
             item.transform.position = transform.position;
 
             yield return new WaitForSeconds(0.5f);
         }
+        Destroy(gameObject);
     }
 
 

@@ -6,7 +6,6 @@ public class Bo_GalaxyMan: Boss
 {
 
     private Animator anim;
-    private SpriteRenderer rend;
     private AudioSource aud;
     public BoxCollider2D col;
 
@@ -15,7 +14,6 @@ public class Bo_GalaxyMan: Boss
 
     public EnWp_TrackBullet blackHoleBaby;
 
-    public Sprite hurtSprite;
     public AudioClip healSound;
 
     protected override void Start()
@@ -31,7 +29,7 @@ public class Bo_GalaxyMan: Boss
 
         anim.gameObject.SetActive(false);
     }
-    private void LateUpdate()
+    protected override void LateUpdate()
     {
         if (invisTime % 0.2f > 0.07f)
             rend.sprite = hurtSprite;
@@ -157,7 +155,7 @@ public class Bo_GalaxyMan: Boss
         while (time > 0)
         {
             Vector3 targetPos = transform.position - transform.right * transform.localScale.x * 128f * Time.fixedDeltaTime;
-            targetPos.y += Mathf.Sin(Time.time * 360f * Mathf.Deg2Rad) * 2;
+            targetPos.y += Mathf.Sin(Time.time * 360f * Mathf.Deg2Rad) * 2 * Time.timeScale;
             body.position = targetPos;
 
             if (isWalled)

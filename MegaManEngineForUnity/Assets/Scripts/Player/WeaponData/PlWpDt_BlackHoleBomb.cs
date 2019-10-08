@@ -42,7 +42,7 @@ public class PlWpDt_BlackHoleBomb : Pl_WeaponData
 
     public override void Press()
     {
-        if (cooldownTime >= 0.0f || weaponEnergy <= 0.0f)
+        if (cooldownTime >= 0.0f || weaponEnergy <= 0.0f || owner.slideTime > 0.0f)
             return;
 
 

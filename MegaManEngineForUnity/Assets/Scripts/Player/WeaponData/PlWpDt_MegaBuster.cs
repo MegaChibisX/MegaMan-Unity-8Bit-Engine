@@ -19,6 +19,7 @@ public class PlWpDt_MegaBuster : Pl_WeaponData
 
 
     private float charge = 0.0f;
+    private float cooldown = 0.0f;
 
     // The Mega Buster doesn't require any special parameters in its constructor.
     public PlWpDt_MegaBuster(Player _owner, string _menuName, WeaponColors _baseColors, WeaponColors[,] _chargeColors) : base(_owner, _menuName, _baseColors, _chargeColors)
@@ -43,6 +44,9 @@ public class PlWpDt_MegaBuster : Pl_WeaponData
     public override void Press()
     {
         // Shoots, sets the player animation to shooting and plays a shoot sound.
+        if (owner.slideTime > 0.0f)
+            return;
+
         Shoot(owner.right * owner.width * 1.3f, Vector3.Angle(owner.right, Vector3.right) > 90, 1, 300, 0);
         owner.shootTime = 0.2f;
         if (!owner.audioWeapon.isPlaying || owner.audioWeapon.clip != owner.SFXLibrary.shootBig)
@@ -63,8 +67,16 @@ public class PlWpDt_MegaBuster : Pl_WeaponData
             // If the Power Gear is active, shoots two shots.
             if (owner.gearActive_Power)
             {
-                owner.StartCoroutine(ShootGear(owner.right * owner.width * 1.3f, Vector3.Angle(owner.right, Vector3.right) > 90, 1, 300, charge));
-                owner.shootTime = 0.5f;
+                if (charge >= 1.0f)
+                {
+                    owner.StartCoroutine(ShootGear(owner.right * owner.width * 1.3f, Vector3.Angle(owner.right, Vector3.right) > 90, 1, 300, charge));
+                    owner.shootTime = 0.5f;
+                }
+                else
+                {
+                    Shoot(owner.right * owner.width * 1.3f, Vector3.Angle(owner.right, Vector3.right) > 90, 1, 300, charge);
+                    owner.shootTime = 0.2f;
+                }
             }
             // Else, if a semi charged shot or more needs to be shot,
             // the appropriate shot is shot.

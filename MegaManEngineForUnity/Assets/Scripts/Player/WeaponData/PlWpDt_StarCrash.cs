@@ -54,6 +54,11 @@ public class PlWpDt_StarCrash : Pl_WeaponData
         }
         weaponEnergy = Mathf.Clamp(weaponEnergy, 0f, 28f);
     }
+    public override void Cancel()
+    {
+        if (activeShield != null)
+            Object.Destroy(activeShield.gameObject);
+    }
 
     private  void Spawn(bool power)
     {
