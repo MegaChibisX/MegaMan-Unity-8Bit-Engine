@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[AddComponentMenu("MegaMan/Allies/Bass")]
 public class Bass : Player
 {
 

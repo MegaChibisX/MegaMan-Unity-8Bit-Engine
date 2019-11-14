@@ -94,7 +94,7 @@ public class Pl_Weapon : MonoBehaviour {
     {
         // When something is hit, if it is an enemy
         // and the enemy can be hurt, it hurts the enemy.
-        if (other.attachedRigidbody != null && other.attachedRigidbody.GetComponent<Enemy>())
+        if (other.attachedRigidbody != null && other.attachedRigidbody.GetComponent<Enemy>() && other.gameObject.layer != 15)
         {
             Enemy enemy = other.attachedRigidbody.GetComponent<Enemy>();
             if (enemy.canBeHit)

@@ -8,7 +8,6 @@ public class EnWp_BowlieBall : Enemy
 
     public Sprite ball1;
     public Sprite ball2;
-    public SpriteRenderer rend;
 
     private bool isActive;
     private float time = 0.0f;
@@ -44,7 +43,7 @@ public class EnWp_BowlieBall : Enemy
             Kill(false, false);
         }
     }
-    protected void LateUpdate()
+    protected override void LateUpdate()
     {
         // Doesn't change sprite if the ball is not active.
         // It's usually not recommended to put 'return' in methods like LateUpdate() or Start(), but this is a fairly simple script.

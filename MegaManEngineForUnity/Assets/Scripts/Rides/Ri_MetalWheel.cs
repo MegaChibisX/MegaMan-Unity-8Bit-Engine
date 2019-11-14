@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The Metal Blade's powered version, the Metal Wheel. It does good damage
+/// and the player can ride it to victory. It can't be ridden through sand though.
+/// </summary>
 public class Ri_MetalWheel : Ride
 {
 
@@ -19,6 +23,7 @@ public class Ri_MetalWheel : Ride
     }
     public override void Update()
     {
+        // If there is a rider, move and jump.
         if (rider != null && touchedGround)
         {
 
@@ -38,7 +43,6 @@ public class Ri_MetalWheel : Ride
         }
         if (isInSand)
             body.velocity = new Vector2(0, body.velocity.y);
-        print(isGrounded);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

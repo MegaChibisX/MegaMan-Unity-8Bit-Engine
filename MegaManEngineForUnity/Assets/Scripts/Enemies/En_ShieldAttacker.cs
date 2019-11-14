@@ -36,7 +36,7 @@ public class En_ShieldAttacker : Enemy
         anim = GetComponentInChildren<Animator>();
         col = GetComponentInChildren<BoxCollider2D>();
     }
-    private void LateUpdate()
+    protected override void LateUpdate()
     {
         ChangeSpriteColor(rendSource, rendOutput1, pairs);
         ChangeSpriteColor(rendSource, rendOutput2, pairs2);

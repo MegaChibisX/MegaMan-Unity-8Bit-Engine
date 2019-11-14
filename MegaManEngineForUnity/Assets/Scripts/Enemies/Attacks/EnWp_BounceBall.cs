@@ -12,7 +12,6 @@ public class EnWp_BounceBall : Enemy
     // and one for the ball when it hits a wall.
     public Sprite ballIdle;
     public Sprite ballBouncing;
-    private SpriteRenderer rend;
 
     
 

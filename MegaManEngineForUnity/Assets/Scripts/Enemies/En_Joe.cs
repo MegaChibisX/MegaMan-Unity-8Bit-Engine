@@ -31,7 +31,7 @@ public class En_Joe : Enemy
         // We start the Joe behavior.
         StartCoroutine(Behavior());
     }
-    protected void LateUpdate()
+    protected override void LateUpdate()
     {
         foreach (SpritePair s in sprites)
         {

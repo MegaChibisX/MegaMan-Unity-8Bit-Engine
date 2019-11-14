@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Instead of using an animator, you can use this for simple animations.
+/// </summary>
 [AddComponentMenu("MegaMan/Misc/Sprite Animation")]
 public class Misc_SpriteAnimation : MonoBehaviour
 {

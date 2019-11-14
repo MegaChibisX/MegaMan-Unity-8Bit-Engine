@@ -32,7 +32,7 @@ public class Menu_Intro : Menu
         {
             countdown -= Time.deltaTime;
             if (countdown <= 0.0f)
-                Helper.GoToStage("StageSelect");
+                Helper.GoToStage("Cutscene_Intro");
         }
     }
     public override void DrawGUI()

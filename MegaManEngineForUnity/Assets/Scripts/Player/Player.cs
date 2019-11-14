@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 
     public static Player instance;
 
+    // The player uses their own timeScale, mostly for the Speed Geear to work without slowing them down.
     public static float timeScale = 1.0f;
     public static float deltaTime
     {
@@ -25,51 +26,63 @@ public class Player : MonoBehaviour
         }
     }
     
-
+    // Basic player data.
     public Animator anim;
     public Rigidbody2D body;
+    public bool isSpriteHidden = false;
     public SpriteRenderer sprite;
     public PlayerHealthbars bars;
     public GameManager.Players curPlayer;
     public Pl_WeaponData.WeaponColors defaultColors = new Pl_WeaponData.WeaponColors(
                                                   new Color(0f / 255f, 160f / 255f, 255f / 255f), new Color(0f / 256f, 97f / 256f, 255f / 255), Color.black);
 
+    // Input.
     public Vector2 input;
 
+    // Colliders.
     public Collider2D normalCol;
     public Collider2D slideCol;
     public GameObject spriteContainer;
 
+    // Audio.
     public AudioSource audioWeapon;
     public AudioSource audioStage;
 
+    // Color sprites.
     public SpriteRenderer bodyColorLight;
     public SpriteRenderer bodyColorDark;
     public SpriteRenderer bodyColorOutline;
 
+    // Gear data.
     public GameObject speedGearTrail;
     public ParticleSystem gearSmoke;
     public GameObject gearBar;
     private Material gearBarMaterial;
 
+    // Death explosion.
     public GameObject deathExplosion;
 
+    // Audio clips.
     public PlayerSFX SFXLibrary;
 
-    //public Pl_WeaponData.Weapons currentWeaponEnum;
+    // Weapon data.
     public Pl_WeaponData currentWeapon;
     public Pl_WeaponData.Weapons defaultWeapon = Pl_WeaponData.Weapons.MegaBuster;
     public List<Pl_WeaponData.Weapons> weaponList;
     public int currentWeaponIndex = 0;
 
+    // Pause menu.
     public Menu_Pause pauseMenu;
     public bool paused = false;
+
+    // Cutscene items. Most unused.
     public bool useIntro = true;
     public Menu_Cutscene cutscene;
     [System.NonSerialized]
     public Vector2 prePauseVelocity;
 
     
+    // States of the player.
     public enum PlayerStates { Normal, Still, Frozen, Climb, Hurt, Fallen, Paused, Riding }
     public PlayerStates state = PlayerStates.Normal;
 
@@ -77,11 +90,13 @@ public class Player : MonoBehaviour
     public bool canBeHurt = true;
     public bool canAnimate = true;
 
+    // Health data.
     public float health = 28;
     public float maxHealth = 28;
     protected float knockbackTime = 0.0f;
     protected float invisTime = 0.0f;
 
+    // Is the double gear available? It can be disabled in the GameManager.
     public bool gearAvailable
     {
         get
@@ -100,18 +115,22 @@ public class Player : MonoBehaviour
     [System.NonSerialized]
     public bool gearActive_Power = false;
 
+    // Gravity.
     public bool gravityInverted = false;
     public float gravityScale = 100.0f;
     public float gravityEnvironmentMulti = 1.0f;
     protected Vector2 windVector;
 
+    // Velocities.
     public float moveSpeed = 80;
     public float climbSpeed = 80;
     public float jumpForce = 370;
 
+    // Jumps.
     public int maxJumps = 1;
     protected int jumpsLeft = 0;
 
+    // Slides.
     public enum SlideType { Slide, Dash, None }
     public SlideType slideType = SlideType.Slide;
 
@@ -120,16 +139,20 @@ public class Player : MonoBehaviour
         get;
         protected set;
     }
-    private bool dashing = false;
+    protected bool dashing = false;
+
+    // Not used for charging anymore, but it has a minor role.
     protected float chargeKeyHold = 0f;
     [System.NonSerialized]
     public float shootTime = 0f;
     [System.NonSerialized]
     public float throwTime = 0f;
 
+    // Spaces out trails.
     protected float gearTrailTime = 0.0f;
     protected bool gearRecovery = false;
 
+    // The vehicle the player is riding. Engine comes with Rush Jet and Metal Wheel, but you can freely add anything like a Ride Armor if you want.
     public Ride ride;
 
     // Information about the collider.
@@ -267,8 +290,17 @@ public class Player : MonoBehaviour
                         Ride();
                     break;
             }
-            // Handles attack related activities.
-            HandleInput_Attacking();
+            switch (state)
+            {
+                case PlayerStates.Climb:
+                case PlayerStates.Normal:
+                    // Handles attack related activities.
+                    HandleInput_Attacking();
+                    break;
+                default:
+                    break;
+
+            }
         }
 
         // Handles animation related activities.
@@ -282,6 +314,17 @@ public class Player : MonoBehaviour
     }
     protected virtual void LateUpdate()
     {
+        // Gets rid of the Player sprites if they should be invisible
+        if (isSpriteHidden) 
+        {
+            if (spriteContainer.activeSelf)
+                spriteContainer.SetActive(false);
+        }
+        else
+        {
+            if (!spriteContainer.activeSelf)
+                spriteContainer.SetActive(true);
+        }
         // The color of the player needs to change depending on the player's weapon
         // and their level of charge.
 
@@ -314,7 +357,7 @@ public class Player : MonoBehaviour
         }
 
         // Invisibility flashing
-        if (spriteContainer != null)
+        if (spriteContainer != null && !isSpriteHidden)
         {
             if (invisTime > 0 && invisTime % 0.2f < 0.1f)
                 spriteContainer.SetActive(false);
@@ -445,7 +488,7 @@ public class Player : MonoBehaviour
            // If in contact with an enemy, take damage.
             if (otherBody.GetComponent<Enemy>())
             {
-                if (invisTime <= 0.0f && canBeHurt)
+                if (invisTime <= 0.0f && canBeHurt && collision.gameObject.tag != "IgnorePlayer")
                     Damage(otherBody.GetComponent<Enemy>().damage);
             }
         }
@@ -481,10 +524,13 @@ public class Player : MonoBehaviour
         if (otherBody != null)
         {
             // If in contact with enemy, take damage.
-            if (otherBody.GetComponent<Enemy>())
+            if (otherBody.GetComponent<Enemy>() && collider.gameObject.tag != "IgnorePlayer")
             {
                 if (invisTime <= 0.0f && canBeHurt)
                     Damage(otherBody.GetComponent<Enemy>().damage);
+
+                if (otherBody.GetComponent<Bo_Roll3D>() && collider.name != "ColliderDamage")
+                    otherBody.GetComponent<Bo_Roll3D>().hitPlayer = true;
             }
             // If in contact with a Boss Door, go through it.
             else if (otherBody.GetComponent<Stage_BossDoor>())
@@ -892,6 +938,11 @@ public class Player : MonoBehaviour
                 else if (col.gameObject.tag == "ConveyorRight")
                     body.velocity += Vector2.right * 32f;
             }
+
+            // Limits drop velocity
+            float lmt = -400 / Time.timeScale * timeScale;
+            if (body.velocity.y < lmt)
+                body.velocity = new Vector2(body.velocity.x, lmt);
         }
     }
     protected virtual void Climb()
@@ -992,6 +1043,9 @@ public class Player : MonoBehaviour
     {
         // Takes health off, plays sounds, kills if needed,
         // sets the state to hurt, sets time for knockback and invisibility.
+        if (damage <= 0)
+            return;
+
         health -= damage;
         audioStage.PlaySound(SFXLibrary.hurt, true);
         if (health <= 0)
@@ -1058,14 +1112,14 @@ public class Player : MonoBehaviour
         // Sets up the weapons the player can use in game at this point.
         weaponList = new List<Pl_WeaponData.Weapons>();
         weaponList.Add(defaultWeapon);
-        weaponList.Add(Pl_WeaponData.Weapons.HyperBomb);
-        weaponList.Add(Pl_WeaponData.Weapons.MetalBlade);
-        weaponList.Add(Pl_WeaponData.Weapons.GeminiLaser);
-        weaponList.Add(Pl_WeaponData.Weapons.PharaohShot);
-        weaponList.Add(Pl_WeaponData.Weapons.StarCrash);
-        weaponList.Add(Pl_WeaponData.Weapons.WindStorm);
-        weaponList.Add(Pl_WeaponData.Weapons.BlackHoleBomb);
-        weaponList.Add(Pl_WeaponData.Weapons.CommandoBomb);
+        //weaponList.Add(Pl_WeaponData.Weapons.HyperBomb);
+        //weaponList.Add(Pl_WeaponData.Weapons.MetalBlade);
+        //weaponList.Add(Pl_WeaponData.Weapons.GeminiLaser);
+        //weaponList.Add(Pl_WeaponData.Weapons.PharaohShot);
+        //weaponList.Add(Pl_WeaponData.Weapons.StarCrash);
+        //weaponList.Add(Pl_WeaponData.Weapons.WindStorm);
+        //weaponList.Add(Pl_WeaponData.Weapons.BlackHoleBomb);
+        //weaponList.Add(Pl_WeaponData.Weapons.CommandoBomb);
 
         if (GameManager.bossDead_BombMan)
             weaponList.Add(Pl_WeaponData.Weapons.HyperBomb);
@@ -1083,6 +1137,10 @@ public class Player : MonoBehaviour
             weaponList.Add(Pl_WeaponData.Weapons.BlackHoleBomb);
         if (GameManager.bossDead_CommandoMan)
             weaponList.Add(Pl_WeaponData.Weapons.CommandoBomb);
+
+
+        weaponList.Add(Pl_WeaponData.Weapons.RushCoil);
+        weaponList.Add(Pl_WeaponData.Weapons.RushJet);
     }
 
     public void SetGear(bool speedGear, bool powerGear)
@@ -1146,6 +1204,9 @@ public class Player : MonoBehaviour
                 case GameManager.Players.Bass:
                     blankSpritePath = "Sprites/Players/Bass/Bass_Blank";
                     break;
+                case GameManager.Players.X:
+                    blankSpritePath = "Sprites/Players/X/X_Blank";
+                    break;
             }
 
             Sprite[] subSprites = Resources.LoadAll<Sprite>(blankSpritePath);
@@ -1203,6 +1264,12 @@ public class Player : MonoBehaviour
             ride.Dismount();
         ride = null;
     }
+    public virtual void SetGrabbed(bool isGrabbed, bool hideSprite)
+    {
+        SetState(isGrabbed ? PlayerStates.Frozen : PlayerStates.Normal);
+        SetGravity(isGrabbed ? 0 : 1, gravityInverted);
+        isSpriteHidden = hideSprite;
+    }
 
 
     public void SetState(PlayerStates newState)
@@ -1221,12 +1288,14 @@ public class Player : MonoBehaviour
                 break;
             case PlayerStates.Climb:
                 canMove = true;
+                body.velocity = Vector3.zero;
                 SetGravity(0.0f, gravityInverted);
                 anim.speed = 0.0f;
                 Dismount();
                 break;
             case PlayerStates.Still:
                 canMove = false;
+                body.velocity = Vector3.zero;
                 SetGravity(1.0f, gravityInverted);
                 SetLocalTimeScale(timeScale);
                 anim.speed = 1.0f;
@@ -1239,6 +1308,7 @@ public class Player : MonoBehaviour
                 break;
             case PlayerStates.Frozen:
                 canMove = false;
+                body.velocity = Vector3.zero;
                 SetGravity(0.0f, gravityInverted);
                 anim.speed = 1.0f;
                 break;
@@ -1365,7 +1435,7 @@ public class Player : MonoBehaviour
         GameManager.bossesActive = 0;
 
         anim.applyRootMotion = true;
-        Helper.GoToStage("StageSelect");
+        GameManager.GoToStageSelect();
     }
 
     public void Earthquake(float time)

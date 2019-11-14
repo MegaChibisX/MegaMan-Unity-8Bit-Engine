@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This is the part of the Black Hole that does damage.
+/// I don't think it's ever used, since PlWp_RapidHits does that job,
+/// but I'm not going to delete this script and break the entire weapon without realising.
+/// </summary>
 public class PlWp_BlackHole : Pl_Weapon
 {
 

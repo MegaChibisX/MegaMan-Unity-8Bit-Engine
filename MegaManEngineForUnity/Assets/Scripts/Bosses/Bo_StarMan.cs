@@ -50,14 +50,26 @@ public class Bo_StarMan : Boss
     {
         float damage = weapon.damage;
 
+        switch (weapon.weaponType)
+        {
+            case Pl_Weapon.WeaponTypes.Galaxy:
+                damage *= 1.5f;
+                break;
+            case Pl_Weapon.WeaponTypes.Gemini:
+                damage = 0.3333f;
+                break;
+            case Pl_Weapon.WeaponTypes.Normal:
+                break;
+            default:
+                damage = 1;
+                break;
+        }
+
         if (shielded && !weapon.ignoreShield)
         {
             weapon.Deflect();
             return;
         }
-
-        if (weapon.weaponType == Pl_Weapon.WeaponTypes.Gemini)
-            damage *= 5;
 
         Damage(damage, weapon.ignoreInvis);
     }
@@ -66,12 +78,12 @@ public class Bo_StarMan : Boss
         StopAllCoroutines();
 
         // Registers death to GameManager.
+        GameManager.bossesActive--;
         if (!ignorePreviousDeath)
             GameManager.bossDead_StarMan = true;
         StartCoroutine(PlayDeathShort());
         if (GameManager.bossesActive <= 0)
-            CameraCtrl.instance.PlayMusic(null);
-
+            CameraCtrl.instance.aud.Stop();
 
     }
 

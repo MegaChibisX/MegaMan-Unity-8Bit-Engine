@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Bomb whose direction can be changed once. Explodes if it hits an enemy, or makes a shockwave if it hits a wall.
+/// </summary>
 public class PlWp_CmdBomb : Pl_Shot
 {
 
@@ -16,6 +19,7 @@ public class PlWp_CmdBomb : Pl_Shot
     {
         base.Update();
 
+        // If the up or down key is pressed and the bullet  hasn't already changed direction, change direction.
         if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.35f && !moved)
         {
             moved = true;

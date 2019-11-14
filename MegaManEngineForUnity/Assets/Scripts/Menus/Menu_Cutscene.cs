@@ -18,6 +18,7 @@ public class Menu_Cutscene : Menu
     
     public string guiText;
     public Texture2D guiImage;
+    public Color guiColor;
     public Vector2 guiImageOffset;
     public float guiImageSize;
 
@@ -33,6 +34,11 @@ public class Menu_Cutscene : Menu
             // The parts are separated based on the text displayed.
             if (anim)
                 anim.SetInteger("animIndex", item.animIndex);
+
+            if (item.shakeGround)
+                GameManager.ShakeCamera(item.nextTextDelay + 0.5f, 2f, false);
+
+            yield return new WaitForSecondsRealtime(item.nextTextDelay);
 
             // Sets up the image to display.
             guiImage = item.image;
@@ -71,6 +77,25 @@ public class Menu_Cutscene : Menu
                     yield return null;
                 }
 
+                // Fades image out.
+                float fadeTime = item.fadeTime;
+                float timeDiv = 1f / fadeTime;
+                if (fadeTime == 0)
+                    timeDiv = 1;
+                while (fadeTime > 0.0f)
+                {
+                    float color = fadeTime * timeDiv;
+                    guiColor = new Color(color, color, color, 1);
+                }
+                fadeTime = item.fadeTime;
+                while (fadeTime > 0.0f)
+                {
+                    float color = 1f - fadeTime * timeDiv;
+                    guiColor = new Color(color, color, color, 1);
+                }
+                guiColor = Color.white;
+
+
                 yield return null;
             }
             yield return null;
@@ -99,7 +124,7 @@ public class Menu_Cutscene : Menu
         font.label.fontSize = (int)(pixelSize * 8);
 
         if (guiBackground)
-            GUI.DrawTexture(new Rect(cmrBase.x, cmrBase.y, Camera.main.pixelWidth, Camera.main.pixelHeight), guiBackground);
+            GUI.DrawTexture(new Rect(cmrBase.x, cmrBase.y, Camera.main.pixelWidth, Camera.main.pixelHeight), guiBackground, ScaleMode.StretchToFill, true, 0, guiColor, 0, 0);
         if (guiImage)
         {
             float ratio = guiImage.height / (float)guiImage.width;
@@ -127,7 +152,12 @@ public class CutsceneItem
     public Vector2 offset;
     public int animIndex;
     public bool playWithText;
-    public float imageSizeOnViewport = 1;
+    public float nextTextDelay;
+    public float fadeTime;
+    public float imageSizeOnViewport;
+    public bool shakeGround;
+    public AudioClip newMusic;
+    public bool changeMusic;
 
     public string[] text;
 }

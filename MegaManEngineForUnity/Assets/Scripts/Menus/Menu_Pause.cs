@@ -63,7 +63,8 @@ public class Menu_Pause : Menu
                                          new PlayerData(GameManager.Players.ProtoMan),
                                          new PlayerData(GameManager.Players.Bass),
                                          new PlayerData(GameManager.Players.MegaManJet),
-                                         new PlayerData(GameManager.Players.MegaManPower)};
+                                         new PlayerData(GameManager.Players.MegaManPower),
+                                        new PlayerData(GameManager.Players.X)};
 
         // Reads the sprites of a sprite sheet from the Resources and assigns the right ones to the right sprites.
         recItemSprites = new Sprite[(int)GameManager.RecoveryItems.Length];
@@ -83,11 +84,10 @@ public class Menu_Pause : Menu
         utItemSprites[3] = sprites[36];
 
         // The misc text options.
-        lowerTexts = new string[4];
-        lowerTexts[0] = "CALL";
-        lowerTexts[1] = "RETRY";
-        lowerTexts[2] = "EXIT";
-        lowerTexts[3] = "ALT+F4";
+        lowerTexts = new string[3];
+        lowerTexts[0] = "RETRY";
+        lowerTexts[1] = "EXIT";
+        lowerTexts[2] = "ALT+F4";
 
         Helper.PlaySound(owner.SFXLibrary.menuOpen);
     }
@@ -206,7 +206,7 @@ public class Menu_Pause : Menu
                         case "EXIT":
                             // Exit
                             //Application.Quit();
-                            Helper.GoToStage("StageSelect");
+                            GameManager.GoToStageSelect();
                             break;
                         case "HELP":
                             // HELP

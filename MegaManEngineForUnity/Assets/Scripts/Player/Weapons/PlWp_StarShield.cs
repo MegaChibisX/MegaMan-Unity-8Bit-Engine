@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Shield that goes around the player, which can be thrown forward. Powered version will split into 3 directions when thrown.
+/// </summary>
 public class PlWp_StarShield : Pl_Weapon
 {
 
     public Transform spriteContainer;
     public Player owner;
 
+    // Variables about the shield movement.
     public float rotateSpeed = 360f;
     public float throwSpeed = 100;
     public bool thrown = false;
@@ -20,9 +24,11 @@ public class PlWp_StarShield : Pl_Weapon
     {
         base.Update();
 
+        // Rotates the shield.
         spriteContainer.eulerAngles = spriteContainer.eulerAngles + Vector3.forward * rotateSpeed * Time.unscaledDeltaTime;
         if (owner)
         {
+            // Moves to the player's position if not thrown.
             transform.position = owner.transform.position;
         }
     }
@@ -38,6 +44,8 @@ public class PlWp_StarShield : Pl_Weapon
         if (thrown)
             return;
 
+       
+        // Changes rocks to bullets if shot.
         if (splitOnThrow)
         {
             foreach (Transform tr in spriteContainer.GetComponentsInChildren<Transform>())
@@ -51,6 +59,7 @@ public class PlWp_StarShield : Pl_Weapon
             }
             Destroy(gameObject);
         }
+        // Shoots entire shield forward.
         else
         {
             body.velocity = owner.right * throwSpeed;

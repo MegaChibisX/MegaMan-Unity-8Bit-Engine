@@ -26,7 +26,7 @@ public class Pl_WeaponData {
     // which has to match its position in the WeaponList, like
     // the examples below. The item 'Length' in the Weapons enum
     // needs to always be last.
-    public enum Weapons { MegaBuster, BassBuster, PowerPunch, PharaohShot, GeminiLaser, MetalBlade, StarCrash, HyperBomb, WindStorm, BlackHoleBomb, CommandoBomb, Length }
+    public enum Weapons { MegaBuster, BassBuster, PowerPunch, PharaohShot, GeminiLaser, MetalBlade, StarCrash, HyperBomb, WindStorm, BlackHoleBomb, CommandoBomb, RushCoil, RushJet, Length }
     // The default parameters for each Pl_WeaponData are explained in this class's constructor.
     public static Pl_WeaponData[] WeaponList =
     {
@@ -97,7 +97,15 @@ public class Pl_WeaponData {
         new PlWpDt_CommandoBomb(null, "C. BOMB", new WeaponColors(new Color(184f/256f,184f/256f, 184f/256f),
                                                                   new Color(200f/256f, 72f/256f, 8f/256f),
                                                                   new Color(0,0,0)),
-                                                                  null)
+                                                                  null),
+        new PlWpDt_RushCoil(null, "R. COIL", new WeaponColors(new Color(256f/256f, 256f/256f, 256f/256f),
+                                                              new Color(229f/256f,0f/256f, 0f/256f),
+                                                              new Color(0,0,0)),
+                                                              null),
+        new PlWpDt_RushJet(null, "R. JET", new WeaponColors(new Color(256f/256f, 256f/256f, 256f/256f),
+                                                            new Color(229f/256f,0f/256f, 0f/256f),
+                                                            new Color(0,0,0)),
+                                                            null),
     };
 
     public Player owner;

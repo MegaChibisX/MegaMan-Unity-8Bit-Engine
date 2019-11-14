@@ -86,36 +86,65 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 > Bugs Fixed:
 
 > Sprites and animations possibly choppy [I think I fixed it]
+
 > No enemy hit indication
+
 > Infinite slide if you press the slide button
+
 > Can shoot while sliding
+
 > Speed gear ignores gravity modifiers
+
 > Wind Storm shouldn't generate weapon pickups, or big ones at least.
+
 > Wind Storm breaks are too strong
+
 > Star clips into ground
+
 > Moving through the wall during Galaxy Man's fight
+
 > Bouncy Bomb should make explosion every time it bounces
+
 > Pressing both weapon buttons should make you return to your default weapon.
+
 > Can shoot and charge weapons when game is paused
+
 > Can shoot Power Gear shots when not fully charged
+
 > Star Crashes can be stacked (delete them on Cancel())
+
 > Can move during screen transitions if you enter with recoil from a Power Gear attack
+
 > Totem explosion damages player
+
 > Power Gear Double Shot sometimes doesn't make sound
+
 > Shield Attacked in Bomb's stage clips through the floor
+
 > Going through boss doors after fight
+
 > Shots go behind solids
+
 > Won't sink through sand if your y speed is 0
+
 > Infinite Metal Wheel jumps
+
 > Sniper Joes don't slide back when they land
+
 > Wind Storm flips its direction randomly.
+
 > Metal Wheel jumps too high with Speed Gear on
+
 > Metal Wheel doesn't work well when your gravity is inverted
+
 > Getting hit while Speed Geared will make you skip back quickly
+
 > Climbing ladders while Speed Geared is fun
+
 > Galaxy Man's wave motion gets exaggerated during Speed Gear
 
-> Thank you everyone who tried 0.6.0 out and sent me bugs!
+
+>> Thank you everyone who tried 0.6.0 out and sent me bugs!
 
 
 # 0.6.0

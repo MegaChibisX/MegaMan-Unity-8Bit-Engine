@@ -28,7 +28,14 @@ public class Misc_CopySprite : MonoBehaviour {
         {
             Debug.LogWarning("There is no sprite in the resources with the name or path " + spritePath + "!\nAre you sure your sprite is in the Resources folder, and that the path is correct?");
         }
-
+        subSprites = Resources.LoadAll<Sprite>(spritePath);
+    }
+    public void Reload()
+    {
+        if (!Resources.Load<Sprite>(spritePath))
+        {
+            Debug.LogWarning("There is no sprite in the resources with the name or path " + spritePath + "!\nAre you sure your sprite is in the Resources folder, and that the path is correct?");
+        }
         subSprites = Resources.LoadAll<Sprite>(spritePath);
     }
 
@@ -40,7 +47,7 @@ public class Misc_CopySprite : MonoBehaviour {
             return;
         }
 
-        if (!rendToCopyFrom.sprite)
+        if (!rendToCopyFrom.sprite || spritePath == "")
         {
             rendToUse.sprite = null;
             return;
@@ -49,5 +56,6 @@ public class Misc_CopySprite : MonoBehaviour {
         Sprite newSprite = Array.Find(subSprites, item => item.name == rendToCopyFrom.sprite.name);
         if (newSprite)
             rendToUse.sprite = newSprite;
+
     }
 }

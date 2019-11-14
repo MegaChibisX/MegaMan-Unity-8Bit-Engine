@@ -20,7 +20,7 @@ public static class GameManager
     public static float checkpointCamera_MaxUpMovement;
     public static bool roomFinishedLoading;
 
-    public enum Players { MegaMan, ProtoMan, Bass, Roll, MegaManJet, MegaManPower, MegaManSuper, BassSuper }
+    public enum Players { MegaMan, ProtoMan, Bass, Roll, MegaManJet, MegaManPower, MegaManSuper, BassSuper, X }
     public static List<Players> availablePlayers;
     public enum RecoveryItems { ETank, WTank, MTank, LTank, RedBullTank, Yashichi, Length }
     public enum UtilityItems { Eddie, Beat, Tango, Reggae, Length }
@@ -32,11 +32,14 @@ public static class GameManager
     public static int bolts;
     public static bool item_DoubleGear;
 
+    // The items found in the current stage and whether they are picked up or not.
+    public static Dictionary<int, bool> stageItems;
+
 
 
     // Stage related variables
     public static float globalTimeScale = 1.0f;
-
+    public static bool preventDeathReset = false;
 
 
     // Boss related variables
@@ -55,6 +58,9 @@ public static class GameManager
     // Stage select variables
     public static Vector2Int lastStageSelected;
     public static int maxFortressStage;
+    public static bool playFortressStageUnlockAnimation;
+    private static int prevFortressStage;
+    private static int prevBossesDead;
 
 
     static GameManager()
@@ -79,6 +85,7 @@ public static class GameManager
         availablePlayers.Add(Players.MegaManPower);
         availablePlayers.Add(Players.MegaManSuper);
         availablePlayers.Add(Players.BassSuper);
+        availablePlayers.Add(Players.X);
 
         recItemsOwned = new int[(int)RecoveryItems.Length];
         for (int i = 0; i < recItemsOwned.Length; i++)
@@ -89,21 +96,26 @@ public static class GameManager
 
         bolts = 0;
         item_DoubleGear = true;
+        stageItems = new Dictionary<int, bool>();
 
-    globalTimeScale = 1.0f;
+        globalTimeScale = 1.0f;
+        preventDeathReset = false;
 
         bossesActive = 0;
-        bossDead_PharaohMan = false;
-        bossDead_GeminiMan = false;
-        bossDead_MetalMan = false;
-        bossDead_StarMan = false;
-        bossDead_BombMan = false;
-        bossDead_WindMan = false;
-        bossDead_GalaxyMan = false;
+        bossDead_PharaohMan  = false;
+        bossDead_GeminiMan   = false;
+        bossDead_MetalMan    = false;
+        bossDead_StarMan     = false;
+        bossDead_BombMan     = false;
+        bossDead_WindMan     = false;
+        bossDead_GalaxyMan   = false;
         bossDead_CommandoMan = false;
 
         lastStageSelected = Vector2Int.one;
-        maxFortressStage = 3;
+        maxFortressStage = 0;
+        prevFortressStage = maxFortressStage;
+        playFortressStageUnlockAnimation = false;
+
     }
 
     public static void ResetRoom()
@@ -112,16 +124,86 @@ public static class GameManager
         bossesActive = 0;
         roomFinishedLoading = false;
         Time.timeScale = 1.0f;
+        preventDeathReset = false;
+
+        foreach (Item_Pickup item in Object.FindObjectsOfType<Item_Pickup>())
+        {
+            int hashCode = new Vector2(item.transform.position.x, item.transform.position.z).GetHashCode();
+            if (stageItems.ContainsKey(hashCode) && stageItems[hashCode] == false)
+                Object.Destroy(item.gameObject);
+            if (stageItems.ContainsKey(hashCode))
+                Debug.Log("Contains! " + stageItems[hashCode]);
+        }
     }
     public static void StartRoom()
     {
         ResetRoom();
         bossesActive = 0;
+        
+        //
+        stageItems.Clear();
+        foreach (Item_Pickup item in Object.FindObjectsOfType<Item_Pickup>())
+        {
+            int hashCode = new Vector2(item.transform.position.x, item.transform.position.z).GetHashCode();
+            if (!stageItems.ContainsKey(hashCode))
+                stageItems.Add(hashCode, true);
+            else
+                Object.Destroy(item.gameObject);
+        }
 
         foreach (Pl_WeaponData wpn in Pl_WeaponData.WeaponList)
         {
             if (wpn != null) 
                 wpn.Init();
+        }
+    }
+
+    public static void GoToStageSelect()
+    {
+        int bossesKilled = 0;
+        if (bossDead_BombMan)
+            bossesKilled++;
+        if (bossDead_CommandoMan)
+            bossesKilled++;
+        if (bossDead_GalaxyMan)
+            bossesKilled++;
+        if (bossDead_GeminiMan)
+            bossesKilled++;
+        if (bossDead_MetalMan)
+            bossesKilled++;
+        if (bossDead_PharaohMan)
+            bossesKilled++;
+        if (bossDead_StarMan)
+            bossesKilled++;
+        if (bossDead_WindMan)
+            bossesKilled++;
+
+        if (prevBossesDead != bossesKilled)
+        {
+            prevBossesDead = bossesKilled;
+            if (bossesKilled == 4)
+                Helper.GoToStage("Cutscene_Halfway");
+            else
+            {
+                if (bossesKilled == 8 && prevFortressStage == 0)
+                {
+                    playFortressStageUnlockAnimation = true;
+                    maxFortressStage = 1;
+                    prevFortressStage = maxFortressStage;
+                    Helper.GoToStage("Cutscene_PreFortress");
+                }
+                else
+                {
+                    prevFortressStage = maxFortressStage;
+                    Helper.GoToStage("StageSelect");
+                }
+            }
+        }
+        else
+        {
+            prevBossesDead = bossesKilled;
+            prevFortressStage = maxFortressStage;
+            Helper.GoToStage("StageSelect");
         }
     }
 
@@ -147,6 +229,8 @@ public static class GameManager
                 return Resources.LoadAll<Sprite>("Sprites/Menus/Characters")[6];
             case Players.BassSuper:
                 return Resources.LoadAll<Sprite>("Sprites/Menus/Characters")[7];
+            case Players.X:
+                return Resources.LoadAll<Sprite>("Sprites/Menus/Characters")[8];
 
         }
     }
@@ -166,6 +250,29 @@ public static class GameManager
                 return (GameObject)Resources.Load<GameObject>("Prefabs/Players/MegaMan_Power");
             case Players.Bass:
                 return (GameObject)Resources.Load<GameObject>("Prefabs/Players/Bass");
+            case Players.X:
+                return (GameObject)Resources.Load<GameObject>("Prefabs/Players/X");
+
+
+        }
+    }
+    public static string GetPlayerSpritePath(Players pl)
+    {
+        switch (pl)
+        {
+            default:
+            case Players.MegaMan:
+                return "Sprites/Players/MegaMan/MegaMan_Full";
+            case Players.ProtoMan:
+                return "Sprites/Players/ProtoMan/ProtoMan_Full";
+            case Players.MegaManJet:
+                return "Sprites/Players/MegaMan_Jet/MegaMan_Full";
+            case Players.MegaManPower:
+                return "Sprites/Players/MegaMan_Power/Power_Full";
+            case Players.Bass:
+                return "Sprites/Players/Bass/Bass_Full";
+            case Players.X:
+                return "Sprites/Players/Bass/X_Full";
 
 
         }

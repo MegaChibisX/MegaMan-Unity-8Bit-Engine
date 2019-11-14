@@ -138,7 +138,7 @@ public static class Helper
         float x = spritePiece.rect.x;
         float y = spritePiece.rect.y;
         float w = spritePiece.rect.x + spritePiece.rect.width;
-        float h = spritePiece.rect.y + spritePiece.rect.height;
+        //float h = spritePiece.rect.y + spritePiece.rect.height;
 
         float curHeight = 0;
         float remainHeight = height;

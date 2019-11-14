@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[AddComponentMenu("MegaMan/Allies/ProtoMan")]
 public class ProtoMan : Player
 {
 
@@ -12,6 +13,7 @@ public class ProtoMan : Player
     {
         base.HandlePhysics_Movement();
 
+        // If Proto Man is mid-air and not attacking, activate the shield.
         if (shieldCol != null)
         {
             if (state == PlayerStates.Normal && !isGrounded && canAnimate)

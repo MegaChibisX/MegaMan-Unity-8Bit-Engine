@@ -13,7 +13,6 @@ public class En_SuperBallMachineJr : Enemy
     // the sprite is just changed after each shot for a fraction of a second.
     public Sprite spriteIdle;
     public Sprite spriteShot;
-    private SpriteRenderer rend;
 
     // The shot the cannon shoots.
     public GameObject shot;

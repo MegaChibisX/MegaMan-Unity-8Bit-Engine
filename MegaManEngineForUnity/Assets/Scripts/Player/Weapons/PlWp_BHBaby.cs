@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This is the black hole that is shot  before  it expands and  damages enemies.
+/// It can go up and down slightly.
+/// </summary>
 public class PlWp_BHBaby : Pl_Shot
 {
 
@@ -26,7 +30,7 @@ public class PlWp_BHBaby : Pl_Shot
     }
     public void FixedUpdate()
     {
-        curTurnSpeed = Mathf.Lerp(curTurnSpeed, turnSpeed, Time.deltaTime * 0.2f);
+        curTurnSpeed = Mathf.Lerp(curTurnSpeed, turnSpeed, Time.deltaTime * 0.4f);
 
         body.velocity = transform.right * transform.localScale.x * speed + transform.up * curTurnSpeed * Input.GetAxisRaw("Vertical");
     }

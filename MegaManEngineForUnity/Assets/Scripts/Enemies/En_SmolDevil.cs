@@ -6,7 +6,6 @@ public class En_SmolDevil : Enemy
 {
 
     private Animator anim;
-    private SpriteRenderer rend;
     public BoxCollider2D col;
 
     public AudioClip shotSound;

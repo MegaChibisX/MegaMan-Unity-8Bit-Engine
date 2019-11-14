@@ -92,9 +92,10 @@ public class Boss : Enemy
         fightStarted = false;
         deathExplosionBoss = Instantiate(deathExplosionBoss);
         deathExplosionBoss.transform.position = transform.position;
-        GetComponentInChildren<SpriteRenderer>().gameObject.SetActive(false);
+        if (rend)
+            rend.gameObject.SetActive(false);
 
-        if (GameManager.bossesActive == 1 && endStageAfterFight)
+        if (GameManager.bossesActive <= 1 && endStageAfterFight)
         {
             if (Player.instance != null)
                 Player.instance.canBeHurt = false;

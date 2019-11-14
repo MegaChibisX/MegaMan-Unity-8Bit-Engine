@@ -8,7 +8,6 @@ public class En_Bowlie : Enemy
     [Header("--------")]
     public Sprite idle1;
     public Sprite idle2;
-    private SpriteRenderer rend;
 
     public EnWp_BowlieBall ball;
 
@@ -42,7 +41,7 @@ public class En_Bowlie : Enemy
         }
     }
 
-    protected void LateUpdate()
+    protected override void LateUpdate()
     {
         // Plays the propeller animation based on a timer. No need for an Animator for such simple animations.
         time += Time.deltaTime;

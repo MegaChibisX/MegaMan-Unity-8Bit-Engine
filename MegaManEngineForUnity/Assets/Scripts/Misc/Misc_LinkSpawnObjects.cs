@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Bomb Man uses this for an attack I think.
+/// </summary>
+[AddComponentMenu("MegaMan/Misc/Link Spawn Objects")]
 public class Misc_LinkSpawnObjects : MonoBehaviour
 {
 

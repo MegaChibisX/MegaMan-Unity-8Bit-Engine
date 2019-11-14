@@ -52,28 +52,49 @@ public class Bo_MetalMan : Boss
         anim.gameObject.SetActive(true);
     }
 
-    public override void Damage(float dmg, bool ignoreInvis)
+    public override void Damage(Pl_Weapon weapon)
     {
-        // If can be hurt, get hurt.
-        if (invisTime > 0.0f && !ignoreInvis || !fightStarted)
-            return;
+        float damage = weapon.damage;
 
-        health -= dmg;
-        invisTime = 1f;
-        if (health <= 0)
+        switch (weapon.weaponType)
         {
-            Kill(false, false);
+            case Pl_Weapon.WeaponTypes.Star:
+                damage = 4;
+                break;
+            case Pl_Weapon.WeaponTypes.Metal:
+                damage = 14;
+                break;
+            case Pl_Weapon.WeaponTypes.Galaxy:
+                damage = 0;
+                break;
+            case Pl_Weapon.WeaponTypes.Gemini:
+                damage = 0.3333f;
+                break;
+            case Pl_Weapon.WeaponTypes.Normal:
+                break;
+            default:
+                damage = 1;
+                break;
         }
+
+        if (shielded && !weapon.ignoreShield)
+        {
+            weapon.Deflect();
+            return;
+        }
+
+        Damage(damage, weapon.ignoreInvis);
     }
     public override void Kill(bool makeItem, bool makeBolt)
     {
-        // Metal Man stops doing what he's doing and dies.
+        // Registers death to GameManager.
+        GameManager.bossesActive--;
         StopAllCoroutines();
         if (!ignorePreviousDeath)
             GameManager.bossDead_MetalMan = true;
         StartCoroutine(PlayDeathShort());
         if (GameManager.bossesActive <= 0)
-            CameraCtrl.instance.PlayMusic(null);
+            CameraCtrl.instance.aud.Stop();
     }
     private void SetConveyor(bool right)
     {

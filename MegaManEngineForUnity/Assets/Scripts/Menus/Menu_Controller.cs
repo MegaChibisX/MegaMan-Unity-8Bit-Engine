@@ -21,6 +21,10 @@ public class Menu_Controller : MonoBehaviour
     {
         menu.DrawGUI();
     }
+    private void OnDrawGizmos()
+    {
+        menu.OnDrawGizmos();
+    }
 
 
 }

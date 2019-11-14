@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Small tornado that breaks up items. Powered version sticks to enemies and makes them drop small items periodically.
+/// </summary>
 public class PlWp_WindStorm : Pl_Shot
 {
 
@@ -19,11 +22,14 @@ public class PlWp_WindStorm : Pl_Shot
     {
         base.Update();
 
+        // Change direction on wall contact.
         if (isWalled)
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
 
+        // Move if nor stuck to an enemy.
         if (!target)
             body.velocity = new Vector2(speed * (transform.localScale.x > 0 ? 1 : -1), body.velocity.y);
+        // Stick to an enemy.
         else
         {
             body.velocity = Vector2.zero;
@@ -35,7 +41,7 @@ public class PlWp_WindStorm : Pl_Shot
     {
         // When something is hit, if it is an enemy
         // and the enemy can be hurt, it hurts the enemy.
-        if (other.attachedRigidbody != null && other.attachedRigidbody.GetComponent<Enemy>())
+        if (other.attachedRigidbody != null && other.attachedRigidbody.GetComponent<Enemy>() && other.gameObject.layer != 15)
         {
             Enemy enemy = other.attachedRigidbody.GetComponent<Enemy>();
             if (enemy.canBeHit)
@@ -44,7 +50,6 @@ public class PlWp_WindStorm : Pl_Shot
                 if (stickToEnemy && target == null)
                 {
                     target = enemy;
-                    print(target);
                     StartCoroutine(ItemBarrage());
                 }
                 else if ((enemy.health > 0 && destroyOnBigEnemies) || destroyOnAllEnemies)
@@ -61,30 +66,32 @@ public class PlWp_WindStorm : Pl_Shot
                 Destroy(gameObject);
         }
 
+
+        // Break up a big item into smaller ones.
         if (other.attachedRigidbody != null && other.attachedRigidbody.GetComponent<Item_Pickup>() && !target)
         {
             Item_Pickup item = other.attachedRigidbody.GetComponent<Item_Pickup>();
             switch (item.itemToGive)
             {
                 case Item.Items.bigHealth:
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < 4; i++)
                     {
                         GameObject o = Instantiate(Item.GetObjectFromItem(Item.Items.smallHealth));
-                        o.transform.position = item.transform.position + Vector3.right * (-2 + i) * 10;
+                        o.transform.position = item.transform.position + Vector3.right * (-1.5f + i) * 10;
                     }
                     break;
                 case Item.Items.bigEnergy:
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < 2; i++)
                     {
                         GameObject o = Instantiate(Item.GetObjectFromItem(Item.Items.smallHealth));
-                        o.transform.position = item.transform.position + Vector3.right * (-1 + i) * 10;
+                        o.transform.position = item.transform.position + Vector3.right * (-0.5f + i) * 10;
                     }
                     break;
                 case Item.Items.bigGear:
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < 4; i++)
                     {
                         GameObject o = Instantiate(Item.GetObjectFromItem(Item.GetRandomItem(0, 1, 0, 1, 0, 1, 0, 0)));
-                        o.transform.position = item.transform.position + Vector3.right * (-2 + i) * 10;
+                        o.transform.position = item.transform.position + Vector3.right * (-1.5f + i) * 10;
                     }
                     break;
                 case Item.Items.boltBig:
@@ -101,8 +108,9 @@ public class PlWp_WindStorm : Pl_Shot
         }
     }
 
-    private  IEnumerator ItemBarrage()
+    private IEnumerator ItemBarrage()
     {
+        // If attached to an enemy, drop random items, then go away.
         Destroy(GetComponent<Misc_DestroyAfterTime>());
         body.bodyType = RigidbodyType2D.Kinematic;
         body.velocity = Vector2.zero;

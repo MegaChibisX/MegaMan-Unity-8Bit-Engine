@@ -22,12 +22,10 @@ public class EnWp_Shot : Enemy
         base.Start();
         if (direction.sqrMagnitude > 0)
             body.velocity = direction.normalized * speed;
-        else
-            Debug.Log("AAAA");
 
         rend = GetComponentInChildren<SpriteRenderer>();
     }
-    protected virtual void LateUpdate()
+    protected override void LateUpdate()
     {
         if (sprites != null && rend != null && sprites.Length > 0.0f)
             rend.sprite = sprites[(int)(Time.time * frameSpeed) % sprites.Length];

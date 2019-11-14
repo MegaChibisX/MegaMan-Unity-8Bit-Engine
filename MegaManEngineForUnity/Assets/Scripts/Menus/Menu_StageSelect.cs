@@ -14,6 +14,7 @@ public class Menu_StageSelect : Menu
     private Vector2 cmrPos;
     private bool cameraInRoom;
     private Vector2 prevScreenXY;
+    private bool cmrSnapToRoom;
 
     private GUISkin font;
 
@@ -50,9 +51,12 @@ public class Menu_StageSelect : Menu
 
     public AudioClip fortressAudioMove;
     public AudioClip fortressAudioConfirm;
+    public AudioClip fortressPathSound;
+    public AudioClip fortressTrack;
 
     public Vector2 fortressSelectorOrigin;
     public Vector2Int fortressIndex;
+    private bool fortressPlayingAnimation;
 
     public Sprite[] fortressStageIcons;
 
@@ -62,6 +66,26 @@ public class Menu_StageSelect : Menu
     public Sprite selectFlashFort4;
     public SpriteRenderer fortIconReference;
     public SpriteRenderer[] fortIcons;
+
+    public MeshFilter fortPathFilter;
+
+    [System.Serializable]
+    public class FortressPathPoints
+    {
+        public Vector3[] points;
+        public Vector3 this[int i]
+        {
+            get
+            {
+                return points[i];
+            }
+        }
+        public int Count
+        {
+            get { return points.Length; }
+        }
+    }
+    public FortressPathPoints[] fortPathPoints;
 
     [Header("Shop Elements")]
 
@@ -104,8 +128,6 @@ public class Menu_StageSelect : Menu
         inputCooldown = 0.0f;
         lastAngle = -1000;
 
-        RefreshFortressStages();
-
         string s = GameManager.LoadData(dataIndex.y, false);
         SetDataDescription(s);
 
@@ -113,14 +135,18 @@ public class Menu_StageSelect : Menu
         stageSelected = false;
         stageCooldown = 1.0f;
 
+        RefreshFortressStages();
+
+        itemCatalog = new Item.Items[] { Item.Items.ETank, Item.Items.WTank, Item.Items.MTank, Item.Items.boltBig };
+
         Helper.SetAspectRatio(cmr);
         prevScreenXY = new Vector2(Screen.width, Screen.height);
 
         font = (GUISkin)Resources.Load("GUI/8BitFont", typeof(GUISkin));
 
         GameManager.checkpointActive = false;
+        GameManager.stageItems.Clear();
     }
-
     public override void Update()
     {
         if (!stageSelected)
@@ -129,9 +155,12 @@ public class Menu_StageSelect : Menu
             if (inputVec.sqrMagnitude > 1f)
                 inputVec.Normalize();
 
-            cmr.transform.position = new Vector3(Mathf.MoveTowards(cmr.transform.position.x, cmrPos.x, Time.deltaTime * 320f),
-                                                 Mathf.MoveTowards(cmr.transform.position.y, cmrPos.y, Time.deltaTime * 256f),
-                                                 cmr.transform.position.z);
+            if (cmrSnapToRoom)
+                cmr.transform.position = new Vector3(cmrPos.x, cmrPos.y, cmr.transform.position.z);
+            else
+                cmr.transform.position = new Vector3(Mathf.MoveTowards(cmr.transform.position.x, cmrPos.x, Time.deltaTime * 320f),
+                                                     Mathf.MoveTowards(cmr.transform.position.y, cmrPos.y, Time.deltaTime * 256f),
+                                                     cmr.transform.position.z);
             if (Vector2.Distance(cmr.transform.position, cmrPos) < 1f)
                 cameraInRoom = true;
             else
@@ -235,6 +264,10 @@ public class Menu_StageSelect : Menu
                 break;
         }
     }
+    public void OnDrawGizmos()
+    {
+        FortressGizmos();
+    }
     public void ChangeRoom(Rooms newRoom)
     {
         cameraInRoom = false;
@@ -284,7 +317,6 @@ public class Menu_StageSelect : Menu
             case Rooms.Shop:
                 cmrPos = new Vector2(-272, 8);
 
-                int maxY = Mathf.CeilToInt(itemCatalog.Length / 6);
                 for (int x = 0; x < 6; x++)
                 {
                     for (int z = 0; z < 2; z++)
@@ -308,8 +340,9 @@ public class Menu_StageSelect : Menu
                 break;
         }
     }
-    public bool GoToSelectedScene(bool checkOnly = false)
+    public bool GoToSelectedScene(bool checkOnly = false, bool snapToRoom = false)
     {
+        cmrSnapToRoom = snapToRoom;
         if (activeRoom == Rooms.MainStage)
         {
             if (stageIndex.x == 0 && stageIndex.y == 0)
@@ -366,12 +399,114 @@ public class Menu_StageSelect : Menu
             if (fortressIndex.x == 0)
             {
                 if (!checkOnly)
-                    Helper.GoToStage("BossRush");
+                    Helper.GoToStage("Fortress_Devil");
+                return true;
+            }
+            if (fortressIndex.x == 1)
+            {
+                if (!checkOnly)
+                    Helper.GoToStage("Fortress_MegaBot");
+                return true;
+            }
+            if (fortressIndex.x == 2)
+            {
+                if (!checkOnly)
+                    Helper.GoToStage("Fortress_Roll");
+                return true;
+            }
+            if (fortressIndex.x == 3)
+            {
+                if (!checkOnly)
+                    Helper.GoToStage("Fortress_Roll3D");
                 return true;
             }
         }
 
         return false;
+    }
+    public IEnumerator PlayFortressAnimation(int stage)
+    {
+        while (!cameraInRoom)
+            yield return null;
+
+        fortressPlayingAnimation = true;
+        foreach (SpriteRenderer rend in fortIcons)
+            rend.gameObject.SetActive(false);
+        fortIconReference.enabled = false;
+
+        yield return new WaitForSeconds(8f);
+
+        //  Preparing the mesh.
+        Mesh mesh = new Mesh();
+
+        List<Vector3> v = new List<Vector3>();
+        List<int> t = new List<int>();
+        List<Vector2> u = new List<Vector2>();
+
+
+
+        // Deciding the place of each path segment.
+
+        if (stage == 0)
+            yield break;
+        else if (stage >= fortPathPoints.Length)
+            stage = fortPathPoints.Length;
+
+
+        for (int j = 0; j < stage; j++)
+        {
+            for (int i = 0; i < fortPathPoints[j].Count - 1; i++)
+            {
+                Vector2 direction = (fortPathPoints[j][i + 1] - fortPathPoints[j][i]);
+                int steps    = (int)(direction.magnitude / 8);
+                float distance = direction.magnitude / (steps + 0.75f);
+                direction.Normalize();
+
+                for (int s =  0; s <= steps; s++)
+                {
+                    int vc = v.Count;
+                    v.Add((Vector2)fortPathPoints[j][i] + Vector2.Perpendicular(direction) * 4f + direction * distance * (s + 0));
+                    v.Add((Vector2)fortPathPoints[j][i] - Vector2.Perpendicular(direction) * 4f + direction * distance * (s + 0));
+                    v.Add((Vector2)fortPathPoints[j][i] - Vector2.Perpendicular(direction) * 4f + direction * distance * (s + 1));
+                    v.Add((Vector2)fortPathPoints[j][i] + Vector2.Perpendicular(direction) * 4f + direction * distance * (s + 1));
+
+                    t.Add(vc + 0);
+                    t.Add(vc + 3);
+                    t.Add(vc + 2);
+                    t.Add(vc + 0);
+                    t.Add(vc + 2);
+                    t.Add(vc + 1);
+
+                    u.Add(new Vector2(0, 1));
+                    u.Add(new Vector2(0, 0));
+                    u.Add(new Vector2(1, 0));
+                    u.Add(new Vector2(1, 1));
+
+                    if (j == stage - 1)
+                    {
+                        mesh = new Mesh();
+                        mesh.vertices = v.ToArray();
+                        mesh.triangles = t.ToArray();
+                        mesh.uv = u.ToArray();
+
+                        fortPathFilter.mesh = mesh;
+
+                        cmr.GetComponent<AudioSource>().PlaySound(fortressPathSound, true);
+                        yield return new WaitForSeconds(0.075f);
+                    }
+                    
+                }
+
+            }
+        }
+
+        foreach (SpriteRenderer rend in fortIcons)
+            rend.gameObject.SetActive(true);
+        fortIconReference.enabled = true;
+
+        fortressPlayingAnimation = false;
+        GameManager.playFortressStageUnlockAnimation = false;
+
     }
    
 
@@ -409,7 +544,10 @@ public class Menu_StageSelect : Menu
         {
             stageSelected = true;
             if (GoToSelectedScene(true))
+            {
                 Helper.PlaySound(stageAudioConfirm);
+                cmr.GetComponent<AudioSource>().Stop();
+            }
             else
                 Helper.PlaySound(stageAudioCancel);
         }
@@ -422,6 +560,9 @@ public class Menu_StageSelect : Menu
 
     private void InputFortressStageSelect()
     {
+        if (fortressPlayingAnimation)
+            return;
+
         // Normally the moveAngle should be one of [-180, -90, 0, 90, 180].
         if (lastAngle == 0)
             fortressIndex.x += 1;
@@ -446,7 +587,10 @@ public class Menu_StageSelect : Menu
         {
             stageSelected = true;
             if (GoToSelectedScene(true))
+            {
                 Helper.PlaySound(stageAudioConfirm);
+                cmr.GetComponent<AudioSource>().Stop();
+            }
             else
                 Helper.PlaySound(stageAudioCancel);
         }
@@ -489,6 +633,44 @@ public class Menu_StageSelect : Menu
                     icon.sprite = fortressStageIcons[i];
             }
         }
+
+        if (GameManager.playFortressStageUnlockAnimation)
+        {
+            ChangeRoom(Rooms.FortressStage);
+            cmrSnapToRoom = true;
+            Object.FindObjectOfType<Menu_Controller>().StartCoroutine(PlayFortressAnimation(GameManager.maxFortressStage));
+            cmr.GetComponent<AudioSource>().PlaySound(fortressTrack, true);
+            cmr.GetComponent<AudioSource>().loop = false;
+            Object.Destroy(cmr.GetComponent<Misc_PlayRandomTrack>());
+        }
+    }
+    public void FortressGizmos()
+    {
+        int stage = 6;
+
+        if (stage == 0)
+            return;
+        else if (stage >= fortPathPoints.Length)
+            stage = fortPathPoints.Length;
+
+
+        for (int j = 0; j < stage; j++)
+        {
+            for (int i = 0; i < fortPathPoints[j].Count - 1; i++)
+            {
+                Vector2 direction = (fortPathPoints[j][i + 1] - fortPathPoints[j][i]);
+                int steps = (int)(direction.magnitude / 8);
+                float distance = direction.magnitude / steps;
+                direction.Normalize();
+
+                for (int s = 0; s <= steps; s++)
+                {
+                    Gizmos.color = Color.cyan * ((float)s / steps) + Color.blue * (1f - (float)s / steps);
+                    Gizmos.DrawSphere((Vector2)fortPathPoints[j][i] + direction * distance * s, 4);
+                }
+
+            }
+        }
     }
 
     private void InputShopStageSelect()
@@ -517,6 +699,10 @@ public class Menu_StageSelect : Menu
         shopIndex.x = Mathf.Clamp(shopIndex.x, 0, 5);
         shopIndex.y = Mathf.Clamp(shopIndex.y, 0, maxY - 1);
         shopIndex.z = Mathf.Clamp(shopIndex.z, 0, maxY - 2);
+        if (shopIndex.y < 0)
+            shopIndex.y = 0;
+        if (shopIndex.z < 0)
+            shopIndex.z = 0;
         GameObject item;
 
         for (int x = 0; x < 6; x++)
@@ -596,7 +782,6 @@ public class Menu_StageSelect : Menu
                     item = Item.GetObjectFromItem(itemCatalog[(shopIndex.z + z) * 6 + x]);
                     if (item != null)
                     {
-                        Vector3 pos = cmr.WorldToScreenPoint(itemSlots[z * 6 + x].transform.position);
                         GUI.Label(new Rect(cmrBase.x + blockSize * (2.425f + 2.00f * x),
                                            cmrBase.y + blockSize * (3.5f + 2.75f * z),
                                            blockSize * 2f,
@@ -609,7 +794,11 @@ public class Menu_StageSelect : Menu
         }
 
         // Draw the quantity of the currently selected item.
-        item = Item.GetObjectFromItem(itemCatalog[(shopIndex.y) * 6 + shopIndex.x]);
+        if ((shopIndex.y) * 6 + shopIndex.x >= itemCatalog.Length)
+            item = null;
+        else
+            item = Item.GetObjectFromItem(itemCatalog[(shopIndex.y) * 6 + shopIndex.x]);
+
         if (item != null)
         {
             GUI.Label(new Rect(cmrBase.x + 3.5f * blockSize,
@@ -699,7 +888,6 @@ public class Menu_StageSelect : Menu
 
         dataDesc += "\n";
         int.TryParse(s.Substring(8, 2), out output);
-        Debug.Log(output);
         dataDesc += "Fortress Stages: " + output.ToString() + "\n";
 
         dataDesc += "\n";

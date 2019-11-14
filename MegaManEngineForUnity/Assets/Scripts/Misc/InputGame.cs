@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This was never used.
+/// </summary>
 public static class InputGame
 {
 

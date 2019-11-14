@@ -11,7 +11,6 @@ public class EnWp_GeminiLaser : Enemy
     // The sprites of each segment.
     public Sprite horizontal;
     public Sprite diagonal;
-    private SpriteRenderer rend;
 
     public AudioClip geminiNoise;
     private float shotRecoverTime = 0.0f;

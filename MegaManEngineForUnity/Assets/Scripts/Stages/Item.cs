@@ -136,7 +136,7 @@ public class Item
                 }
 
                 // Plays the recovery sound and waits the appropriate time.
-                player.audioStage.PlaySound(itemSound, true);
+                Helper.PlaySound(itemSound);
 
                 yield return new WaitForSecondsRealtime(0.075f);
             }
@@ -293,7 +293,6 @@ public class Item
             default:
                 return false;
         }
-        return true;
     }
 
 

@@ -78,6 +78,15 @@ TextureImporter:
     21300146: MegaManWeapons_73
     21300148: MegaManWeapons_74
     21300150: MegaManWeapons_75
+    21300152: MegaManWeapons_76
+    21300154: MegaManWeapons_77
+    21300156: MegaManWeapons_78
+    21300158: MegaManWeapons_79
+    21300160: MegaManWeapons_80
+    21300162: MegaManWeapons_81
+    21300164: MegaManWeapons_82
+    21300166: MegaManWeapons_83
+    21300168: MegaManWeapons_84
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -1639,7 +1648,7 @@ TextureImporter:
         width: 256
         height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1659,7 +1668,7 @@ TextureImporter:
         width: 256
         height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1679,13 +1688,193 @@ TextureImporter:
         width: 256
         height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: 57eac11aa0fecc04ba313d18cbc8afbb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MegaManWeapons_76
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 250
+        width: 7
+        height: 32
+      alignment: 9
+      pivot: {x: 0.42857146, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cc87bf552f92bf40b761c9e518e8174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MegaManWeapons_77
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 250
+        width: 22
+        height: 27
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5849f5c0abf15f24db0da3537ed137ed
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MegaManWeapons_78
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 250
+        width: 22
+        height: 11
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b87a2a05d7ff194b920c71e6e8dbb61
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MegaManWeapons_79
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 248
+        width: 27
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4814815, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d74da811c1f01d44bc3ca1de4c28de0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MegaManWeapons_80
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 248
+        width: 26
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4615385, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65654e31aa596ae42ab4b5b73e81997c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MegaManWeapons_81
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 247
+        width: 27
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4814815, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63c91bfee5a31174bb3cd7a3d8a6dd05
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MegaManWeapons_82
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 215
+        width: 27
+        height: 19
+      alignment: 9
+      pivot: {x: 0.4814815, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e8ed24a5d50d5a4ba3f625e6b060989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MegaManWeapons_83
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 215
+        width: 30
+        height: 13
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ec562384b9e7d440bddbe70b4c3e3ca
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MegaManWeapons_84
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 215
+        width: 32
+        height: 13
+      alignment: 9
+      pivot: {x: 0.53125, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de74243d87ff0824c8043f4e5b64d3d2
       vertices: []
       indices: 
       edges: []

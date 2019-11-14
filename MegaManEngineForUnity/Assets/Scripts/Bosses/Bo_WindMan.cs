@@ -42,6 +42,24 @@ public class Bo_WindMan : Boss
     {
         float damage = weapon.damage;
 
+        switch (weapon.weaponType)
+        {
+            case Pl_Weapon.WeaponTypes.Commando:
+                damage = 6;
+                break;
+            case Pl_Weapon.WeaponTypes.Galaxy:
+                damage = 0;
+                break;
+            case Pl_Weapon.WeaponTypes.Gemini:
+                damage = 0.3333f;
+                break;
+            case Pl_Weapon.WeaponTypes.Normal:
+                break;
+            default:
+                damage = 1;
+                break;
+        }
+
         if (shielded && !weapon.ignoreShield)
         {
             weapon.Deflect();
@@ -55,13 +73,14 @@ public class Bo_WindMan : Boss
         StopAllCoroutines();
 
         // Registers death to GameManager.
+        GameManager.bossesActive--;
         if (!ignorePreviousDeath)
             GameManager.bossDead_WindMan = true;
         particles.Stop();
         Destroy(wind.gameObject);
         StartCoroutine(PlayDeathShort());
         if (GameManager.bossesActive <= 0)
-            CameraCtrl.instance.PlayMusic(null);
+            CameraCtrl.instance.aud.Stop();
     }
 
 

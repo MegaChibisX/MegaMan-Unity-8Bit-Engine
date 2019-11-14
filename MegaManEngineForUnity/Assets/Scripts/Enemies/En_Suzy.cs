@@ -26,7 +26,6 @@ public class En_Suzy : Enemy {
     public Sprite eyeOpen;
     public Sprite eyeMiddle;
     public Sprite eyeClosed;
-    private SpriteRenderer rend;
 
 
     protected override void Start()

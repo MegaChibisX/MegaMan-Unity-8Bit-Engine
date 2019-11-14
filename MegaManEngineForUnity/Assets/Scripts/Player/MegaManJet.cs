@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[AddComponentMenu("MegaMan/Allies/MegaMan Jet")]
 public class MegaManJet : Player
 {
 
@@ -20,7 +21,7 @@ public class MegaManJet : Player
         Vector2 cmrBase = new Vector2(Camera.main.rect.x * Screen.width, Camera.main.rect.y * Screen.height);
 
 
-        // Reads and displays the healthbar.
+        // Reads and displays the jet fuel bar.
         Sprite healthBar = bars.rushBar;
         Rect healthBarRect = new Rect(healthBar.rect.x / healthBar.texture.width, healthBar.rect.y / healthBar.texture.height,
                                 healthBar.rect.width / healthBar.texture.width, healthBar.rect.height / healthBar.texture.height);
@@ -40,6 +41,7 @@ public class MegaManJet : Player
 
     protected override void Land()
     {
+        // If in ground, there is no way the player should be flying.
         shouldBeInJet = false;
 
         base.Land();
@@ -47,21 +49,25 @@ public class MegaManJet : Player
     protected override void HandleInput_Movement()
     {
 
+        // If there are no more jumps left for the player, go jet.
         if (Input.GetButtonDown("Jump"))
         {
             if (jetTime > 0.0f && !isGrounded && jumpsLeft <= 0f)
                 shouldBeInJet = true;
         }
+        // If the player releases the  jump button, don't jet.
         else if (Input.GetButtonUp("Jump"))
         {
             shouldBeInJet = false;
         }
 
+        // Add jet fuel when on ground.
         if (isGrounded)
         {
             jetTime = Mathf.MoveTowards(jetTime, 2.0f, Time.fixedDeltaTime * 5f);
         }
 
+        // Add y velocity to fly and use fuel.
         if (Input.GetButton("Jump") && shouldBeInJet && jetTime > 0.0f)
         {
             float forceMulti = 1f;
@@ -102,6 +108,7 @@ public class MegaManJet : Player
 
     public override void SetGravity(float magnitude, bool inverted)
     {
+        // Lower gravity can make the jet act weird. Make sure this doesn't happen.
         if (Input.GetButton("Jump") && shouldBeInJet && jetTime > 0.0f)
         {
             base.SetGravity(1, inverted);

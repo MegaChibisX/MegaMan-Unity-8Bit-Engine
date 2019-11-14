@@ -46,6 +46,22 @@ public class Bo_BombMan : Boss
     {
         float damage = weapon.damage;
 
+        switch (weapon.weaponType)
+        {
+            case Pl_Weapon.WeaponTypes.Pharaoh:
+                damage *=2 ;
+                break;
+            case Pl_Weapon.WeaponTypes.Galaxy:
+                damage = 0;
+                break;
+            case Pl_Weapon.WeaponTypes.Gemini:
+                damage = 0.3333f;
+                break;
+            default:
+                damage = 1;
+                break;
+        }
+
         if (shielded && !weapon.ignoreShield)
         {
             weapon.Deflect();
@@ -59,11 +75,12 @@ public class Bo_BombMan : Boss
         StopAllCoroutines();
 
         // Registers death to GameManager.
+        GameManager.bossesActive--;
         if (!ignorePreviousDeath)
             GameManager.bossDead_BombMan = true;
         StartCoroutine(PlayDeathShort());
         if (GameManager.bossesActive <= 0)
-            CameraCtrl.instance.PlayMusic(null);
+            CameraCtrl.instance.aud.Stop();
     }
     private void AnimPlay(string animName)
     {

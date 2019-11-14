@@ -100,19 +100,34 @@ public class Bo_GeminiMan : Boss
     }
 
 
-    public override void Damage(float dmg, bool ignoreInvis)
+    public override void Damage(Pl_Weapon weapon)
     {
-        // If can be hurt, get hurt.
-        if (invisTime > 0.0f && !ignoreInvis || !fightStarted)
-            return;
+        float damage = weapon.damage;
 
-        health -= dmg;
-        invisTime = 1f;
-        if (health <= 0)
+        switch (weapon.weaponType)
         {
-            Kill(false, false);
+            case Pl_Weapon.WeaponTypes.Bomb:
+                damage = 4;
+                break;
+            case Pl_Weapon.WeaponTypes.Galaxy:
+                damage = 0;
+                break;
+            case Pl_Weapon.WeaponTypes.Gemini:
+                damage = 0.3333f;
+                break;
+            default:
+                damage = 1;
+                break;
         }
-    }   
+
+        if (shielded && !weapon.ignoreShield)
+        {
+            weapon.Deflect();
+            return;
+        }
+
+        Damage(damage, weapon.ignoreInvis);
+    }
     public void Freeze(bool shouldBeTrue)
     {
         shouldFreeze = shouldBeTrue;
@@ -122,7 +137,8 @@ public class Bo_GeminiMan : Boss
 
     public override void Kill(bool makeItem, bool makeBolt)
     {
-        // Gemini Man stops doing what he's doing and dies.
+        // Registers death to GameManager.
+        GameManager.bossesActive--;
         StopAllCoroutines();
         if (isPrimary && otherGemini != null)
         {
@@ -134,7 +150,7 @@ public class Bo_GeminiMan : Boss
             GameManager.bossDead_GeminiMan = true;
         StartCoroutine(PlayDeathShort());
         if (GameManager.bossesActive <= 0)
-            CameraCtrl.instance.PlayMusic(null);
+            CameraCtrl.instance.aud.Stop();
     }
 
 

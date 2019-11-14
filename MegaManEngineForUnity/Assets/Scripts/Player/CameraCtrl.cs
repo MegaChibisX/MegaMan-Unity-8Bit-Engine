@@ -22,6 +22,9 @@ public class CameraCtrl : MonoBehaviour {
 
     // The Audio Source component that plays the music.
     public AudioSource aud;
+    // The Audio Source that plays the earthquake sound.
+    public AudioSource audQuake;
+    public AudioClip quakeClip;
 
     // The Stage_ChangeCameraBorders class is used to update
     // the borders of the Camera when the player enters a new room.
@@ -110,6 +113,7 @@ public class CameraCtrl : MonoBehaviour {
         {
             transform.position += Random.rotation * Vector3.right * Random.Range(0, shakeStrength);
             shakeTime -= Time.deltaTime;
+            audQuake.PlaySound(quakeClip, false);
         }
     }
 

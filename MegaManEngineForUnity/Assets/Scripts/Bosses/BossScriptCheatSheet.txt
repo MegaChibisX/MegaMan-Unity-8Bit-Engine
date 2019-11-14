@@ -6,11 +6,9 @@ public class Bo_ : Boss
 {
 
     private Animator anim;
-    private SpriteRenderer rend;
     private AudioSource aud;
 	public BoxCollider2D col;
 
-    public Sprite hurtSprite;
     public AudioClip healSound;
 
     protected override void Start()
@@ -26,7 +24,7 @@ public class Bo_ : Boss
 
         anim.gameObject.SetActive(false);
     }
-    private void LateUpdate()
+    protected override void LateUpdate()
     {
         if (invisTime % 0.2f > 0.07f)
             rend.sprite = hurtSprite;
@@ -51,11 +49,12 @@ public class Bo_ : Boss
         StopAllCoroutines();
 
         // Registers death to GameManager.
+        GameManager.bossesActive--;
         if (!ignorePreviousDeath)
             GameManager.bossDead_ = true;
         StartCoroutine(PlayDeathShort());
 		if (GameManager.bossesActive <= 0)
-			CameraCtrl.instance.PlayMusic(null);
+			CameraCtrl.instance.aud.Stop();
     }
 
 
@@ -84,7 +83,7 @@ public class Bo_ : Boss
         // Plays intro.
         anim.gameObject.SetActive(true);
         anim.Play("Intro");
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3.0f);
 
         // Slowly gains health.
         for (int i = 0; i < 28; i++)
@@ -105,7 +104,17 @@ public class Bo_ : Boss
 
         // Starts battle.
         canBeHit = true;
-        //StartCoroutine(Behavior());
+        StartCoroutine(Behavior());
+    }
+
+
+	public IEnumerator Behavior()
+    {
+        while (true)
+        {
+            yield return null;
+
+        }
     }
 	
 	

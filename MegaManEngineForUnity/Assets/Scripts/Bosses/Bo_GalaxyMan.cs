@@ -41,6 +41,19 @@ public class Bo_GalaxyMan: Boss
     {
         float damage = weapon.damage;
 
+        switch (weapon.weaponType)
+        {
+            case Pl_Weapon.WeaponTypes.Galaxy:
+                damage = 0;
+                break;
+            case Pl_Weapon.WeaponTypes.Gemini:
+                damage = 1.0f;
+                break;
+            default:
+                damage = 1;
+                break;
+        }
+
         if (shielded && !weapon.ignoreShield)
         {
             weapon.Deflect();
@@ -54,11 +67,12 @@ public class Bo_GalaxyMan: Boss
         StopAllCoroutines();
 
         // Registers death to GameManager.
+        GameManager.bossesActive--;
         if (!ignorePreviousDeath)
             GameManager.bossDead_GalaxyMan = true;
         StartCoroutine(PlayDeathShort());
         if (GameManager.bossesActive <= 0)
-            CameraCtrl.instance.PlayMusic(null);
+            CameraCtrl.instance.aud.Stop();
     }
 
 
@@ -150,7 +164,6 @@ public class Bo_GalaxyMan: Boss
     public IEnumerator FlyAround(float time)
     {
         anim.Play("Fly");
-        float height = upHeight.position.y;
 
         while (time > 0)
         {
