@@ -50,7 +50,8 @@ public class PlWp_RushCoil : MonoBehaviour
         {
             UseCoil();
             madeContact = true;
-            body.velocity = new Vector2(body.velocity.x, jumpForce);
+			bool gravityFlip = body.GetComponent<Player>().gravityInverted;
+            body.velocity = new Vector2(body.velocity.x, jumpForce * (gravityFlip ? -1 : 1));
         }
     }
 
