@@ -94,12 +94,7 @@ public class Item_Pickup : MonoBehaviour {
 
                 int hashCode = new Vector2(transform.position.x, transform.position.z).GetHashCode();
                 if (GameManager.stageItems.ContainsKey(hashCode))
-                {
-                    print(hashCode + " found!");
                     GameManager.stageItems[hashCode] = false;
-                }
-                else
-                    print(hashCode + " failed!");
             }
             else
             {

@@ -93,6 +93,8 @@ public class Stage_Teleporter : MonoBehaviour
             }
         }
 
+        target.anim.transform.localPosition = Vector3.zero;
+
         target.canMove = true;
         target.canAnimate = true;
         target.canBeHurt = true;

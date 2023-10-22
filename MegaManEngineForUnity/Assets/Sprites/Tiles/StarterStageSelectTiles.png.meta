@@ -1,21 +1,45 @@
 fileFormatVersion: 2
 guid: c93e58752ca38b0409a2685b50d967b8
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: StarterStageSelectTiles_0
-    21300002: StarterStageSelectTiles_1
-    21300004: StarterStageSelectTiles_2
-    21300006: StarterStageSelectTiles_3
-    21300008: StarterStageSelectTiles_4
-    21300010: StarterStageSelectTiles_5
-    21300012: StarterStageSelectTiles_6
-    21300014: StarterStageSelectTiles_7
-    21300016: StarterStageSelectTiles_8
-    21300018: StarterStageSelectTiles_9
-    21300020: StarterStageSelectTiles_10
-    21300022: StarterStageSelectTiles_11
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: StarterStageSelectTiles_0
+  - first:
+      213: 21300002
+    second: StarterStageSelectTiles_1
+  - first:
+      213: 21300004
+    second: StarterStageSelectTiles_2
+  - first:
+      213: 21300006
+    second: StarterStageSelectTiles_3
+  - first:
+      213: 21300008
+    second: StarterStageSelectTiles_4
+  - first:
+      213: 21300010
+    second: StarterStageSelectTiles_5
+  - first:
+      213: 21300012
+    second: StarterStageSelectTiles_6
+  - first:
+      213: 21300014
+    second: StarterStageSelectTiles_7
+  - first:
+      213: 21300016
+    second: StarterStageSelectTiles_8
+  - first:
+      213: 21300018
+    second: StarterStageSelectTiles_9
+  - first:
+      213: 21300020
+    second: StarterStageSelectTiles_10
+  - first:
+      213: 21300022
+    second: StarterStageSelectTiles_11
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -35,6 +59,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -44,8 +70,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -66,11 +92,15 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -81,7 +111,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -92,7 +123,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -103,6 +135,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -122,6 +155,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c3fed5e22c84f8b4b8fc959d73a77d40
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -142,6 +176,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 9091c5af652e92a42853ca7c3e377470
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -162,6 +197,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 772d829f0285a3140b0b141c9c72d3e5
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -182,6 +218,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: bd9af831ff2a763478c522b2509cc9c3
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -202,6 +239,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: dd5b6e1ed00c836478288e07c0a91ceb
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -222,6 +260,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a19ec1e738fac954e81936e8e7aebf14
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
@@ -242,6 +281,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5c54a1f67ddad7641970887859a7b3e9
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
@@ -262,6 +302,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 1c92dd187e4e4da41b943a4fad2f07a1
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
@@ -282,6 +323,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 091806bfb15dce240ac71d282fa14bdc
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []
@@ -302,6 +344,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e5d2a01a5ba60804fafbc6b31f505cab
+      internalID: 21300018
       vertices: []
       indices: 
       edges: []
@@ -322,6 +365,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b8cc54c62511ad24dae15ec0ddf091fb
+      internalID: 21300020
       vertices: []
       indices: 
       edges: []
@@ -342,6 +386,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f9e5203056fc68646b7c4094c8f603f9
+      internalID: 21300022
       vertices: []
       indices: 
       edges: []
@@ -350,10 +395,25 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: dcda00608a848ca4983c17a3c5771173
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      StarterStageSelectTiles_6: 21300012
+      StarterStageSelectTiles_3: 21300006
+      StarterStageSelectTiles_0: 21300000
+      StarterStageSelectTiles_1: 21300002
+      StarterStageSelectTiles_5: 21300010
+      StarterStageSelectTiles_7: 21300014
+      StarterStageSelectTiles_8: 21300016
+      StarterStageSelectTiles_10: 21300020
+      StarterStageSelectTiles_11: 21300022
+      StarterStageSelectTiles_9: 21300018
+      StarterStageSelectTiles_2: 21300004
+      StarterStageSelectTiles_4: 21300008
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

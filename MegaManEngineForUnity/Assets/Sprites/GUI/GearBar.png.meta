@@ -1,16 +1,30 @@
 fileFormatVersion: 2
 guid: 6f6c40563d37ed34e8bc9d3e22fff32d
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: GearBar_0
-    21300002: GearBar_1
-    21300004: GearBar_2
-    21300006: GearBar_3
-    21300008: GearBar_4
-    21300010: GearBar_5
-    21300012: GearBar_6
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: GearBar_0
+  - first:
+      213: 21300002
+    second: GearBar_1
+  - first:
+      213: 21300004
+    second: GearBar_2
+  - first:
+      213: 21300006
+    second: GearBar_3
+  - first:
+      213: 21300008
+    second: GearBar_4
+  - first:
+      213: 21300010
+    second: GearBar_5
+  - first:
+      213: 21300012
+    second: GearBar_6
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -30,6 +44,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -39,8 +55,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -61,11 +77,15 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -76,7 +96,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -87,7 +108,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -98,6 +120,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -117,6 +140,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5c2a7f15ef01c68429ae6a43e6858771
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -137,6 +161,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2fa90d146bea02b42bd0fd4c63250489
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -157,6 +182,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3b5bcdf4edd609a4eb251203b4e8e146
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -177,6 +203,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4c2c6b821dff2d5469fbd9ea20231b7c
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -197,6 +224,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 714a5aaf411fd5b4f9e5028882c0eb5c
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -217,6 +245,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 7914a160c994f3d45a64aeadacbc592e
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
@@ -237,6 +266,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 86bbacfb162beae49ac420b3b332f9e8
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
@@ -245,10 +275,20 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: f0d8622ec9870bb4b895c7f2c1d7ce00
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      GearBar_6: 21300012
+      GearBar_4: 21300008
+      GearBar_5: 21300010
+      GearBar_0: 21300000
+      GearBar_2: 21300004
+      GearBar_3: 21300006
+      GearBar_1: 21300002
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

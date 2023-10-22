@@ -205,20 +205,21 @@ public class PlWpDt_MegaBuster : Pl_WeaponData
 
         // Adds some knockback to the player.
         owner.gravityScale = 100.0f;
-        owner.body.velocity = -owner.right * 70.0f + owner.up * 200.0f;
+        owner.body.velocity = (-owner.right * 70.0f + owner.up * 200.0f) / owner.body.mass;
 
         // Shoots the second shot.
         if (owner != null && owner.curPlayer == GameManager.Players.ProtoMan)
             newShot = Object.Instantiate(Resources.Load<Pl_Shot>("Prefabs/PlayerWeapons/ProtoManPoweredShot"));
         else
             newShot = Object.Instantiate(Resources.Load<Pl_Shot>("Prefabs/PlayerWeapons/MegaManPoweredShot"));
+
         newShot.transform.position = owner.transform.position + offset;
         if (shootLeft)
             newShot.transform.localScale = Vector3.Scale(newShot.transform.localScale, new Vector3(-1, 1, 1));
         newShot.damage *= damageMultiplier;
         newShot.speed = speed;
 
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSecondsRealtime(0.35f);
 
         // The player can move again.
         owner.canMove = true;

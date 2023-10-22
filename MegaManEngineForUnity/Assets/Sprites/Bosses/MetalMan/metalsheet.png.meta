@@ -1,21 +1,45 @@
 fileFormatVersion: 2
 guid: d35999335f50520408cd0af11ad4ab30
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: metalsheet_0
-    21300002: metalsheet_1
-    21300004: metalsheet_2
-    21300006: metalsheet_3
-    21300008: metalsheet_4
-    21300010: metalsheet_5
-    21300012: metalsheet_6
-    21300014: metalsheet_7
-    21300016: metalsheet_8
-    21300018: metalsheet_9
-    21300020: metalsheet_10
-    21300022: metalsheet_11
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: metalsheet_0
+  - first:
+      213: 21300002
+    second: metalsheet_1
+  - first:
+      213: 21300004
+    second: metalsheet_2
+  - first:
+      213: 21300006
+    second: metalsheet_3
+  - first:
+      213: 21300008
+    second: metalsheet_4
+  - first:
+      213: 21300010
+    second: metalsheet_5
+  - first:
+      213: 21300012
+    second: metalsheet_6
+  - first:
+      213: 21300014
+    second: metalsheet_7
+  - first:
+      213: 21300016
+    second: metalsheet_8
+  - first:
+      213: 21300018
+    second: metalsheet_9
+  - first:
+      213: 21300020
+    second: metalsheet_10
+  - first:
+      213: 21300022
+    second: metalsheet_11
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -35,6 +59,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -44,8 +70,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -66,11 +92,15 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -81,7 +111,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -92,7 +123,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -103,6 +135,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -122,6 +155,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e1855109bcf2c40419df66b0193c1617
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -142,6 +176,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 402dec1e93a98784984ae7ba98f22b8e
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -162,6 +197,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: fd2a3953a0ad8db468d9f04fffe1aadd
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -182,6 +218,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 8602475165db33f4f8e6c0667d755a82
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -202,6 +239,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2f7f635d5e86eb94a806c87707f609d7
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -222,6 +260,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ccd46d075ae3b9f45a065292493630ce
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
@@ -242,6 +281,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 116333e4d4e1c204f9ea338b08033fe3
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
@@ -262,6 +302,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a1c3e096fa085704aa2aeafdf85aa930
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
@@ -282,6 +323,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2bb1646e0899e824cb158fd6388514cb
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []
@@ -302,6 +344,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 98bc1c55bfe082743b0bb87936a0ec66
+      internalID: 21300018
       vertices: []
       indices: 
       edges: []
@@ -322,6 +365,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e34e2f91b9828f34b84119fef3df6475
+      internalID: 21300020
       vertices: []
       indices: 
       edges: []
@@ -342,6 +386,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b4159801c9a312347a4334ab8c2ded0b
+      internalID: 21300022
       vertices: []
       indices: 
       edges: []
@@ -350,10 +395,25 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 66a8e6cf80cf8cc4a9d8c8b508f3b271
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      metalsheet_3: 21300006
+      metalsheet_6: 21300012
+      metalsheet_9: 21300018
+      metalsheet_0: 21300000
+      metalsheet_10: 21300020
+      metalsheet_4: 21300008
+      metalsheet_11: 21300022
+      metalsheet_5: 21300010
+      metalsheet_2: 21300004
+      metalsheet_7: 21300014
+      metalsheet_1: 21300002
+      metalsheet_8: 21300016
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

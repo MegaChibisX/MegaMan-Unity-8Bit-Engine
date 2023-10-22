@@ -18,6 +18,16 @@ public class Menu_CtrlCutscene : MonoBehaviour
         scene.anim = GetComponentInChildren<Animator>();
         StartCoroutine(PlayCutscene(scene.cutsceneSegments));
     }
+    protected void Update()
+    {
+        if (Input.GetButtonDown("Start"))
+        {
+            StopAllCoroutines();
+            scene.Exit();
+
+            GameManager.GoToStageSelect();
+        }
+    }
 
     public IEnumerator PlayCutscene(CutsceneItem[] items)
     {

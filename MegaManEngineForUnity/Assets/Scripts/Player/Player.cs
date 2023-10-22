@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 
 [AddComponentMenu("MegaMan/Allies/Player")]
 public class Player : MonoBehaviour
@@ -9,7 +10,7 @@ public class Player : MonoBehaviour
 
     public static Player instance;
 
-    // The player uses their own timeScale, mostly for the Speed Geear to work without slowing them down.
+    // The player uses their own timeScale, mostly for the Speed Gear to work without slowing them down.
     public static float timeScale = 1.0f;
     public static float deltaTime
     {
@@ -22,7 +23,7 @@ public class Player : MonoBehaviour
     {
         get
         {
-            return Time.fixedUnscaledDeltaTime * timeScale * (Time.timeScale == 0 ? 0 : (1 / Time.timeScale));
+            return Time.fixedUnscaledDeltaTime * timeScale ;
         }
     }
     
@@ -243,6 +244,8 @@ public class Player : MonoBehaviour
         if (gearBar != null)
             gearBarMaterial = gearBar.GetComponent<MeshRenderer>().material;
 
+        SetGear(false, false);
+
         // Plays the player intro, if this is the beginning of a room.
         if (useIntro)
             StartCoroutine(PlayIntro());
@@ -364,8 +367,6 @@ public class Player : MonoBehaviour
             else if (!spriteContainer.activeSelf)
                 spriteContainer.SetActive(true);
         }
-    
-        ApplyGravity();
     }
     protected virtual void FixedUpdate()
     {
@@ -375,14 +376,18 @@ public class Player : MonoBehaviour
         windVector = Vector3.zero;
 
         // Handles movement related activities that should be done in FixedUpdate
+        ApplyGravity();
         HandlePhysics_Movement();
 
         // Slow down the player based on how slow their local time is.
         // For example, this will be used when slowed down by their own Speed Gear.
-        if (Time.timeScale == 0.0f)
-            body.velocity = new Vector2(0, body.velocity.y);
-        else
-            body.velocity = new Vector2(body.velocity.x * timeScale / GameManager.globalTimeScale, body.velocity.y);
+        if (canMove)
+        {
+            if (Time.timeScale == 0.0f)
+                body.velocity = new Vector2(0, body.velocity.y);
+            else
+                body.velocity = new Vector2(body.velocity.x / body.mass, body.velocity.y);
+        }
     }
     protected virtual void OnDrawGizmosSelected()
     {
@@ -500,8 +505,6 @@ public class Player : MonoBehaviour
         {
             if (otherBody.gameObject.layer == 13)
             {
-                print(collision.contacts[0].point);
-                print("S");
                 Kill();
             }
             // If in contact with a Boss Door, go through the door.
@@ -615,7 +618,7 @@ public class Player : MonoBehaviour
                         (jumpsLeft > 0 ||
                         isInSand))
             {
-                body.velocity = new Vector2(body.velocity.x, jumpForce * timeScale / (GameManager.globalTimeScale != 0 ? GameManager.globalTimeScale : 1) * up.y);
+                body.velocity = new Vector2(body.velocity.x, jumpForce * up.y / body.mass);
                 jumpsLeft--;
             }
         }
@@ -986,6 +989,8 @@ public class Player : MonoBehaviour
             return;
         }
 
+        anim.transform.localPosition = Vector3.zero;
+
         if (state == PlayerStates.Climb)
         {
             if (input.x != 0)
@@ -1050,7 +1055,6 @@ public class Player : MonoBehaviour
         audioStage.PlaySound(SFXLibrary.hurt, true);
         if (health <= 0)
         {
-            print("D");
             Kill();
         }
 
@@ -1354,7 +1358,7 @@ public class Player : MonoBehaviour
     public void ApplyGravity()
     {
         if (!body.isKinematic && !paused)
-            body.velocity += Vector2.down * 10f * gravityScale * gravityEnvironmentMulti * body.mass * body.mass * fixedDeltaTime;
+            body.velocity += Vector2.down * 10f * gravityScale * gravityEnvironmentMulti * fixedDeltaTime * body.mass;
         gravityEnvironmentMulti = 1.0f;
     }
     public virtual void SetGravity(float magnitude, bool inverted)
@@ -1417,6 +1421,8 @@ public class Player : MonoBehaviour
         canBeHurt = true;
         anim.applyRootMotion = true;
         GameManager.roomFinishedLoading = true;
+
+        anim.transform.localPosition = Vector3.zero;
     }
     protected IEnumerator PlayOutro()
     {

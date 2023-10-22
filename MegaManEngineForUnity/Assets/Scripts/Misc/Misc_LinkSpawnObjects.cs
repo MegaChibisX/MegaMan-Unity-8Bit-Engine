@@ -24,17 +24,37 @@ public class Misc_LinkSpawnObjects : MonoBehaviour
     private IEnumerator Explode()
     {
         GameObject expl;
+        Vector3 targetPos;
+        bool spawnLeft = true;
+        bool spawnRight = true;
+
         for (int i = 0; i < objsPerSide; i++)
         {
-            expl = Instantiate(objToSpawn);
-            expl.transform.position = transform.position + transform.right * (distance * i + startDistance);
-            expl.transform.rotation = transform.rotation;
-            expl.transform.localScale = transform.localScale;
+            targetPos = transform.position + transform.right * (distance * i + startDistance);
+            if (!Physics2D.Linecast(targetPos, targetPos - transform.up * 8, 1 << 8) ||
+                Physics2D.Linecast(targetPos + transform.up * 8, targetPos + transform.up * 16, 1 << 8))
+                spawnRight = false;
 
-            expl = Instantiate(objToSpawn);
-            expl.transform.position = transform.position - transform.right * (distance * i + startDistance);
-            expl.transform.rotation = transform.rotation;
-            expl.transform.localScale = transform.localScale;
+            if (spawnRight)
+            {
+                expl = Instantiate(objToSpawn);
+                expl.transform.position = targetPos;
+                expl.transform.rotation = transform.rotation;
+                expl.transform.localScale = transform.localScale;
+            }
+
+            targetPos = transform.position - transform.right * (distance * i + startDistance);
+            if (!Physics2D.Linecast(targetPos, targetPos - transform.up * 16, 1 << 8) ||
+                Physics2D.Linecast(targetPos + transform.up * 8, targetPos + transform.up * 16, 1 << 8))
+                spawnLeft = false;
+
+            if (spawnLeft)
+            {
+                expl = Instantiate(objToSpawn);
+                expl.transform.position = targetPos;
+                expl.transform.rotation = transform.rotation;
+                expl.transform.localScale = transform.localScale;
+            }
 
 
             yield return new WaitForSeconds(delay);

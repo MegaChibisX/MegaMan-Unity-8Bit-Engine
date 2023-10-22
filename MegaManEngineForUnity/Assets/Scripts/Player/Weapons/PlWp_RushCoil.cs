@@ -12,17 +12,20 @@ public class PlWp_RushCoil : MonoBehaviour
     public float jumpForce = 500f;
     // Can't jump multiple times.
     public bool madeContact = false;
+    // Can't jump when playing intro/outro
+    private bool canJump = false;
 
     public void Start()
     {
         // Play intro.
         GetComponentInChildren<Animator>().Play("Intro");
+        Invoke("AllowJump", 1.150f);
     }
 
     public void UseCoil()
     {
         // Use the coil if not already used.
-        if (madeContact)
+        if (madeContact || !canJump)
             return;
 
         GetComponentInChildren<Animator>().Play("Coil");
@@ -34,11 +37,16 @@ public class PlWp_RushCoil : MonoBehaviour
         GetComponentInChildren<Animator>().Play("Outro");
         // Die  again in 1 second.
         Invoke("Kill2", 1f);
+        canJump = false;
     }
     private void Kill2()
     {
         // Die.
         Destroy(gameObject);
+    }
+    public void AllowJump()
+    {
+        canJump = true;
     }
 
 
@@ -46,7 +54,7 @@ public class PlWp_RushCoil : MonoBehaviour
     {
         // Make the player jump if that was indeed the player.
         Rigidbody2D body = other.attachedRigidbody;
-        if (!madeContact && body && body.GetComponent<Player>())
+        if (!madeContact && body && body.GetComponent<Player>() && canJump)
         {
             UseCoil();
             madeContact = true;

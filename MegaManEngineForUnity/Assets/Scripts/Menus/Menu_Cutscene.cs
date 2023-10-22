@@ -22,11 +22,17 @@ public class Menu_Cutscene : Menu
     public Vector2 guiImageOffset;
     public float guiImageSize;
 
+    private bool shouldSkip = false;
+
     public  IEnumerator PlayCutscene(CutsceneItem[] items)
     {
+        shouldSkip = false;
+
         // A cutscene should consist out of multiple segments.
         for (int i = 0; i < items.Length; i++)
         {
+            if (shouldSkip) break;
+
             CutsceneItem item = items[i];
 
             // Sets the animator state. Each cutscene animator should have an animIndex variable
@@ -39,6 +45,7 @@ public class Menu_Cutscene : Menu
                 GameManager.ShakeCamera(item.nextTextDelay + 0.5f, 2f, false);
 
             yield return new WaitForSecondsRealtime(item.nextTextDelay);
+            if (shouldSkip) break;
 
             // Sets up the image to display.
             guiImage = item.image;
@@ -48,6 +55,7 @@ public class Menu_Cutscene : Menu
             // Displays every piece of text on its own.
             for (int j = 0; j < item.text.Length; j++)
             {
+                if (shouldSkip) break;
                 // The text slowly appears, unless the Jump button is pressed.
                 int maxChars = 0;
                 bool awaitRelease = Input.GetButton("Jump");
@@ -64,16 +72,22 @@ public class Menu_Cutscene : Menu
                         guiText = item.text[j];
 
                         while (Input.GetButton("Jump"))
+                        {
+                            if (shouldSkip) break;
                             yield return null;
+                        }
+                        if (shouldSkip) break;
                     }
                     guiText = item.text[j].Substring(0, maxChars);
 
                     yield return new WaitForSecondsRealtime(0.02f);
+                    if (shouldSkip) break;
                 }
 
                 // Waits for the Jump button to be pressed.
                 while (!Input.GetButtonDown("Jump"))
                 {
+                    if (shouldSkip) break;
                     yield return null;
                 }
 
@@ -84,12 +98,14 @@ public class Menu_Cutscene : Menu
                     timeDiv = 1;
                 while (fadeTime > 0.0f)
                 {
+                    if (shouldSkip) break;
                     float color = fadeTime * timeDiv;
                     guiColor = new Color(color, color, color, 1);
                 }
                 fadeTime = item.fadeTime;
                 while (fadeTime > 0.0f)
                 {
+                    if (shouldSkip) break;
                     float color = 1f - fadeTime * timeDiv;
                     guiColor = new Color(color, color, color, 1);
                 }

@@ -199,6 +199,7 @@ public class PlWpDt_PowerPunch : Pl_WeaponData
         cooldown = 0.4f;
         punching = true;
         owner.canAnimate = false;
+        owner.body.velocity = Vector3.Project(owner.body.velocity, owner.transform.up);
 
         if (owner.state == Player.PlayerStates.Climb)
         {
@@ -215,11 +216,11 @@ public class PlWpDt_PowerPunch : Pl_WeaponData
             owner.canMove = false;
         }
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSecondsRealtime(0.1f);
 
         Shoot(owner.right * owner.width * 2.0f, Vector3.Angle(owner.right, Vector3.right) > 90, 1, 300, charge, owner.gearActive_Power);
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSecondsRealtime(0.1f);
 
         punching = false;
         owner.canMove = true;

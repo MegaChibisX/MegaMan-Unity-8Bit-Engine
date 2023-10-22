@@ -109,6 +109,7 @@ public class Menu_StageSelect : Menu
 
     public AudioClip dataAudioMove;
     public AudioClip dataAudioChange;
+    public AudioClip dataAudioSelect;
 
     public Vector2 dataSelectorOrigin;
     public Vector2Int dataIndex;
@@ -158,8 +159,8 @@ public class Menu_StageSelect : Menu
             if (cmrSnapToRoom)
                 cmr.transform.position = new Vector3(cmrPos.x, cmrPos.y, cmr.transform.position.z);
             else
-                cmr.transform.position = new Vector3(Mathf.MoveTowards(cmr.transform.position.x, cmrPos.x, Time.deltaTime * 320f),
-                                                     Mathf.MoveTowards(cmr.transform.position.y, cmrPos.y, Time.deltaTime * 256f),
+                cmr.transform.position = new Vector3(Mathf.MoveTowards(cmr.transform.position.x, cmrPos.x, Time.unscaledDeltaTime * 320f),
+                                                     Mathf.MoveTowards(cmr.transform.position.y, cmrPos.y, Time.unscaledDeltaTime * 256f),
                                                      cmr.transform.position.z);
             if (Vector2.Distance(cmr.transform.position, cmrPos) < 1f)
                 cameraInRoom = true;
@@ -201,13 +202,13 @@ public class Menu_StageSelect : Menu
                 }
                 else
                 {
-                    inputCooldown -= Time.deltaTime;
+                    inputCooldown -= Time.unscaledDeltaTime;
                 }
             }
         }
         else
         {
-            stageCooldown -= Time.deltaTime;
+            stageCooldown -= Time.unscaledDeltaTime;
             if (stageCooldown <= 0)
             {
                 switch (activeRoom)
@@ -853,11 +854,17 @@ public class Menu_StageSelect : Menu
         if (Input.GetButtonDown("Start"))
         {
             if (dataIndex.x == 0)
-                GameManager.SaveData(dataIndex.y);
+            {
+                string s = GameManager.SaveData(dataIndex.y);
+                SetDataDescription(s);
+                Helper.PlaySound(dataAudioSelect);
+            }
             else
             {
-                GameManager.LoadData(dataIndex.y, true);
+                string s = GameManager.LoadData(dataIndex.y, true);
+                SetDataDescription(s);
                 RefreshFortressStages();
+                Helper.PlaySound(dataAudioSelect);
             }
         }
     }

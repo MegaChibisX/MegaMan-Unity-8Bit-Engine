@@ -46,6 +46,22 @@ public class MegaManJet : Player
 
         base.Land();
     }
+    protected override void HandlePhysics_Movement()
+    {
+        base.HandlePhysics_Movement();
+
+        if (canMove && !paused)
+        {
+            if (jetTime > 0.0f && shouldBeInJet)
+            {
+                float forceMulti = 1f;
+                forceMulti *= fixedDeltaTime;
+                forceMulti /= GameManager.globalTimeScale;
+
+                body.velocity += (gravityInverted ? Vector2.down : Vector2.up) * 1750f * forceMulti;
+            }
+        }
+    }
     protected override void HandleInput_Movement()
     {
 
@@ -64,18 +80,12 @@ public class MegaManJet : Player
         // Add jet fuel when on ground.
         if (isGrounded)
         {
-            jetTime = Mathf.MoveTowards(jetTime, 2.0f, Time.fixedDeltaTime * 5f);
+            jetTime = Mathf.MoveTowards(jetTime, 2.0f, Time.deltaTime * 5f);
         }
 
         // Add y velocity to fly and use fuel.
         if (Input.GetButton("Jump") && shouldBeInJet && jetTime > 0.0f)
         {
-            float forceMulti = 1f;
-            forceMulti *= timeScale * timeScale;
-            forceMulti /= GameManager.globalTimeScale;
-
-            body.velocity += (gravityInverted ? Vector2.down : Vector2.up) * 25f * forceMulti;
-
             jetTime -= Time.deltaTime;
             return;
         }

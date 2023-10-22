@@ -131,8 +131,6 @@ public static class GameManager
             int hashCode = new Vector2(item.transform.position.x, item.transform.position.z).GetHashCode();
             if (stageItems.ContainsKey(hashCode) && stageItems[hashCode] == false)
                 Object.Destroy(item.gameObject);
-            if (stageItems.ContainsKey(hashCode))
-                Debug.Log("Contains! " + stageItems[hashCode]);
         }
     }
     public static void StartRoom()
