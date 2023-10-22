@@ -34,24 +34,6 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 > Go to MegaManEngineForUnity/Build and open the 8bit.exe file.
 
 
-## Upcoming features
-
-> Rush Utilities
-
-> New enemies, including but not limited to: Totem Polen, Shield Attackers, Hothead, Count Bombs (Thanks JKF-Infiniti), etc.
-
-> In-game animation cutscenes.
-
-> More enemies, bosses, players.
-
-> Possibly a story.
-
-> Enemy hit sound.
-
-> Music in the stages.
-
-> Comments in: Menu_Ctrl.
-
 
 
 ## Known bugs
@@ -79,6 +61,13 @@ The sprites have been provided by https://www.sprites-inc.co.uk/
 
 
 # Update Log
+# 2.0.0
+> Major Bugfixing Update
+
+> Don't ask me what bugs exactly I forgot 😭
+
+# 1.0.0
+> Official Release Woohoo
 
 # 0.6.1
 > Metal Wheel now follows sand behavior.
